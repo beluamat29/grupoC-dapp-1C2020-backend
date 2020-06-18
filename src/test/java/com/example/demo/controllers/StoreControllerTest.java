@@ -60,7 +60,7 @@ public class StoreControllerTest {
         mockMvc.perform(get("/stores"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$", hasSize(3)))
-                .andExpect(jsonPath("$[0].id", is(stores.get(0).id())))
+                .andExpect(jsonPath("$[0].id", is(8923891)))
                 .andExpect(jsonPath("$[1].id", is(stores.get(1).id())))
                 .andExpect(jsonPath("$[2].id", is(stores.get(2).id())))
                 .andExpect(jsonPath("$[0].storeName", is(stores.get(0).name())))
