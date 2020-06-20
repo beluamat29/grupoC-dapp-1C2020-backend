@@ -2,13 +2,11 @@ package com.example.demo.services;
 
 import com.example.demo.model.exceptions.NotFoundStoreException;
 import com.example.demo.model.merchandise.Merchandise;
-import com.example.demo.model.store.StoreCategory;
 import com.example.demo.model.user.StoreAdminUser;
 import com.example.demo.model.store.Store;
 import com.example.demo.model.validator.EntityValidator;
 import com.example.demo.repositories.StoreRepository;
 import com.example.demo.repositories.merchandise.MerchandiseRepository;
-import com.example.demo.repositories.storeSchedule.StoreScheduleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -23,8 +21,6 @@ public class StoreService implements IStoreService {
     @Autowired
     private StoreRepository storeRepository;
 
-    @Autowired
-    private StoreScheduleRepository storeScheduleRepository;
     @Autowired
     private MerchandiseRepository merchandiseRepository;
 
@@ -57,7 +53,6 @@ public class StoreService implements IStoreService {
    @Override
    public Store addStore(Store store) {
        validateStore(store);
-       storeScheduleRepository.save(store.storeSchedule());
        storeRepository.save(store);
        return store;
    }
