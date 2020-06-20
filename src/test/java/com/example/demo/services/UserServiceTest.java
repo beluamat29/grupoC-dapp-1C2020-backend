@@ -2,6 +2,7 @@ package com.example.demo.services;
 
 import ch.qos.logback.core.net.server.Client;
 import com.example.demo.builders.ClientUserBuilder;
+import com.example.demo.model.exceptions.ForbiddenAttributeUpdate;
 import com.example.demo.model.exceptions.NotAvailableUserNameException;
 import com.example.demo.model.exceptions.NotFoundUserException;
 import com.example.demo.model.user.User;
@@ -106,17 +107,31 @@ public class UserServiceTest {
     //UPDATE USER
     @Test
     public void aClientUserCanUpdateItsPasswordAndAddress() {
-        ClientUser clientUser = ClientUserBuilder.user().withPassword("ABD134").withAddress("Alsina 233").build();
-        ClientUser updatedUser = ClientUserBuilder.user().withPassword("aNewPassword").withAddress("aNewAddress").build();
+        User savedUser = ClientUserBuilder.user().buildWithId();
+        savedUser.setPassword("newPassword");
+        savedUser.setAddress("aNewAddress");
+        when(userRepositoryMock.findById(any())).thenReturn(java.util.Optional.ofNullable(savedUser));
+        when(userRepositoryMock.save(any())).thenReturn(savedUser);
 
-        when(userRepositoryMock.findById(any())).thenReturn(java.util.Optional.ofNullable(clientUser));
-        when(userRepositoryMock.save(any())).thenReturn(updatedUser);
+        User updatedUser = userService.updateUser(savedUser);
 
-        userService.updateUser(clientUser);
-        User updatedAndRetrievedUser = userService.findUserById(clientUser.id());
+        assertEquals(updatedUser.password(), "newPassword");
+        assertEquals(updatedUser.address(), "aNewAddress");
+    }
 
-        assertEquals(updatedUser.password(), updatedAndRetrievedUser.password());
-        assertEquals(updatedUser.password(), updatedAndRetrievedUser.address());
+    @Test
+    public void aUserCannotUpdateItsUsername() {
+        User savedUser = ClientUserBuilder.user().buildWithId();
+        savedUser.setPassword("newPassword");
+        savedUser.setAddress("aNewAddress");
+        when(userRepositoryMock.findById(any())).thenReturn(java.util.Optional.ofNullable(savedUser));
+        when(userRepositoryMock.save(any())).thenReturn(savedUser);
+
+        User gonnaFailUser = ClientUserBuilder.user().withAddress(savedUser.address()).withPassword(savedUser.password()).build();
+        gonnaFailUser.setId(savedUser.id());
+        gonnaFailUser.setUsername("fakeuser@gmail.com");
+
+        assertThrows(ForbiddenAttributeUpdate.class, () -> userService.updateUser(gonnaFailUser));
     }
 
     private ClientUser addIdToClientUser(ClientUser aUser){
