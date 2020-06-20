@@ -1,5 +1,6 @@
 package com.example.demo.services.users;
 
+import com.example.demo.model.exceptions.ForbiddenAttributeUpdate;
 import com.example.demo.model.exceptions.NotAvailableUserNameException;
 import com.example.demo.model.exceptions.NotFoundUserException;
 import com.example.demo.model.store.Store;
@@ -65,5 +66,16 @@ public class UserService implements IUserService {
     @Override
     public User findUserById(Long id) {
         return userRepository.findById(id).orElseThrow(NotFoundUserException::new);
+    }
+
+    @Override
+    public User updateUser(User userToUpdate) {
+        User alreadySavedUser = this.findUserById(userToUpdate.id());
+        if(alreadySavedUser.username() != userToUpdate.username()){
+            throw new ForbiddenAttributeUpdate("a user cannot update its username");
+        }
+        alreadySavedUser.setPassword(userToUpdate.password());
+        alreadySavedUser.setAddress(userToUpdate.address());
+        return userRepository.save(alreadySavedUser);
     }
 }

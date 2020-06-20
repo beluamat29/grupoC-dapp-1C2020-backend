@@ -104,7 +104,7 @@ public class UserServiceTest {
     }
 
     //UPDATE USER
-  /*  @Test
+    @Test
     public void aClientUserCanUpdateItsPasswordAndAddress() {
         ClientUser clientUser = ClientUserBuilder.user().withPassword("ABD134").withAddress("Alsina 233").build();
         ClientUser updatedUser = ClientUserBuilder.user().withPassword("aNewPassword").withAddress("aNewAddress").build();
@@ -113,11 +113,11 @@ public class UserServiceTest {
         when(userRepositoryMock.save(any())).thenReturn(updatedUser);
 
         userService.updateUser(clientUser);
-        ClientUser updatedAndRetrievedUser = userService.getUserById(clientUser.id());
+        User updatedAndRetrievedUser = userService.findUserById(clientUser.id());
 
         assertEquals(updatedUser.password(), updatedAndRetrievedUser.password());
         assertEquals(updatedUser.password(), updatedAndRetrievedUser.address());
-    }*/
+    }
 
     private ClientUser addIdToClientUser(ClientUser aUser){
         aUser.setId(new Random().nextLong());
