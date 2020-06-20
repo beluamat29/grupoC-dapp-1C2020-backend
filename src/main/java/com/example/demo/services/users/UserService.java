@@ -61,4 +61,9 @@ public class UserService implements IUserService {
         }
         throw new NotAvailableUserNameException();
     }
+
+    @Override
+    public User findUserById(Long id) {
+        return userRepository.findById(id).orElseThrow(NotFoundUserException::new);
+    }
 }

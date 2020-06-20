@@ -62,4 +62,10 @@ public class ClientUserBuilder {
         client.setAddress("");
         return client;
     }
+
+    public ClientUser buildWithId() {
+        ClientUser user = this.build();
+        user.setId(new Random().nextLong());
+        return user;
+    }
 }

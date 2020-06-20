@@ -19,4 +19,6 @@ public interface IUserService {
     ClientUser addUser(String username, String password, String address);
 
     StoreAdminUser addStoreAdmin(StoreAdminUser storeAdminUser);
+
+    User findUserById(Long id);
 }

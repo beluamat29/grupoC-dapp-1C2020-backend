@@ -1,8 +1,10 @@
 package com.example.demo.services;
 
+import ch.qos.logback.core.net.server.Client;
 import com.example.demo.builders.ClientUserBuilder;
 import com.example.demo.model.exceptions.NotAvailableUserNameException;
 import com.example.demo.model.exceptions.NotFoundUserException;
+import com.example.demo.model.user.User;
 import com.example.demo.repositories.users.UserRepository;
 import com.example.demo.services.users.IUserService;
 import com.example.demo.model.user.ClientUser;
@@ -27,7 +29,7 @@ import static org.mockito.Mockito.when;
 public class UserServiceTest {
 
     @MockBean
-    UserRepository userRepositoryMock; //Si esto esta definido hay que usarlo si o si en cada test
+    UserRepository userRepositoryMock;
 
     @Autowired
     IUserService userService;
@@ -80,6 +82,42 @@ public class UserServiceTest {
 
         assertThrows(NotAvailableUserNameException.class, () -> userService.addUser("aNewUser", "password", "address"));
     }
+
+    @Test
+    public void findingAnExistingUserByIdReturnsTheUser() {
+        ClientUser user = ClientUserBuilder.user().buildWithId();
+        when(userRepositoryMock.findById(any())).thenReturn(java.util.Optional.ofNullable(user));
+
+        User foundedUser = userService.findUserById(user.id());
+
+        assertEquals(foundedUser.id(), user.id());
+        assertEquals(foundedUser.username(), user.username());
+        assertEquals(foundedUser.password(), user.password());
+    }
+
+    @Test
+    public void findingAnNonExistingUserByIdReturnsAnException() {
+        ClientUser user = ClientUserBuilder.user().buildWithId();
+        when(userRepositoryMock.findById(any())).thenReturn(java.util.Optional.ofNullable(null));
+
+        assertThrows(NotFoundUserException.class, () -> userService.findUserById(user.id()));
+    }
+
+    //UPDATE USER
+  /*  @Test
+    public void aClientUserCanUpdateItsPasswordAndAddress() {
+        ClientUser clientUser = ClientUserBuilder.user().withPassword("ABD134").withAddress("Alsina 233").build();
+        ClientUser updatedUser = ClientUserBuilder.user().withPassword("aNewPassword").withAddress("aNewAddress").build();
+
+        when(userRepositoryMock.findById(any())).thenReturn(java.util.Optional.ofNullable(clientUser));
+        when(userRepositoryMock.save(any())).thenReturn(updatedUser);
+
+        userService.updateUser(clientUser);
+        ClientUser updatedAndRetrievedUser = userService.getUserById(clientUser.id());
+
+        assertEquals(updatedUser.password(), updatedAndRetrievedUser.password());
+        assertEquals(updatedUser.password(), updatedAndRetrievedUser.address());
+    }*/
 
     private ClientUser addIdToClientUser(ClientUser aUser){
         aUser.setId(new Random().nextLong());
