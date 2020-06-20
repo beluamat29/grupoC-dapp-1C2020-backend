@@ -10,7 +10,6 @@ import com.example.demo.model.store.StoreCategory;
 import com.example.demo.repositories.StoreRepository;
 import com.example.demo.model.store.Store;
 import com.example.demo.repositories.merchandise.MerchandiseRepository;
-import com.example.demo.repositories.storeSchedule.StoreScheduleRepository;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -31,9 +30,6 @@ public class StoreServiceTest {
 
     @Mock
     StoreRepository storeRepositoryMock;
-
-    @Mock
-    StoreScheduleRepository storeScheduleRepository;
 
     @Mock
     MerchandiseRepository merchandiseRepository;
@@ -78,7 +74,6 @@ public class StoreServiceTest {
     @Test
     public void addingAStoreReturnsTheStore() {
         Store store = StoreBuilder.aStore().build();
-        when(storeScheduleRepository.save(any())).thenReturn(store.storeSchedule());
         when(storeRepositoryMock.save(any())).thenReturn(store);
 
         assertEquals(storeService.addStore(store), store);

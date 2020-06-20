@@ -5,7 +5,6 @@ import com.example.demo.model.exceptions.NotFoundUserException;
 import com.example.demo.model.store.Store;
 import com.example.demo.model.user.StoreAdminUser;
 import com.example.demo.model.user.User;
-import com.example.demo.repositories.storeSchedule.StoreScheduleRepository;
 import com.example.demo.repositories.threshold.MoneyThresholdRepository;
 import com.example.demo.repositories.users.UserRepository;
 import com.example.demo.model.user.ClientUser;

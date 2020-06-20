@@ -44,7 +44,7 @@ public class Store {
     private String storeImageUrl;
     @ElementCollection
     private List<String> availablePaymentMethods;
-    @OneToOne(cascade = CascadeType.MERGE)
+    @OneToOne(cascade = CascadeType.ALL)
     private StoreSchedule storeTimeSchedule;
     private String mail = "";
     @Transient

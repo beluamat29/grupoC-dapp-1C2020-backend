@@ -6,7 +6,6 @@ import com.example.demo.model.merchandise.MerchandiseCategory;
 import com.example.demo.model.store.Store;
 import com.example.demo.model.store.StoreCategory;
 import com.example.demo.repositories.merchandise.MerchandiseRepository;
-import com.example.demo.repositories.storeSchedule.StoreScheduleRepository;
 import com.example.demo.services.StoreService;
 import com.example.demo.services.users.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,9 +25,6 @@ public class DatabaseInitializate implements CommandLineRunner {
     UserService userService;
 
     @Autowired
-    StoreScheduleRepository storeScheduleRepository;
-
-    @Autowired
     StoreService storeService;
 
     @Override
@@ -41,22 +37,22 @@ public class DatabaseInitializate implements CommandLineRunner {
         List<StoreCategory> panaderia = Arrays.asList(StoreCategory.BAKERY);
         List<StoreCategory> multiple = Arrays.asList(StoreCategory.BAKERY, StoreCategory.GROCERY);
 
-        Store historietas = generateStore("Calabozo del androide y expendio de tarjetas de baseball", "calle falsa 123", 2, storeScheduleRepository, almacen, "https://s3.us-east-1.amazonaws.com/musiquiatra/upload/monthly_2018_06/800px-Androidsdungeon.png.2d079f7f971d3794cf23275925e32bff.png");
-        Store kwickEMart = generateStore("Kwik-E-Mart", "calle apus 123", 3,storeScheduleRepository, multiple, "https://www.tonica.la/__export/1534892802783/sites/debate/img/2018/08/21/kwik-e-mart_sc.jpg_1902800913.jpg");
-        Store leftorium = generateStore("Leftorium", "Av. Siempre Viva 123", 2, storeScheduleRepository, higiene, "https://vignette.wikia.nocookie.net/simpsons/images/2/2e/Sex%2C_Pies%2C_and_Idiot_Scrapes_-00144.jpg/revision/latest/scale-to-width-down/340?cb=20150115022043");
-        Store cents = generateStore("Tienda de 33 centavos", "calle 2 456", 3, storeScheduleRepository, verduleria, "https://vignette.wikia.nocookie.net/simpsons/images/5/5a/Tumblr_m9wwvdmsDA1r8yo2fo1_500.jpg/revision/latest/top-crop/width/360/height/360?cb=20130124054954");
-        Store helados = generateStore("Helados Mantecon", "calle 25 254", 3, storeScheduleRepository, almacen , "https://vignette.wikia.nocookie.net/simpsons/images/c/c4/Splitsville.jpg/revision/latest/top-crop/width/360/height/360?cb=20120105055048");
-        Store donas = generateStore("Lard Lad Donuts", "calle 12 587", 3, storeScheduleRepository, almacen , "https://i.pinimg.com/originals/0a/53/2a/0a532a02ec87046356d4f83d097bf896.png");
-        Store edna = generateStore("Edna's Edible", "calle 14 1141", 4, storeScheduleRepository, panaderia, "https://vignette.wikia.nocookie.net/simpsons/images/4/40/Edna%27s_Edibles.png/revision/latest?cb=20100519080645");
-        Store gorras = generateStore("El Maloso Lanudo", "calle 11 124", 3, storeScheduleRepository, almacen, "https://vignette.wikia.nocookie.net/simpsons/images/9/9c/Wooly_bully.png/revision/latest/top-crop/width/360/height/360?cb=20100903120446");
-        Store moe = generateStore("La Taberna de Moe", "calle 2 2524", 3, storeScheduleRepository, almacen, "https://vignette.wikia.nocookie.net/simpsons/images/7/76/Moe%27s_Tavern.PNG/revision/latest?cb=20151025003531");
-        Store cleaner = generateStore("Spring Field Cleaner", "calle 4 2524", 3, storeScheduleRepository, higiene, "https://vignette.wikia.nocookie.net/simpsons/images/2/27/Cleaners.jpg/revision/latest/top-crop/width/360/height/360?cb=20120119050327");
-        Store burger = generateStore("Krusty Burger", "calle 1 252", 3, storeScheduleRepository, panaderia, "https://cdn.hobbyconsolas.com/sites/navi.axelspringer.es/public/styles/1200/public/media/image/2020/01/kursty-burger.jpg?itok=bVJGiESu");
-        Store monstruomercado = generateStore("Mounstro Mercado", "calle 3 254", 3, storeScheduleRepository, multiple, "https://vignette.wikia.nocookie.net/simpsonstappedout/images/5/56/Monstromart_animation.png/revision/latest/top-crop/width/300/height/300?cb=20181126200035");
-        Store tryNSave = generateStore("A ver si ahorra", "calle 3 223", 3, storeScheduleRepository, multiple, "https://vignette.wikia.nocookie.net/lossimpson/images/1/1b/Trynsave.png/revision/latest/scale-to-width-down/340?cb=20180708175512&path-prefix=es");
-        Store allCreatures = generateStore("All Creatures", "calle 1 300", 3, storeScheduleRepository, almacen, "https://img1.wikia.nocookie.net/__cb20101028182609/lossimpson/es/images/e/e8/250px-All_creatures_great_and_cheap.png");
-        Store trufaDorada = generateStore("La trufa dorada", "calle 1 350", 3, storeScheduleRepository, almacen, "https://media.malditosnerds.com/adjuntos/290/migration/__export/1543350848181/sites/claro/malditosnerds/img/2015/09/21/aea433_THE_GILDED_TRUFFLE.jpg_875081608.jpg");
-        Store luigi = generateStore("Luigi's", "calle 6 5047", 4, storeScheduleRepository, verduleria, "https://vignette.wikia.nocookie.net/simpsons/images/7/79/Luigi%27s.png/revision/latest/top-crop/width/300/height/300?cb=20150518202729");
+        Store historietas = generateStore("Calabozo del androide y expendio de tarjetas de baseball", "calle falsa 123", 2, almacen, "https://s3.us-east-1.amazonaws.com/musiquiatra/upload/monthly_2018_06/800px-Androidsdungeon.png.2d079f7f971d3794cf23275925e32bff.png");
+        Store kwickEMart = generateStore("Kwik-E-Mart", "calle apus 123", 3, multiple, "https://www.tonica.la/__export/1534892802783/sites/debate/img/2018/08/21/kwik-e-mart_sc.jpg_1902800913.jpg");
+        Store leftorium = generateStore("Leftorium", "Av. Siempre Viva 123", 2, higiene, "https://vignette.wikia.nocookie.net/simpsons/images/2/2e/Sex%2C_Pies%2C_and_Idiot_Scrapes_-00144.jpg/revision/latest/scale-to-width-down/340?cb=20150115022043");
+        Store cents = generateStore("Tienda de 33 centavos", "calle 2 456", 3, verduleria, "https://vignette.wikia.nocookie.net/simpsons/images/5/5a/Tumblr_m9wwvdmsDA1r8yo2fo1_500.jpg/revision/latest/top-crop/width/360/height/360?cb=20130124054954");
+        Store helados = generateStore("Helados Mantecon", "calle 25 254", 3, almacen , "https://vignette.wikia.nocookie.net/simpsons/images/c/c4/Splitsville.jpg/revision/latest/top-crop/width/360/height/360?cb=20120105055048");
+        Store donas = generateStore("Lard Lad Donuts", "calle 12 587", 3, almacen , "https://i.pinimg.com/originals/0a/53/2a/0a532a02ec87046356d4f83d097bf896.png");
+        Store edna = generateStore("Edna's Edible", "calle 14 1141", 4, panaderia, "https://vignette.wikia.nocookie.net/simpsons/images/4/40/Edna%27s_Edibles.png/revision/latest?cb=20100519080645");
+        Store gorras = generateStore("El Maloso Lanudo", "calle 11 124", 3, almacen, "https://vignette.wikia.nocookie.net/simpsons/images/9/9c/Wooly_bully.png/revision/latest/top-crop/width/360/height/360?cb=20100903120446");
+        Store moe = generateStore("La Taberna de Moe", "calle 2 2524", 3, almacen, "https://vignette.wikia.nocookie.net/simpsons/images/7/76/Moe%27s_Tavern.PNG/revision/latest?cb=20151025003531");
+        Store cleaner = generateStore("Spring Field Cleaner", "calle 4 2524", 3, higiene, "https://vignette.wikia.nocookie.net/simpsons/images/2/27/Cleaners.jpg/revision/latest/top-crop/width/360/height/360?cb=20120119050327");
+        Store burger = generateStore("Krusty Burger", "calle 1 252", 3, panaderia, "https://cdn.hobbyconsolas.com/sites/navi.axelspringer.es/public/styles/1200/public/media/image/2020/01/kursty-burger.jpg?itok=bVJGiESu");
+        Store monstruomercado = generateStore("Mounstro Mercado", "calle 3 254", 3, multiple, "https://vignette.wikia.nocookie.net/simpsonstappedout/images/5/56/Monstromart_animation.png/revision/latest/top-crop/width/300/height/300?cb=20181126200035");
+        Store tryNSave = generateStore("A ver si ahorra", "calle 3 223", 3, multiple, "https://vignette.wikia.nocookie.net/lossimpson/images/1/1b/Trynsave.png/revision/latest/scale-to-width-down/340?cb=20180708175512&path-prefix=es");
+        Store allCreatures = generateStore("All Creatures", "calle 1 300", 3, almacen, "https://img1.wikia.nocookie.net/__cb20101028182609/lossimpson/es/images/e/e8/250px-All_creatures_great_and_cheap.png");
+        Store trufaDorada = generateStore("La trufa dorada", "calle 1 350", 3, almacen, "https://media.malditosnerds.com/adjuntos/290/migration/__export/1543350848181/sites/claro/malditosnerds/img/2015/09/21/aea433_THE_GILDED_TRUFFLE.jpg_875081608.jpg");
+        Store luigi = generateStore("Luigi's", "calle 6 5047", 4, verduleria, "https://vignette.wikia.nocookie.net/simpsons/images/7/79/Luigi%27s.png/revision/latest/top-crop/width/300/height/300?cb=20150518202729");
         Merchandise fideos = new Merchandise("Fideos", "Marolio", 20.5, 12, MerchandiseCategory.GROCERY, "https://jumboargentina.vteximg.com.br/arquivos/ids/539292-750-750/Fideos-Spaghetti-Marolio-500-Gr-1-44037.jpg?v=636989736779430000");
         Merchandise mayonesa = new Merchandise("Mayonesa", "Helmanns", 15.0, 12, MerchandiseCategory.GROCERY, "https://cdn11.bigcommerce.com/s-3stx4pub31/images/stencil/608x608/products/492/1313/mayonesa950__07850.1563569504.jpg?c=2");
         Merchandise mostaza = new Merchandise("Mostaza", "Savora", 21.5, 12, MerchandiseCategory.GROCERY, "https://statics.dinoonline.com.ar/imagenes/full_600x600_ma/2440460_f.jpg");
@@ -189,11 +185,10 @@ public class DatabaseInitializate implements CommandLineRunner {
         userService.addUser("maggiesimpson@gmail.com", "nohabla", "Av. Siempreviva 742");
     }
 
-    private Store generateStore(String name, String address, Integer distanceInKm, StoreScheduleRepository storeScheduleRepository, List<StoreCategory> categories, String imageUrl) {
+    private Store generateStore(String name, String address, Integer distanceInKm, List<StoreCategory> categories, String imageUrl) {
         List<String> paymentMethods = Arrays.asList("Efectivo", "Tarjeta de credito");
         List<DayOfWeek> days = Arrays.asList(DayOfWeek.MONDAY, DayOfWeek.THURSDAY);
         StoreSchedule schedule = new StoreSchedule(days, LocalTime.of(9,0), LocalTime.of(17, 0));
-        storeScheduleRepository.save(schedule);
         return new Store(name, categories, address, distanceInKm, paymentMethods,schedule, LocalDate.now(), imageUrl);
     }
 
