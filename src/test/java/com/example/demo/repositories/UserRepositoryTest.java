@@ -5,6 +5,7 @@ import com.example.demo.builders.StoreAdminBuilder;
 import com.example.demo.model.user.ClientUser;
 import com.example.demo.model.user.StoreAdminUser;
 import com.example.demo.model.user.User;
+import com.example.demo.repositories.storeSchedule.StoreScheduleRepository;
 import com.example.demo.repositories.threshold.MoneyThresholdRepository;
 import com.example.demo.repositories.users.UserRepository;
 import org.junit.Test;
@@ -24,6 +25,12 @@ public class UserRepositoryTest {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private StoreScheduleRepository storeScheduleRepository;
+    @Autowired
+    private StoreRepository storeRepository;
+
     @Autowired
     private MoneyThresholdRepository moneyThresholdRepository;
 
@@ -56,12 +63,14 @@ public class UserRepositoryTest {
     @Test
     public void aStoreAdminUserCanUpdateItsPassword() {
         StoreAdminUser storeAdminUser = StoreAdminBuilder.aStoreAdmin().withPassword("ABC789").build();
+
+        storeScheduleRepository.save(storeAdminUser.store().storeSchedule());
+        storeRepository.save(storeAdminUser.store());
         User savedUser = userRepository.save(storeAdminUser);
 
         User retrievedUser = userRepository.findById(savedUser.id()).get();
         retrievedUser.setPassword("newPassword");
 
-        userRepository.save(retrievedUser);
         userRepository.save(retrievedUser);
         retrievedUser = userRepository.findById(retrievedUser.id()).get();
 

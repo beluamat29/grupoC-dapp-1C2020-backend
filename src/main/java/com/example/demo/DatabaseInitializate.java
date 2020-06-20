@@ -5,6 +5,7 @@ import com.example.demo.model.merchandise.Merchandise;
 import com.example.demo.model.merchandise.MerchandiseCategory;
 import com.example.demo.model.store.Store;
 import com.example.demo.model.store.StoreCategory;
+import com.example.demo.model.user.StoreAdminUser;
 import com.example.demo.repositories.merchandise.MerchandiseRepository;
 import com.example.demo.repositories.storeSchedule.StoreScheduleRepository;
 import com.example.demo.services.StoreService;
@@ -41,7 +42,11 @@ public class DatabaseInitializate implements CommandLineRunner {
         List<StoreCategory> panaderia = Arrays.asList(StoreCategory.BAKERY);
         List<StoreCategory> multiple = Arrays.asList(StoreCategory.BAKERY, StoreCategory.GROCERY);
 
+
         Store historietas = generateStore("Calabozo del androide y expendio de tarjetas de baseball", "calle falsa 123", 2, storeScheduleRepository, almacen, "https://s3.us-east-1.amazonaws.com/musiquiatra/upload/monthly_2018_06/800px-Androidsdungeon.png.2d079f7f971d3794cf23275925e32bff.png");
+        StoreAdminUser storeAdminUser = new StoreAdminUser("jeffalbertson@gmail.com", "calabozo123", historietas);
+        userService.addStoreAdmin(storeAdminUser);
+
         Store kwickEMart = generateStore("Kwik-E-Mart", "calle apus 123", 3,storeScheduleRepository, multiple, "https://www.tonica.la/__export/1534892802783/sites/debate/img/2018/08/21/kwik-e-mart_sc.jpg_1902800913.jpg");
         Store leftorium = generateStore("Leftorium", "Av. Siempre Viva 123", 2, storeScheduleRepository, higiene, "https://vignette.wikia.nocookie.net/simpsons/images/2/2e/Sex%2C_Pies%2C_and_Idiot_Scrapes_-00144.jpg/revision/latest/scale-to-width-down/340?cb=20150115022043");
         Store cents = generateStore("Tienda de 33 centavos", "calle 2 456", 3, storeScheduleRepository, verduleria, "https://vignette.wikia.nocookie.net/simpsons/images/5/5a/Tumblr_m9wwvdmsDA1r8yo2fo1_500.jpg/revision/latest/top-crop/width/360/height/360?cb=20130124054954");
@@ -112,7 +117,7 @@ public class DatabaseInitializate implements CommandLineRunner {
 
 
 
-        storeService.addStore(historietas);
+        //storeService.addStore(historietas);
         storeService.addMerchandiseToStore(historietas.id(), fideos);
         storeService.addMerchandiseToStore(historietas.id(), mostaza);
         storeService.addStore(kwickEMart);
