@@ -251,8 +251,8 @@ public class Store {
         return this.storeImageUrl;
     }
 
-    public void setAddress(String address) {
-        this.storeAddress = address;
+    public void setAddress(String newAddress) {
+        this.storeAddress = newAddress;
     }
 }
 

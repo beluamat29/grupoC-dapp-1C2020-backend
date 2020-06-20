@@ -29,12 +29,12 @@ public class StoreAdminUser extends User {
     public Boolean isAdminOfStore() { return true;}
 
     @Override
-    public String address() {
-        return this.store().address();
+    public void setAddress(String newAddress) {
+        this.store.setAddress(newAddress);
     }
 
     @Override
-    public void setAddress(String address) {
-        this.store().setAddress(address);
+    public String address() {
+        return this.store.address();
     }
 }

@@ -68,7 +68,7 @@ public abstract class User {
         this.id = id;
     }
 
-    public abstract String address();
+    public abstract void setAddress(String newAddress);
 
-    public abstract void setAddress(String address);
+    public abstract String address();
 }
