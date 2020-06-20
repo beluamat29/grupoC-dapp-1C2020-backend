@@ -250,5 +250,9 @@ public class Store {
     public String imageURL() {
         return this.storeImageUrl;
     }
+
+    public void setAddress(String newAddress) {
+        this.storeAddress = newAddress;
+    }
 }
 
