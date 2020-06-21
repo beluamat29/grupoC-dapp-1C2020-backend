@@ -46,7 +46,7 @@ public class DatabaseInitializate implements CommandLineRunner {
         Store donas = generateStore("Lard Lad Donuts", "calle 12 587", 3, almacen , "https://i.pinimg.com/originals/0a/53/2a/0a532a02ec87046356d4f83d097bf896.png");
         Store edna = generateStore("Edna's Edible", "calle 14 1141", 4, panaderia, "https://vignette.wikia.nocookie.net/simpsons/images/4/40/Edna%27s_Edibles.png/revision/latest?cb=20100519080645");
         Store gorras = generateStore("El Maloso Lanudo", "calle 11 124", 3, almacen, "https://vignette.wikia.nocookie.net/simpsons/images/9/9c/Wooly_bully.png/revision/latest/top-crop/width/360/height/360?cb=20100903120446");
-        Store moe = generateStore("La Taberna de Moe", "calle 2 2524", 3, almacen, "https://vignette.wikia.nocookie.net/simpsons/images/7/76/Moe%27s_Tavern.PNG/revision/latest?cb=20151025003531");
+        Store tabernaDeMoe = generateStore("La Taberna de Moe", "calle 2 2524", 3, almacen, "https://vignette.wikia.nocookie.net/simpsons/images/7/76/Moe%27s_Tavern.PNG/revision/latest?cb=20151025003531");
         Store cleaner = generateStore("Spring Field Cleaner", "calle 4 2524", 3, higiene, "https://vignette.wikia.nocookie.net/simpsons/images/2/27/Cleaners.jpg/revision/latest/top-crop/width/360/height/360?cb=20120119050327");
         Store burger = generateStore("Krusty Burger", "calle 1 252", 3, panaderia, "https://cdn.hobbyconsolas.com/sites/navi.axelspringer.es/public/styles/1200/public/media/image/2020/01/kursty-burger.jpg?itok=bVJGiESu");
         Store monstruomercado = generateStore("Mounstro Mercado", "calle 3 254", 3, multiple, "https://vignette.wikia.nocookie.net/simpsonstappedout/images/5/56/Monstromart_animation.png/revision/latest/top-crop/width/300/height/300?cb=20181126200035");
@@ -156,47 +156,55 @@ public class DatabaseInitializate implements CommandLineRunner {
         cleaner.addMerchandise(jabonTocador);
         StoreAdminUser cleanerSupplies = new StoreAdminUser("cleaner@gmail.com", "cleaner123", cleaner);
         userService.addStoreAdmin(cleanerSupplies);
-        /*
 
         donas.addMerchandise(donuts);
-        storeService.addStore(donas);
+        StoreAdminUser donasAdmin = new StoreAdminUser("donas@gmail.com", "donas123", donas);
+        userService.addStoreAdmin(donasAdmin);
 
+        tabernaDeMoe.addMerchandise(cerveza);
+        StoreAdminUser moe = new StoreAdminUser("moe@gmail.com", "moe123", tabernaDeMoe);
+        userService.addStoreAdmin(moe);
 
+        StoreAdminUser flanders = new StoreAdminUser("leftorium@gmail.com", "leftorium123", leftorium);
+        userService.addStoreAdmin(flanders);
 
-        moe.addMerchandise(cerveza);
-        storeService.addStore(moe);
+        StoreAdminUser gorrasAdmin = new StoreAdminUser("gorras@gmail.com", "gorras123", gorras);
+        userService.addStoreAdmin(gorrasAdmin);
 
-        */
+        StoreAdminUser krusty = new StoreAdminUser("krustyburger@gmail.com", "krusty123", burger);
+        userService.addStoreAdmin(krusty);
 
+        monstruomercado.addMerchandise(ferne);
+        monstruomercado.addMerchandise(mantequilla);
+        monstruomercado.addMerchandise(mermelada);
+        monstruomercado.addMerchandise(quaker);
+        monstruomercado.addMerchandise(nesquik);
+        StoreAdminUser monstromercadoadmin = new StoreAdminUser("monstromercado@gmail.com", "monstromercado123", monstruomercado);
+        userService.addStoreAdmin(monstromercadoadmin);
 
-        /*
-        storeService.addStore(leftorium);
+        tryNSave.addMerchandise(milaSoja);
+        tryNSave.addMerchandise(coca);
+        tryNSave.addMerchandise(cocaDosLts);
+        tryNSave.addMerchandise(cocaZero);
+        tryNSave.addMerchandise(cocalataZero);
+        tryNSave.addMerchandise(cocaLata);
+        StoreAdminUser tryNSaveAdmin = new StoreAdminUser("tryNSave@gmail.com", "tryNsave123", tryNSave);
+        userService.addStoreAdmin(tryNSaveAdmin);
 
-        storeService.addStore(gorras);
+        allCreatures.addMerchandise(comidaPerro);
+        allCreatures.addMerchandise(sobrecitoCachCarne);
+        allCreatures.addMerchandise(sobrecitoCachPollo);
+        allCreatures.addMerchandise(sobrecitoPollo);
+        allCreatures.addMerchandise(sobrecitoCarne);
+        StoreAdminUser allCreaturesAdmin = new StoreAdminUser("allcreatures@gmail.com", "allcreatures123", allCreatures);
+        userService.addStoreAdmin(allCreaturesAdmin);
 
-        storeService.addStore(burger);
-        storeService.addStore(monstruomercado);
-        storeService.addMerchandiseToStore(monstruomercado.id(), ferne);
-        storeService.addMerchandiseToStore(monstruomercado.id(), mantequilla);
-        storeService.addMerchandiseToStore(monstruomercado.id(), mermelada);
-        storeService.addMerchandiseToStore(monstruomercado.id(), quaker);
-        storeService.addMerchandiseToStore(monstruomercado.id(), nesquik);
-        storeService.addStore(tryNSave);
-        storeService.addMerchandiseToStore(tryNSave.id(), milaSoja);
-        storeService.addMerchandiseToStore(tryNSave.id(), coca);
-        storeService.addMerchandiseToStore(tryNSave.id(), cocaDosLts);
-        storeService.addMerchandiseToStore(tryNSave.id(), cocaZero);
-        storeService.addMerchandiseToStore(tryNSave.id(), cocalataZero);
-        storeService.addMerchandiseToStore(tryNSave.id(), cocaLata);
-        storeService.addStore(allCreatures);
-        storeService.addMerchandiseToStore(allCreatures.id(), comidaPerro);
-        storeService.addMerchandiseToStore(allCreatures.id(), sobrecitoPollo);
-        storeService.addMerchandiseToStore(allCreatures.id(), sobrecitoCarne);
-        storeService.addMerchandiseToStore(allCreatures.id(), sobrecitoCachPollo);
-        storeService.addMerchandiseToStore(allCreatures.id(), sobrecitoCachCarne);
-        storeService.addStore(trufaDorada);
-        storeService.addMerchandiseToStore(trufaDorada.id(), papitasN);
-        storeService.addStore(luigi);*/
+        trufaDorada.addMerchandise(papitasN);
+        StoreAdminUser trufaAdmin = new StoreAdminUser("trufadorada@gmail.com", "trufa123", trufaDorada);
+        userService.addStoreAdmin(trufaAdmin);
+
+        StoreAdminUser luigiAdmin = new StoreAdminUser("luigis@gmail.com", "luigis123", luigi);
+        userService.addStoreAdmin(luigiAdmin);
     }
 
     private void generateUsers() {
