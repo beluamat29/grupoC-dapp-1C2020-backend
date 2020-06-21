@@ -44,7 +44,6 @@ public class UserController {
     public ResponseEntity<StoreAdminUser> createNewStore(@RequestBody StoreAdminUser storeAdminUser)
     {
         StoreAdminUser savedStoreAdmin = userService.addStoreAdmin(storeAdminUser);
-        storeService.addStore(storeAdminUser.store());
         return new ResponseEntity<>(savedStoreAdmin, HttpStatus.OK);
     }
 }

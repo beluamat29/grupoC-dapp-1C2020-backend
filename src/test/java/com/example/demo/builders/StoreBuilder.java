@@ -8,6 +8,7 @@ import com.example.demo.model.store.StoreCategory;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
@@ -25,12 +26,12 @@ public class StoreBuilder {
         return Arrays.asList(store, anotherStore, store2);
     }
     private String storeName = "Jumbo";
-    private List<StoreCategory> storeCategories = Arrays.asList(StoreCategory.GROCERY);
+    private List<StoreCategory> storeCategories =  new ArrayList<StoreCategory>() {{ add(StoreCategory.GROCERY); }};
     private String storeAddress = "Calchaqui 123";
     private String mail = "store@gmail.com";
     private Integer deliveryMaxDistanceInKm = 3;
-    private List<String> availablePaymentMethods = Arrays.asList("Efectivo");
-    private List<DayOfWeek> openingDays = Arrays.asList(DayOfWeek.FRIDAY);
+    private List<String> availablePaymentMethods = new ArrayList<String>() {{ add("Efectivo"); }};
+    private List<DayOfWeek> openingDays = new ArrayList<DayOfWeek>() {{ add(DayOfWeek.FRIDAY); }};
     private StoreSchedule storeTimeSchedule = new StoreSchedule(openingDays, LocalTime.of(9,0), LocalTime.of(15, 0));
     private LocalDate openingDate = LocalDate.now();
     private String imageUrl = "https://k62.kn3.net/taringa/3/F/6/7/B/E/MMLPQTPario/1CB.jpg";
@@ -42,7 +43,7 @@ public class StoreBuilder {
     public Store build() {
         Store store = new Store(storeName, storeCategories, storeAddress,
                                 deliveryMaxDistanceInKm, availablePaymentMethods, storeTimeSchedule, openingDate, imageUrl);
-        store.setId(new Random().nextLong());
+      //  store.setId(new Random().nextLong());
         return store;
     }
 
