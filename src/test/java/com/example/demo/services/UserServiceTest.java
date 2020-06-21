@@ -1,8 +1,10 @@
 package com.example.demo.services;
 
+import ch.qos.logback.core.net.server.Client;
 import com.example.demo.builders.ClientUserBuilder;
 import com.example.demo.model.exceptions.NotAvailableUserNameException;
 import com.example.demo.model.exceptions.NotFoundUserException;
+import com.example.demo.model.user.User;
 import com.example.demo.repositories.users.UserRepository;
 import com.example.demo.services.users.IUserService;
 import com.example.demo.model.user.ClientUser;
@@ -47,6 +49,17 @@ public class UserServiceTest {
 
         assertThrows(NotFoundUserException.class, () -> userService.authenticateUser(clientUser.username(), clientUser.password()));
 
+    }
+
+    @Test
+    public void askingForAUserByIdTheServiceReturnsTheUser(){
+        ClientUser clientUser = ClientUserBuilder.user().build();
+        when(userRepositoryMock.findById(any())).thenReturn(java.util.Optional.ofNullable(clientUser));
+
+        User userRetrieved = userService.getUserById(new Random().nextLong());
+        assertEquals(userRetrieved.username(), clientUser.username());
+        assertEquals(userRetrieved.password(), clientUser.password());
+        assertEquals(userRetrieved.isAdminOfStore(), clientUser.isAdminOfStore());
     }
 
     @Test
