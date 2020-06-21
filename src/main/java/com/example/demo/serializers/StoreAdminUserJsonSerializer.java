@@ -16,6 +16,7 @@ public class StoreAdminUserJsonSerializer extends JsonSerializer<StoreAdminUser>
         jgen.writeStringField("username", storeAdminUser.username());
         jgen.writeStringField("password", storeAdminUser.password());
         jgen.writeObjectField("store", storeAdminUser.store());
+        jgen.writeObjectField("isStoreAdmin", storeAdminUser.isAdminOfStore());
         jgen.writeEndObject();
     }
 }

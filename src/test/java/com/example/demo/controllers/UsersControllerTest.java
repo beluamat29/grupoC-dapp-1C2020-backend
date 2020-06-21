@@ -97,6 +97,7 @@ public class UsersControllerTest {
                 .andExpect(jsonPath("id", is(clientUser.id())))
                 .andExpect(jsonPath("username", is(clientUser.username())))
                 .andExpect(jsonPath("address", is(clientUser.address())))
+                .andExpect(jsonPath("isStoreAdmin", is(clientUser.isAdminOfStore())))
                 .andReturn();
         String response = mvcResult.getResponse().getContentAsString();
 
@@ -168,6 +169,7 @@ public class UsersControllerTest {
         String response = mvcResult.getResponse().getContentAsString();
         assertEquals(JsonPath.parse(response).read("username"), aStoreAdmin.username());
         assertEquals(JsonPath.parse(response).read("password"), aStoreAdmin.password());
+        assertEquals(JsonPath.parse(response).read("isStoreAdmin"), aStoreAdmin.isAdminOfStore());
         assertEquals(JsonPath.parse(response).read("store.storeName"), aStore.name());
         assertEquals(JsonPath.parse(response).read("store.storeAddress"), aStore.address());
         assertEquals(JsonPath.parse(response).read("store.storeCategories"),storeTestHelper.storeCategoriesToString(aStore.storeCategories()));
@@ -220,6 +222,7 @@ public class UsersControllerTest {
         JSONObject storeAdminJson = new JSONObject();
         storeAdminJson.put("username", storeAdminUser.username());
         storeAdminJson.put("password", storeAdminUser.password());
+        storeAdminJson.put("isStoreAdmin", storeAdminUser.isAdminOfStore());
         JSONObject store = generateStore(storeAdminUser.store());
         storeAdminJson.put("store", store);
         return storeAdminJson;
@@ -254,6 +257,7 @@ public class UsersControllerTest {
         jsonObject.put("username", clientUser.username());
         jsonObject.put("password", clientUser.password());
         jsonObject.put("address", clientUser.address());
+        jsonObject.put("isStoreAdmin", clientUser.isAdminOfStore());
         return jsonObject;
     }
 
