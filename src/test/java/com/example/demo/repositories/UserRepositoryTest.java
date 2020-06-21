@@ -56,14 +56,14 @@ public class UserRepositoryTest {
     @Test
     public void aStoreAdminUserCanUpdateItsPassword() {
         StoreAdminUser storeAdminUser = StoreAdminBuilder.aStoreAdmin().withPassword("ABC789").build();
+
         User savedUser = userRepository.save(storeAdminUser);
 
-        User retrievedUser = userRepository.findById(savedUser.id()).get();
-        retrievedUser.setPassword("newPassword");
+        storeAdminUser.setPassword("newPassword");
 
-        userRepository.save(retrievedUser);
-        userRepository.save(retrievedUser);
-        retrievedUser = userRepository.findById(retrievedUser.id()).get();
+        userRepository.save(storeAdminUser);
+
+        User retrievedUser = userRepository.findById(savedUser.id()).get();
 
         assertEquals(retrievedUser.password(), "newPassword");
     }

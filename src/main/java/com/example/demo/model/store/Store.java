@@ -49,7 +49,7 @@ public class Store {
     private String mail = "";
     @Transient
     private List<Discount> discountList = new ArrayList<>();
-    @OneToMany(fetch = FetchType.EAGER)
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private List<Merchandise> merchandiseList = new ArrayList<>();
 
     public Store(String name, List<StoreCategory> categories, String address, Integer distanceInKm,

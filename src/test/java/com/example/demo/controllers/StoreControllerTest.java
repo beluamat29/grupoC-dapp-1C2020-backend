@@ -55,6 +55,7 @@ public class StoreControllerTest {
     @Test
     public void ifWeAskForStoresWeGetTheActualStoresList() throws Exception {
         List<Store> stores = StoreBuilder.storeList();
+        addIdToStores(stores);
         when(storeServiceMock.getStores()).thenReturn(stores);
 
         mockMvc.perform(get("/stores"))
@@ -71,6 +72,7 @@ public class StoreControllerTest {
     @Test
     public void ifWeAskForStoresWithACategoryWeOnlyGetTheStoresThatHaveThatCategoryList() throws Exception {
         List<Store> stores = StoreBuilder.storeWithACategoryList(StoreCategory.CLEANING_SUPPLIES);
+        addIdToStores(stores);
         when(storeServiceMock.getStoresWithACategory(StoreCategory.CLEANING_SUPPLIES.toString())).thenReturn(stores);
 
         mockMvc.perform(get("/stores?category=CLEANING_SUPPLIES"))
@@ -82,6 +84,7 @@ public class StoreControllerTest {
     @Test
     public void whenThereAreNoStoreWithASpecificCategoryItsReturns404() throws Exception {
         List<Store> stores = StoreBuilder.storeWithACategoryList(StoreCategory.CLEANING_SUPPLIES);
+        //add id to stores
         when(storeServiceMock.getStoresWithACategory(StoreCategory.GROCERY.toString())).thenReturn(new ArrayList<>());
 
         mockMvc.perform(get("/stores?category=GROCERY"))
@@ -92,6 +95,7 @@ public class StoreControllerTest {
     @Test
     public void askingForAnExistingStoreByIdReturnsTheStore() throws Exception {
         Store store = StoreBuilder.aStore().build();
+        store.setId(new Random().nextLong());
         when(storeServiceMock.getStore(any())).thenReturn(store);
         mockMvc.perform(get("/stores/" + store.id().toString()))
                 .andExpect(status().isOk())
@@ -215,7 +219,6 @@ public class StoreControllerTest {
         merchandise.setId(new Random().nextLong());
         JSONObject merchandiseJson = new JSONObject();
 
-
         merchandiseJson.put("id", merchandise.id());
         merchandiseJson.put("merchandiseName", merchandise.name());
         merchandiseJson.put("merchandiseBrand", merchandise.brand());
@@ -224,6 +227,10 @@ public class StoreControllerTest {
         merchandiseJson.put("category", merchandise.getCategory().toString());
         merchandiseJson.put("productImage", merchandise.imageURL());
         return merchandiseJson;
+    }
 
+    public List<Store> addIdToStores(List<Store> stores){
+        stores.stream().forEach(store -> store.setId(new Random().nextLong()));
+        return stores;
     }
 }

@@ -2,7 +2,6 @@ package com.example.demo.services.users;
 
 import com.example.demo.model.exceptions.NotAvailableUserNameException;
 import com.example.demo.model.exceptions.NotFoundUserException;
-import com.example.demo.model.store.Store;
 import com.example.demo.model.user.StoreAdminUser;
 import com.example.demo.model.user.User;
 import com.example.demo.repositories.threshold.MoneyThresholdRepository;

@@ -5,6 +5,7 @@ import com.example.demo.model.merchandise.Merchandise;
 import com.example.demo.model.merchandise.MerchandiseCategory;
 import com.example.demo.model.store.Store;
 import com.example.demo.model.store.StoreCategory;
+import com.example.demo.model.user.StoreAdminUser;
 import com.example.demo.repositories.merchandise.MerchandiseRepository;
 import com.example.demo.services.StoreService;
 import com.example.demo.services.users.UserService;
@@ -107,51 +108,72 @@ public class DatabaseInitializate implements CommandLineRunner {
         Merchandise cafe = new Merchandise("Cafe Instantaneo", "Dolca", 252.30, 12, MerchandiseCategory.GROCERY, "https://walmartar.vteximg.com.br/arquivos/ids/858334-1000-1000/Cafe-Instantaneo-Dolca-Clasic-Frasco-Nescafe-100-Gr-1-469317.jpg?v=637175918297900000");
 
 
+        historietas.addMerchandise(fideos);
+        historietas.addMerchandise(mostaza);
+        StoreAdminUser gordoCalabozoDelAndroide = new StoreAdminUser("calabozo@gmail.com", "calabozo123", historietas);
+        userService.addStoreAdmin(gordoCalabozoDelAndroide);
 
-        storeService.addStore(historietas);
-        storeService.addMerchandiseToStore(historietas.id(), fideos);
-        storeService.addMerchandiseToStore(historietas.id(), mostaza);
-        storeService.addStore(kwickEMart);
-        storeService.addMerchandiseToStore(kwickEMart.id(), mayonesa);
-        storeService.addMerchandiseToStore(kwickEMart.id(),arroz);
-        storeService.addMerchandiseToStore(kwickEMart.id(),pan);
-        storeService.addMerchandiseToStore(kwickEMart.id(), fideosLuchetti);
-        storeService.addMerchandiseToStore(kwickEMart.id(),polenta);
-        storeService.addMerchandiseToStore(kwickEMart.id(),aceite);
-        storeService.addMerchandiseToStore(kwickEMart.id(), lexe);
-        storeService.addMerchandiseToStore(kwickEMart.id(),rumba);
-        storeService.addMerchandiseToStore(kwickEMart.id(),oreo);
-        storeService.addMerchandiseToStore(kwickEMart.id(), oregano);
-        storeService.addMerchandiseToStore(kwickEMart.id(),cafe);
-        storeService.addStore(leftorium);
-        storeService.addStore(cents);
-        storeService.addMerchandiseToStore(cents.id(), manzana);
-        storeService.addMerchandiseToStore(cents.id(), banana);
-        storeService.addStore(helados);
-        storeService.addMerchandiseToStore(helados.id(), helado);
+        kwickEMart.addMerchandise(mayonesa);
+        kwickEMart.addMerchandise(arroz);
+        kwickEMart.addMerchandise(pan);
+        kwickEMart.addMerchandise(fideosLuchetti);
+        kwickEMart.addMerchandise(polenta);
+        kwickEMart.addMerchandise(lexe);
+        kwickEMart.addMerchandise(rumba);
+        kwickEMart.addMerchandise(oreo);
+        kwickEMart.addMerchandise(oregano);
+        kwickEMart.addMerchandise(cafe);
+        StoreAdminUser apu = new StoreAdminUser("apu@gmail.com", "apu123", kwickEMart);
+        userService.addStoreAdmin(apu);
+
+        cents.addMerchandise(manzana);
+        cents.addMerchandise(banana);
+        StoreAdminUser centsAdmin = new StoreAdminUser("centsstore@gmail.com", "cents123", cents);
+        userService.addStoreAdmin(centsAdmin);
+
+        helados.addMerchandise(helado);
+        StoreAdminUser heladero = new StoreAdminUser("helados@gmail.com", "helados123", helados);
+        userService.addStoreAdmin(heladero);
+
+        edna.addMerchandise(sugus);
+        edna.addMerchandise(chocolate);
+        edna.addMerchandise(mym);
+        edna.addMerchandise(chocoPasas);
+        StoreAdminUser ednaKrabapel = new StoreAdminUser("edna@gmail.com", "edna123", edna);
+        userService.addStoreAdmin(ednaKrabapel);
+
+        cleaner.addMerchandise(lavandina);
+        cleaner.addMerchandise(trapo);
+        cleaner.addMerchandise(pañales);
+        cleaner.addMerchandise(rexona);
+        cleaner.addMerchandise(colgate);
+        cleaner.addMerchandise(detergente);
+        cleaner.addMerchandise(cepilloDientes);
+        cleaner.addMerchandise(shampoo);
+        cleaner.addMerchandise(desengrasante);
+        cleaner.addMerchandise(acondicionador);
+        cleaner.addMerchandise(jabonRopa);
+        cleaner.addMerchandise(jabonTocador);
+        StoreAdminUser cleanerSupplies = new StoreAdminUser("cleaner@gmail.com", "cleaner123", cleaner);
+        userService.addStoreAdmin(cleanerSupplies);
+        /*
+
+        donas.addMerchandise(donuts);
         storeService.addStore(donas);
-        storeService.addMerchandiseToStore(donas.id(), donuts);
-        storeService.addStore(edna);
-        storeService.addMerchandiseToStore(edna.id(), sugus);
-        storeService.addMerchandiseToStore(edna.id(), chocolate);
-        storeService.addMerchandiseToStore(edna.id(), mym );
-        storeService.addMerchandiseToStore(edna.id(), chocoPasas);
-        storeService.addStore(gorras);
+
+
+
+        moe.addMerchandise(cerveza);
         storeService.addStore(moe);
-        storeService.addMerchandiseToStore(moe.id(), cerveza);
-        storeService.addStore(cleaner);
-        storeService.addMerchandiseToStore(cleaner.id(), lavandina);
-        storeService.addMerchandiseToStore(cleaner.id(), trapo);
-        storeService.addMerchandiseToStore(cleaner.id(), pañales);
-        storeService.addMerchandiseToStore(cleaner.id(), rexona);
-        storeService.addMerchandiseToStore(cleaner.id(), colgate);
-        storeService.addMerchandiseToStore(cleaner.id(), detergente);
-        storeService.addMerchandiseToStore(cleaner.id(), cepilloDientes);
-        storeService.addMerchandiseToStore(cleaner.id(), shampoo);
-        storeService.addMerchandiseToStore(cleaner.id(), acondicionador);
-        storeService.addMerchandiseToStore(cleaner.id(), desengrasante);
-        storeService.addMerchandiseToStore(cleaner.id(), jabonTocador);
-        storeService.addMerchandiseToStore(cleaner.id(), jabonRopa);
+
+        */
+
+
+        /*
+        storeService.addStore(leftorium);
+
+        storeService.addStore(gorras);
+
         storeService.addStore(burger);
         storeService.addStore(monstruomercado);
         storeService.addMerchandiseToStore(monstruomercado.id(), ferne);
@@ -174,7 +196,7 @@ public class DatabaseInitializate implements CommandLineRunner {
         storeService.addMerchandiseToStore(allCreatures.id(), sobrecitoCachCarne);
         storeService.addStore(trufaDorada);
         storeService.addMerchandiseToStore(trufaDorada.id(), papitasN);
-        storeService.addStore(luigi);
+        storeService.addStore(luigi);*/
     }
 
     private void generateUsers() {

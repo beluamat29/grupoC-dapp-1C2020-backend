@@ -11,7 +11,7 @@ import javax.persistence.*;
 @JsonSerialize(using = StoreAdminUserJsonSerializer.class)
 public class StoreAdminUser extends User {
 
-    @Transient
+    @OneToOne(cascade = CascadeType.ALL)
     private Store store;
 
     public StoreAdminUser(String username, String password, Store store) {

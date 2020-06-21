@@ -27,8 +27,6 @@ public class Merchandise {
     private MerchandiseCategory category;
     @Transient
     private Discount discountToApply = new NoDiscount();
-    /*@ManyToOne
-    private Store store;*/
 
     public Merchandise(String aName, String aBrand, Double aPrice, Integer aStock, MerchandiseCategory aCategory, String url) {
         if(aStock < 0) { throw new NegativeStockMerchandiseException();}
