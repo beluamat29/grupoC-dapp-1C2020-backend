@@ -1,12 +1,13 @@
 package com.example.demo.services.users;
 
 import com.example.demo.model.user.ClientUser;
-import com.example.demo.model.store.Store;
 import com.example.demo.model.user.StoreAdminUser;
 import com.example.demo.model.user.User;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
+
 @Service
 public interface IUserService {
 
@@ -19,4 +20,6 @@ public interface IUserService {
     ClientUser addUser(String username, String password, String address);
 
     StoreAdminUser addStoreAdmin(StoreAdminUser storeAdminUser);
+
+    User getUserById(Long id);
 }

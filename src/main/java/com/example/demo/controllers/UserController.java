@@ -28,6 +28,12 @@ public class UserController {
         return userService.getUsers();
     }
 
+    @RequestMapping("/users/{id}")
+    public ResponseEntity<User> getUserById(@PathVariable("id") String id){
+        Long userId = Long.parseLong(id);
+        return new ResponseEntity<>(userService.getUserById(userId), HttpStatus.OK);
+    }
+
     @PostMapping(path = "/validateUser")
     public ResponseEntity<User> validateUser(@RequestBody ValidationUserDTO validationUserDTO)
     {

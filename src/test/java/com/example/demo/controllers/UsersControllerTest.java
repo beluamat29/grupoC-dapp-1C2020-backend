@@ -218,6 +218,25 @@ public class UsersControllerTest {
                 .andReturn();
     }
 
+    @Test
+    public void askingForAUserByIdReturnsTheUserAnd200Status() throws Exception {
+        ClientUser aClientUser = ClientUserBuilder.user().build();
+        addIdToClientUser(aClientUser);
+        when(userServiceMock.getUserById(any())).thenReturn(aClientUser);
+
+        mockMvc.perform(get("/users/" + aClientUser.id().toString()))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("id", is(aClientUser.id())));
+    }
+
+    @Test
+    public void askingForANonExistingUserByIdReturns404() throws Exception {
+        when(userServiceMock.getUserById(any())).thenThrow(new NotFoundUserException());
+        Long nonExistingId = new Random().nextLong();
+        mockMvc.perform(get("/users/" + nonExistingId.toString()))
+                .andExpect(status().isNotFound());
+    }
+
     private JSONObject generateStoreAdminBody(StoreAdminUser storeAdminUser) throws JSONException, JsonProcessingException {
         JSONObject storeAdminJson = new JSONObject();
         storeAdminJson.put("username", storeAdminUser.username());
