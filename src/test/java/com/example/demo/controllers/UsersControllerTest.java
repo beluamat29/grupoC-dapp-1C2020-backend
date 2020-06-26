@@ -3,6 +3,7 @@ package com.example.demo.controllers;
 import com.example.demo.builders.ClientUserBuilder;
 import com.example.demo.builders.StoreAdminBuilder;
 import com.example.demo.helpers.StoreTestHelper;
+import com.example.demo.model.exceptions.ForbiddenAttributeUpdate;
 import com.example.demo.model.exceptions.NotAvailableUserNameException;
 import com.example.demo.model.exceptions.NotFoundUserException;
 import com.example.demo.model.store.Store;
@@ -264,7 +265,20 @@ public class UsersControllerTest {
                 .content(String.valueOf(body)))
                 .andExpect(status().isNotFound())
                 .andReturn();
+    }
 
+    @Test
+    public void tryingToUpdateAUsersUsernameReturnsForbidden() throws Exception {
+        when(userServiceMock.updateUser(any(), any())).thenThrow(new ForbiddenAttributeUpdate("updating user's username is forbidden"));
+        ClientUser clientUser = ClientUserBuilder.user().build();
+        Long randomId = new Random().nextLong();
+        JSONObject body = generateClientUserBody(clientUser);
+
+        MvcResult mvcResult = mockMvc.perform(put("/users/" + randomId.toString())
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(String.valueOf(body)))
+                .andExpect(status().isForbidden())
+                .andReturn();
     }
 
     private JSONObject generateStoreAdminBody(StoreAdminUser storeAdminUser) throws JSONException, JsonProcessingException {

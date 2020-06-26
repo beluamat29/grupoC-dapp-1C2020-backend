@@ -1,5 +1,6 @@
 package com.example.demo.services.users;
 
+import com.example.demo.model.exceptions.ForbiddenAttributeUpdate;
 import com.example.demo.model.exceptions.NotAvailableUserNameException;
 import com.example.demo.model.exceptions.NotFoundUserException;
 import com.example.demo.model.user.StoreAdminUser;
@@ -69,6 +70,7 @@ public class UserService implements IUserService {
     @Override
     public User updateUser(Long userId, User user) {
         User retrievedUser = this.getUserById(userId);
+        if(!retrievedUser.username().equals(user.username())) {throw new ForbiddenAttributeUpdate("updating user's username is forbidden");}
         retrievedUser.setAddress(user.address());
         retrievedUser.setPassword(user.password());
         return userRepository.save(retrievedUser);
