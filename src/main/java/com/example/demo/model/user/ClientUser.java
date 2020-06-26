@@ -2,9 +2,11 @@ package com.example.demo.model.user;
 
 import com.example.demo.deserializers.UserJsonDeserializer;
 import com.example.demo.model.Bill;
+import com.example.demo.model.exceptions.ClientUserDoesNotHaveStoresException;
 import com.example.demo.model.exceptions.InvalidAddressException;
 import com.example.demo.model.exceptions.NotFoundCategoryMoneyThresholdForThisUser;
 import com.example.demo.model.merchandise.MerchandiseCategory;
+import com.example.demo.model.store.Store;
 import com.example.demo.model.thresholds.CategoryMoneyThreshold;
 import com.example.demo.model.thresholds.MoneyThreshold;
 import com.example.demo.serializers.UserJsonSerializer;
@@ -18,7 +20,7 @@ import java.util.List;
 @Entity
 @DiscriminatorValue("CLIENT_USER")
 @JsonSerialize(using = UserJsonSerializer.class)
-public class ClientUser extends User {
+    public class ClientUser extends User {
 
     @Transient
     private List<Bill> billOfPurchase;
@@ -59,6 +61,16 @@ public class ClientUser extends User {
 
     public String address(){
         return this.address;
+    }
+
+    @Override
+    public Store store() {
+        throw new ClientUserDoesNotHaveStoresException();
+    }
+
+    @Override
+    public void setStore(Store store) {
+        throw new ClientUserDoesNotHaveStoresException();
     }
 
     public void disableMoneyThreshold() {

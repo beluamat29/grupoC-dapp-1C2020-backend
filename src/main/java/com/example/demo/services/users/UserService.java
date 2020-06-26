@@ -8,11 +8,10 @@ import com.example.demo.model.user.User;
 import com.example.demo.repositories.threshold.MoneyThresholdRepository;
 import com.example.demo.repositories.users.UserRepository;
 import com.example.demo.model.user.ClientUser;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class UserService implements IUserService {
@@ -73,6 +72,23 @@ public class UserService implements IUserService {
         if(!retrievedUser.username().equals(user.username())) {throw new ForbiddenAttributeUpdate("updating user's username is forbidden");}
         retrievedUser.setAddress(user.address());
         retrievedUser.setPassword(user.password());
+        if(user.isAdminOfStore()) {
+            updateStoreData(user, retrievedUser);
+        }
         return userRepository.save(retrievedUser);
     }
+
+    private void updateStoreData(User user, User retrievedUser) {
+        retrievedUser.store().setName(user.store().name());
+        retrievedUser.store().setAddress(user.store().address());
+        retrievedUser.store().setDeliveryDistance(user.store().deliveryDistanceInKm());
+        retrievedUser.store().storeSchedule().setDays(user.store().storeSchedule().days());
+        retrievedUser.store().storeSchedule().setOpeningTime(user.store().storeSchedule().openingTime());
+        retrievedUser.store().storeSchedule().setClosingTime(user.store().storeSchedule().closingTime());
+        retrievedUser.store().setImageUrl(user.store().imageURL());
+        retrievedUser.store().setCategories(user.store().storeCategories());
+        retrievedUser.store().setPaymentMethods(user.store().availablePaymentMethods());
+    }
+
+
 }

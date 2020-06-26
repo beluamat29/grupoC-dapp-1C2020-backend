@@ -26,6 +26,11 @@ public class StoreAdminUser extends User {
     }
 
     @Override
+    public void setStore(Store store) {
+        this.store = store;
+    }
+
+    @Override
     public Boolean isAdminOfStore() { return true;}
 
     @Override

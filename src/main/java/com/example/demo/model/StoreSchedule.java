@@ -67,4 +67,16 @@ public class StoreSchedule {
     public void setEmptyDays() {
         scheduleDays = new ArrayList<>();
     }
+
+    public void setDays(List<DayOfWeek> days) {
+        this.scheduleDays = days;
+    }
+
+    public void setOpeningTime(LocalTime openingTime) {
+        this.openingTime = openingTime;
+    }
+
+    public void setClosingTime(LocalTime closingTime) {
+        this.closingTime = closingTime;
+    }
 }
