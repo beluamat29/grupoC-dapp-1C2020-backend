@@ -24,7 +24,7 @@ public class MerchandiseDTO {
     @JsonCreator
     public MerchandiseDTO(@JsonProperty("storeId") Long storeId, @JsonProperty("name")String name, @JsonProperty("brand")String brand,
                           @JsonProperty("price") Double price, @JsonProperty("stock") Integer stock,
-                          @JsonProperty("category") MerchandiseCategory category, @JsonProperty("productImage") String imageURL){
+                          @JsonProperty("category") MerchandiseCategory category, @JsonProperty("productImageURL") String imageURL){
         this.storeId = storeId;
         this.merchandiseName = name;
         this.merchandiseBrand = brand;

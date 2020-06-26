@@ -55,7 +55,7 @@ public class StoreController {
         return new ResponseEntity<>(new MerchandiseListResponseDTO(merchandises, store), HttpStatus.OK);
     }
 
-    @PostMapping(path="/stores/addMerchandise")
+    @PostMapping(path="/stores/addMerchandise", consumes = "application/json", produces = "application/json")
     public ResponseEntity<Merchandise> addMerchandise(@RequestBody MerchandiseDTO merchandiseDTO){
         Merchandise merchandise = new Merchandise(merchandiseDTO.getMerchandiseName(), merchandiseDTO.getMerchandiseBrand(),
                 merchandiseDTO.getMerchandisePrice(), merchandiseDTO.getMerchandiseStock(), merchandiseDTO.getCategory(),
