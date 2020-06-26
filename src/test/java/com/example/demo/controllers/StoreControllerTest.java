@@ -129,7 +129,7 @@ public class StoreControllerTest {
         assertEquals(JsonPath.parse(response).read("price"), merchandise.price());
         assertEquals(JsonPath.parse(response).read("stock"), merchandise.stock());
         assertEquals(JsonPath.parse(response).read("category"), merchandise.getCategory().toString());
-        assertEquals(JsonPath.parse(response).read("productImageURL"), merchandise.imageURL());
+        assertEquals(JsonPath.parse(response).read("productImage"), merchandise.imageURL());
 
     }
 
@@ -191,7 +191,7 @@ public class StoreControllerTest {
                 .andExpect(jsonPath("merchandises[0].price", is(merchandiseList.get(0).price())))
                 .andExpect(jsonPath("merchandises[0].stock", is(merchandiseList.get(0).stock())))
                 .andExpect(jsonPath("merchandises[0].category", is(merchandiseList.get(0).getCategory().toString())))
-                .andExpect(jsonPath("merchandises[0].productImageURL", is(merchandiseList.get(0).imageURL())));
+                .andExpect(jsonPath("merchandises[0].productImage", is(merchandiseList.get(0).imageURL())));
     }
 
     @Test
