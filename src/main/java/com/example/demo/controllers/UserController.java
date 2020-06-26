@@ -1,4 +1,5 @@
 package com.example.demo.controllers;
+import com.example.demo.dtos.ClientUserDTO;
 import com.example.demo.dtos.ValidationUserDTO;
 import com.example.demo.model.user.StoreAdminUser;
 import com.example.demo.model.user.User;
@@ -43,6 +44,13 @@ public class UserController {
     @PostMapping(path = "/users", consumes = "application/json", produces = "application/json")
     public ResponseEntity<ClientUser> createUser(@RequestBody ClientUser clientUser) {
         ClientUser savedUser = userService.addUser(clientUser.username(), clientUser.password(), clientUser.address());
+        return new ResponseEntity<>(savedUser, HttpStatus.OK);
+    }
+
+    @PutMapping(path = "/users/{id}")
+    public ResponseEntity<User> updateUser(@RequestBody ClientUser clientUser, @PathVariable("id") String id) {
+        Long userId = Long.parseLong(id);
+        User savedUser = userService.updateUser(userId, clientUser);
         return new ResponseEntity<>(savedUser, HttpStatus.OK);
     }
 

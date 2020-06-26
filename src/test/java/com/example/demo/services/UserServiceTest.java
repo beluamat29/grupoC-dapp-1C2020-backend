@@ -2,8 +2,12 @@ package com.example.demo.services;
 
 import ch.qos.logback.core.net.server.Client;
 import com.example.demo.builders.ClientUserBuilder;
+import com.example.demo.builders.StoreAdminBuilder;
+import com.example.demo.builders.StoreBuilder;
 import com.example.demo.model.exceptions.NotAvailableUserNameException;
 import com.example.demo.model.exceptions.NotFoundUserException;
+import com.example.demo.model.store.Store;
+import com.example.demo.model.user.StoreAdminUser;
 import com.example.demo.model.user.User;
 import com.example.demo.repositories.users.UserRepository;
 import com.example.demo.services.users.IUserService;
@@ -92,6 +96,36 @@ public class UserServiceTest {
         when(userRepositoryMock.findByUsernameEquals(any())).thenReturn(java.util.Optional.ofNullable(clientUser));
 
         assertThrows(NotAvailableUserNameException.class, () -> userService.addUser("aNewUser", "password", "address"));
+    }
+
+    //UPDATE
+    @Test
+    public void aClientUserCanHaveItsPasswordAndAddressUpdated() {
+        ClientUser clientUser = ClientUserBuilder.user().withAddress("Alsina 234").withPassword("1234ABCD").build();
+        ClientUser updatedClient = ClientUserBuilder.user().withAddress("Alvear 2918").withPassword("789HJI").build();
+        addIdToClientUser(clientUser);
+        updatedClient.setId(clientUser.id());
+
+        when(userRepositoryMock.findById(any())).thenReturn(java.util.Optional.of(clientUser));
+        when(userRepositoryMock.save(any())).thenReturn(updatedClient);
+
+        User retrievedUser = userService.updateUser(clientUser.id(), updatedClient);
+        assertEquals(retrievedUser.password(), "789HJI");
+        assertEquals(retrievedUser.address(), "Alvear 2918");
+    }
+
+    @Test public void aStoreAdminUserCanHaveItsPasswordAndStoreDataUpdated() {
+        Store aStore = StoreBuilder.aStore().withName("Lo de tito").buildWithId();
+        StoreAdminUser storeAdminUser = StoreAdminBuilder.aStoreAdmin().withPassword("ABC123").withStore(aStore).buildWithId();
+        StoreAdminUser updatedStoreAdminUser = StoreAdminBuilder.aStoreAdmin().withPassword("123ABC").withStore(aStore).build();
+        updatedStoreAdminUser.setId(storeAdminUser.id());
+
+        when(userRepositoryMock.findById(any())).thenReturn(java.util.Optional.of(storeAdminUser));
+        when(userRepositoryMock.save(any())).thenReturn(updatedStoreAdminUser);
+
+        User retrievedUser = userService.updateUser(storeAdminUser.id(), updatedStoreAdminUser);
+
+        assertEquals(retrievedUser.password(), "123ABC");
     }
 
     private ClientUser addIdToClientUser(ClientUser aUser){
