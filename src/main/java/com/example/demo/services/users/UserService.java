@@ -65,4 +65,12 @@ public class UserService implements IUserService {
     public User getUserById(Long id) {
         return userRepository.findById(id).get();
     }
+
+    @Override
+    public User updateUser(Long userId, User user) {
+        User retrievedUser = this.getUserById(userId);
+        retrievedUser.setAddress(user.address());
+        retrievedUser.setPassword(user.password());
+        return userRepository.save(retrievedUser);
+    }
 }

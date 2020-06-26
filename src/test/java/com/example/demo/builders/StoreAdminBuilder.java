@@ -40,4 +40,15 @@ public class StoreAdminBuilder {
         storeAdminUser.setPassword("");
         return storeAdminUser;
     }
+
+    public StoreAdminBuilder withStore(Store aStore) {
+        store = aStore;
+        return this;
+    }
+
+    public StoreAdminUser buildWithId() {
+        StoreAdminUser storeAdminUser = this.build();
+        storeAdminUser.setId(new Random().nextLong());
+        return storeAdminUser;
+    }
 }

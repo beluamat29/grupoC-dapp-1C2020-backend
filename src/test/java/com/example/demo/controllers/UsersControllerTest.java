@@ -3,12 +3,10 @@ package com.example.demo.controllers;
 import com.example.demo.builders.ClientUserBuilder;
 import com.example.demo.builders.StoreAdminBuilder;
 import com.example.demo.helpers.StoreTestHelper;
-import com.example.demo.model.exceptions.InvalidStoreException;
 import com.example.demo.model.exceptions.NotAvailableUserNameException;
 import com.example.demo.model.exceptions.NotFoundUserException;
 import com.example.demo.model.store.Store;
 import com.example.demo.model.user.StoreAdminUser;
-import com.example.demo.model.user.User;
 import com.example.demo.services.StoreService;
 import com.example.demo.services.users.UserService;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -99,7 +97,6 @@ public class UsersControllerTest {
                 .andExpect(jsonPath("address", is(clientUser.address())))
                 .andExpect(jsonPath("isStoreAdmin", is(clientUser.isAdminOfStore())))
                 .andReturn();
-        String response = mvcResult.getResponse().getContentAsString();
 
     }
 
@@ -235,6 +232,39 @@ public class UsersControllerTest {
         Long nonExistingId = new Random().nextLong();
         mockMvc.perform(get("/users/" + nonExistingId.toString()))
                 .andExpect(status().isNotFound());
+    }
+
+    @Test
+    public void updatingAClientUserReturnsTheUpdatedUser() throws Exception {
+        ClientUser clientUser = ClientUserBuilder.user().build();
+        clientUser.setId(new Random().nextLong());
+        when(userServiceMock.updateUser(any(), any())).thenReturn(clientUser);
+
+        JSONObject body = generateClientUserBody(clientUser);
+        MvcResult mvcResult = mockMvc.perform(put("/users/" + clientUser.id().toString())
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(String.valueOf(body)))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("id", is(clientUser.id())))
+                .andExpect(jsonPath("username", is(clientUser.username())))
+                .andExpect(jsonPath("address", is(clientUser.address())))
+                .andExpect(jsonPath("isStoreAdmin", is(clientUser.isAdminOfStore())))
+                .andReturn();
+    }
+
+    @Test
+    public void tryingToUpdateANonExistingUserReturns404() throws Exception {
+        when(userServiceMock.updateUser(any(), any())).thenThrow(new NotFoundUserException());
+        ClientUser clientUser = ClientUserBuilder.user().build();
+        Long randomId = new Random().nextLong();
+        JSONObject body = generateClientUserBody(clientUser);
+
+        MvcResult mvcResult = mockMvc.perform(put("/users/" + randomId.toString())
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(String.valueOf(body)))
+                .andExpect(status().isNotFound())
+                .andReturn();
+
     }
 
     private JSONObject generateStoreAdminBody(StoreAdminUser storeAdminUser) throws JSONException, JsonProcessingException {

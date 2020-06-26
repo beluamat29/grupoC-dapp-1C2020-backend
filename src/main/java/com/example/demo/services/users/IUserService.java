@@ -22,4 +22,6 @@ public interface IUserService {
     StoreAdminUser addStoreAdmin(StoreAdminUser storeAdminUser);
 
     User getUserById(Long id);
+
+    User updateUser(Long id, User user);
 }
