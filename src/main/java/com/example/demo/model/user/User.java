@@ -3,6 +3,7 @@ package com.example.demo.model.user;
 import com.example.demo.deserializers.UserJsonDeserializer;
 import com.example.demo.model.exceptions.InvalidMailException;
 import com.example.demo.model.exceptions.InvalidUsernameOrPasswordException;
+import com.example.demo.model.store.Store;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 
 import javax.persistence.*;
@@ -71,4 +72,8 @@ public abstract class User {
     public abstract void setAddress(String newAddress);
 
     public abstract String address();
+
+    public abstract Store store();
+
+    public abstract void setStore(Store store);
 }

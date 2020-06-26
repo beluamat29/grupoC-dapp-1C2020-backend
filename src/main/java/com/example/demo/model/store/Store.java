@@ -254,5 +254,29 @@ public class Store {
     public void setAddress(String newAddress) {
         this.storeAddress = newAddress;
     }
+
+    public void setName(String name) {
+        this.storeName = name;
+    }
+
+    public void setDeliveryDistance(Integer deliveryDistanceInKm) {
+        this.deliveryDistanceInKm = deliveryDistanceInKm;
+    }
+
+    public void setSchedule(StoreSchedule storeSchedule) {
+        this.storeTimeSchedule = storeSchedule;
+    }
+
+    public void setImageUrl(String imageURL) {
+        this.storeImageUrl = imageURL;
+    }
+
+    public void setCategories(List<StoreCategory> storeCategories) {
+        this.storeCategories = storeCategories;
+    }
+
+    public void setPaymentMethods(List<String> availablePaymentMethods) {
+        this.availablePaymentMethods = availablePaymentMethods;
+    }
 }
 
