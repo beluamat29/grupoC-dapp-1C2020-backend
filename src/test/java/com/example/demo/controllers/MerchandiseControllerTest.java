@@ -2,6 +2,7 @@ package com.example.demo.controllers;
 
 
 import com.example.demo.builders.MerchandiseBuilder;
+import com.example.demo.model.exceptions.NotFoundMerchandiseException;
 import com.example.demo.model.merchandise.Merchandise;
 import com.example.demo.services.merchandise.MerchandiseService;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -63,6 +64,20 @@ public class MerchandiseControllerTest {
         assertEquals(JsonPath.parse(response).read("stock"), merchandise.stock());
         assertEquals(JsonPath.parse(response).read("category"), merchandise.getCategory().toString());
         assertEquals(JsonPath.parse(response).read("productImage"), merchandise.imageURL());
+    }
+
+    @Test
+    public void tryingToUpdateANonExistingMerchandiseReturns404() throws Exception {
+        when(merchandiseServiceMock.updateMerchandise(any(),any())).thenThrow(new NotFoundMerchandiseException());
+        Merchandise merchandise = MerchandiseBuilder.aMerchandise().build();
+        Long randomId = new Random().nextLong();
+        JSONObject body = generateMerchandiseToAddBody(merchandise);
+
+        MvcResult mvcResult = mockMvc.perform(put("/merchandise/" + randomId.toString())
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(String.valueOf(body)))
+                .andExpect(status().isNotFound())
+                .andReturn();
     }
 
     private JSONObject generateMerchandiseToAddBody(Merchandise merchandise) throws JSONException {

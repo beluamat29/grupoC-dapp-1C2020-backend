@@ -54,4 +54,10 @@ public class ExceptionsAPIHandler {
     public ResponseEntity<String> invalidAttributeUpdate(Exception exception){
         return new ResponseEntity<>(exception.getMessage(), HttpStatus.FORBIDDEN);
     }
+
+    @ExceptionHandler({NotFoundMerchandiseException.class})
+        public ResponseEntity<String> notFoundMerchandise(Exception exception){
+            return new ResponseEntity<>(exception.getMessage(), HttpStatus.NOT_FOUND);
+        }
+
 }
