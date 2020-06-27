@@ -40,7 +40,7 @@ public class MerchandiseServiceTest {
     }
 
     @Test
-    public void aMerchandiseCanHaveItsPriceAndUpdated(){
+    public void aMerchandiseCanHaveItsPriceAndStockUpdated(){
         Merchandise merchandise = MerchandiseBuilder.aMerchandise().withPrice(40.0).withStock(10).build();
         Merchandise updatedMerchandise = MerchandiseBuilder.aMerchandise().withPrice(45.5).withStock(100).build();
         updatedMerchandise.setId(merchandise.id());

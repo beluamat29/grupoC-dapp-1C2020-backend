@@ -102,6 +102,9 @@ public class Merchandise {
     }
 
     public void setStock(Integer stock) {
+        if(stock < 0){
+          throw new NegativeStockMerchandiseException();
+        }
         this.merchandiseStock = stock;
     }
 }
