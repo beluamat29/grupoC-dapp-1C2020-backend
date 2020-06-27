@@ -15,7 +15,6 @@ public interface MerchandiseRepository extends JpaRepository<Merchandise, Long> 
     @Query(value = "SELECT * FROM (SELECT * FROM STORE_MERCHANDISE_LIST INNER JOIN MERCHANDISE ON MERCHANDISE.ID=MERCHANDISE_LIST_ID AND STORE_ID= :storeId)",
             nativeQuery = true)
     Optional<List<Merchandise>> getMerchandiseFromStore(@Param("storeId") Long storeId);
-
 }
 
 //SELECT * FROM (SELECT * FROM STORE_MERCHANDISE_LIST INNER JOIN MERCHANDISE ON MERCHANDISE.ID=STORE_MERCHANDISE_LIST.MERCHANDISE_LIST_ID) WHERE STORE_ID=27

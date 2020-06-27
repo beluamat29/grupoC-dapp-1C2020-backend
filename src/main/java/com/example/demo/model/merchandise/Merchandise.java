@@ -92,4 +92,16 @@ public class Merchandise {
     }
 
     public Long setId(Long merchandiseID) { return this.id = merchandiseID; }
+
+    public void setName(String name) {
+        this.merchandiseName = name;
+    }
+
+    public void setBrand(String brand) {
+        this.merchandiseBrand = brand;
+    }
+
+    public void setStock(Integer stock) {
+        this.merchandiseStock = stock;
+    }
 }
