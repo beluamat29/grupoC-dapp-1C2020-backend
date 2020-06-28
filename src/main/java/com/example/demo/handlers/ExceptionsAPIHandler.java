@@ -1,4 +1,5 @@
 package com.example.demo.handlers;
+
 import com.example.demo.model.exceptions.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -10,7 +11,7 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 @EnableWebMvc
 public class ExceptionsAPIHandler {
 
-    @ExceptionHandler({ NotFoundUserException.class})
+    @ExceptionHandler({NotFoundUserException.class})
     public ResponseEntity<String> notFoundUser(Exception exception) {
         return new ResponseEntity<String>(exception.getMessage(), HttpStatus.NOT_FOUND);
     }
@@ -41,23 +42,32 @@ public class ExceptionsAPIHandler {
     }
 
     @ExceptionHandler({RepeatedMerchandiseInStore.class})
-    public ResponseEntity<String> repeatedMerchandise(Exception exception){
+    public ResponseEntity<String> repeatedMerchandise(Exception exception) {
         return new ResponseEntity<>(exception.getMessage(), HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler({InvalidMerchandiseException.class})
-    public ResponseEntity<String> invalidMerchandise(Exception exception){
+    public ResponseEntity<String> invalidMerchandise(Exception exception) {
         return new ResponseEntity<>(exception.getMessage(), HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler({ForbiddenAttributeUpdate.class})
-    public ResponseEntity<String> invalidAttributeUpdate(Exception exception){
+    public ResponseEntity<String> invalidAttributeUpdate(Exception exception) {
         return new ResponseEntity<>(exception.getMessage(), HttpStatus.FORBIDDEN);
     }
 
     @ExceptionHandler({NotFoundMerchandiseException.class})
-        public ResponseEntity<String> notFoundMerchandise(Exception exception){
-            return new ResponseEntity<>(exception.getMessage(), HttpStatus.NOT_FOUND);
-        }
+    public ResponseEntity<String> notFoundMerchandise(Exception exception) {
+        return new ResponseEntity<>(exception.getMessage(), HttpStatus.NOT_FOUND);
+    }
 
+    @ExceptionHandler({NegativeStockMerchandiseException.class})
+    public  ResponseEntity<String> invalidStockQuantity(Exception exception){
+        return new ResponseEntity<>(exception.getMessage(), HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler({NegativePriceMerchandiseException.class})
+    public  ResponseEntity<String> invalidPriceQuantity(Exception exception){
+        return new ResponseEntity<>(exception.getMessage(), HttpStatus.BAD_REQUEST);
+    }
 }

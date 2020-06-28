@@ -2,8 +2,11 @@ package com.example.demo.controllers;
 
 
 import com.example.demo.builders.MerchandiseBuilder;
+import com.example.demo.model.exceptions.NegativePriceMerchandiseException;
+import com.example.demo.model.exceptions.NegativeStockMerchandiseException;
 import com.example.demo.model.exceptions.NotFoundMerchandiseException;
 import com.example.demo.model.merchandise.Merchandise;
+import com.example.demo.model.merchandise.MerchandiseCategory;
 import com.example.demo.services.merchandise.MerchandiseService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.jayway.jsonpath.JsonPath;
@@ -78,6 +81,45 @@ public class MerchandiseControllerTest {
                 .content(String.valueOf(body)))
                 .andExpect(status().isNotFound())
                 .andReturn();
+    }
+
+    @Test
+    public void tryingToUpdateAMerchandiseWithStockLowerThanZeroReturnsBadRequest() throws Exception {
+        when(merchandiseServiceMock.updateMerchandise(any(),any())).thenThrow(new NegativeStockMerchandiseException());
+        Long randomId = new Random().nextLong();
+        JSONObject bodyToFail = generateMerchandiseToFailBody(randomId, -10, 20.0);
+
+        MvcResult mvcResult = mockMvc.perform(put("/merchandise/" + randomId.toString())
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(String.valueOf(bodyToFail)))
+                .andExpect(status().isBadRequest())
+                .andReturn();
+    }
+
+    @Test
+    public void tryingToUpdateAMerchandiseWithPriceLowerThanZeroReturnsBadRequest() throws Exception {
+        when(merchandiseServiceMock.updateMerchandise(any(),any())).thenThrow(new NegativePriceMerchandiseException());
+        Long randomId = new Random().nextLong();
+        JSONObject bodyToFail = generateMerchandiseToFailBody(randomId, 100, -20.0);
+
+        MvcResult mvcResult = mockMvc.perform(put("/merchandise/" + randomId.toString())
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(String.valueOf(bodyToFail)))
+                .andExpect(status().isBadRequest())
+                .andReturn();
+    }
+
+    private JSONObject generateMerchandiseToFailBody(Long id, Integer stock, Double price) throws JSONException {
+        JSONObject merchandiseJson = new JSONObject();
+
+        merchandiseJson.put("id", id);
+        merchandiseJson.put("merchandiseName", "Nombre");
+        merchandiseJson.put("merchandiseBrand", "Marca");
+        merchandiseJson.put("merchandisePrice", price);
+        merchandiseJson.put("merchandiseStock", stock);
+        merchandiseJson.put("category", MerchandiseCategory.NON_CLASSIFIED_PRODUCT.toString());
+        merchandiseJson.put("productImage", "");
+        return merchandiseJson;
     }
 
     private JSONObject generateMerchandiseToAddBody(Merchandise merchandise) throws JSONException {
