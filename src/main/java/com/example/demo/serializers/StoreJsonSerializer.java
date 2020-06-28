@@ -21,7 +21,7 @@ public class StoreJsonSerializer extends JsonSerializer<Store> {
         jgen.writeStringField("storeAddress", store.address());
         jgen.writeNumberField("deliveryDistanceInKm", store.deliveryDistanceInKm());
         jgen.writeObjectField("storeSchedule", store.storeSchedule());
-        jgen.writeStringField("storeImage", store.imageURL());
+        jgen.writeStringField("storeImageURL", store.imageURL());
         serializeStoreCategories(jgen, store);
         serializeStorePaymentMethods(jgen, store);
         jgen.writeEndObject();
