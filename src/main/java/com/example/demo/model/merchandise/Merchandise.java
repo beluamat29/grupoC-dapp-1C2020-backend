@@ -92,4 +92,27 @@ public class Merchandise {
     }
 
     public Long setId(Long merchandiseID) { return this.id = merchandiseID; }
+
+    public void setName(String name) {
+        this.merchandiseName = name;
+    }
+
+    public void setBrand(String brand) {
+        this.merchandiseBrand = brand;
+    }
+
+    public void setStock(Integer stock) {
+        if(stock < 0){
+          throw new NegativeStockMerchandiseException();
+        }
+        this.merchandiseStock = stock;
+    }
+
+    public void setCategory(MerchandiseCategory newCategory) {
+        this.category = newCategory;
+    }
+
+    public void setImageURL(String newImageURL) {
+        this.imageURL = newImageURL;
+    }
 }
