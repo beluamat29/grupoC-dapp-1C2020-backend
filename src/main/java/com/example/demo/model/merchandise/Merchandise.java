@@ -107,4 +107,12 @@ public class Merchandise {
         }
         this.merchandiseStock = stock;
     }
+
+    public void setCategory(MerchandiseCategory newCategory) {
+        this.category = newCategory;
+    }
+
+    public void setImageURL(String newImageURL) {
+        this.imageURL = newImageURL;
+    }
 }

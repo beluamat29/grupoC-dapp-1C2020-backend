@@ -19,6 +19,8 @@ public class MerchandiseService implements IMerchandiseService {
         retrivedMerchandise.setBrand(merchandise.brand());
         retrivedMerchandise.updatePrice(merchandise.price());
         retrivedMerchandise.setStock(merchandise.stock());
+        retrivedMerchandise.setCategory(merchandise.getCategory());
+        retrivedMerchandise.setImageURL(merchandise.imageURL());
 
         return merchandiseRepository.save(retrivedMerchandise);
     }

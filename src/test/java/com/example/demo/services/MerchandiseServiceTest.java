@@ -2,6 +2,7 @@ package com.example.demo.services;
 
 import com.example.demo.builders.MerchandiseBuilder;
 import com.example.demo.model.merchandise.Merchandise;
+import com.example.demo.model.merchandise.MerchandiseCategory;
 import com.example.demo.repositories.merchandise.MerchandiseRepository;
 import com.example.demo.services.merchandise.MerchandiseService;
 import org.junit.Test;
@@ -53,5 +54,19 @@ public class MerchandiseServiceTest {
         Merchandise retrievedMerchandise = merchandiseService.updateMerchandise(merchandise.id(), updatedMerchandise);
         assertEquals(price, retrievedMerchandise.price());
         assertEquals(stock, retrievedMerchandise.stock());
+    }
+
+    @Test
+    public void aMerchandiseCanHaveItsCategoryAndImageUpdated(){
+        Merchandise merchandise = MerchandiseBuilder.aMerchandise().withCategory(MerchandiseCategory.GROCERY).withImage("image").build();
+        Merchandise updatedMerchandise = MerchandiseBuilder.aMerchandise().withCategory(MerchandiseCategory.BAKERY).withImage("anotherimage").build();
+        updatedMerchandise.setId(merchandise.id());
+
+        when(merchandiseRepositoryMock.findById(any())).thenReturn(java.util.Optional.ofNullable(merchandise));
+        when(merchandiseRepositoryMock.save(any())).thenReturn(updatedMerchandise);
+
+        Merchandise retrievedMerchandise = merchandiseService.updateMerchandise(merchandise.id(), updatedMerchandise);
+        assertEquals(MerchandiseCategory.BAKERY, retrievedMerchandise.getCategory());
+        assertEquals("anotherimage", retrievedMerchandise.imageURL());
     }
 }
