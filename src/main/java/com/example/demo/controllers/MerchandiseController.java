@@ -1,5 +1,6 @@
 package com.example.demo.controllers;
 
+import com.example.demo.dtos.MerchandiseDTO;
 import com.example.demo.model.merchandise.Merchandise;
 import com.example.demo.services.merchandise.IMerchandiseService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,8 +19,9 @@ public class MerchandiseController {
     private IMerchandiseService merchandiseService;
 
     @PutMapping(path="/merchandise/{id}")
-    public ResponseEntity<Merchandise> updateMerchandise(@RequestBody Merchandise merchandise, @PathVariable("id") String id){
+    public ResponseEntity<Merchandise> updateMerchandise(@RequestBody MerchandiseDTO merchandiseDTO, @PathVariable("id") String id){
         Long merchandiseId = Long.parseLong(id);
+        Merchandise merchandise = merchandiseDTO.buildMerchandise();
         Merchandise savedMerchandise = merchandiseService.updateMerchandise(merchandiseId, merchandise);
         return new ResponseEntity<>(savedMerchandise, HttpStatus.OK);
     }
