@@ -66,7 +66,7 @@ public class MerchandiseControllerTest {
         assertEquals(JsonPath.parse(response).read("price"), merchandise.price());
         assertEquals(JsonPath.parse(response).read("stock"), merchandise.stock());
         assertEquals(JsonPath.parse(response).read("category"), merchandise.getCategory().toString());
-        assertEquals(JsonPath.parse(response).read("productImage"), merchandise.imageURL());
+        assertEquals(JsonPath.parse(response).read("productImageURL"), merchandise.imageURL());
     }
 
     @Test

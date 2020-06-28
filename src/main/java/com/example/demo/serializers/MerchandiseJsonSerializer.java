@@ -18,7 +18,7 @@ public class MerchandiseJsonSerializer extends JsonSerializer<Merchandise> {
         jsonGenerator.writeNumberField("price", merchandise.price());
         jsonGenerator.writeNumberField("stock", merchandise.stock());
         jsonGenerator.writeStringField("category", merchandise.getCategory().toString());
-        jsonGenerator.writeStringField("productImage", merchandise.imageURL());
+        jsonGenerator.writeStringField("productImageURL", merchandise.imageURL());
         jsonGenerator.writeObjectField("discountToApply", merchandise.percentOfDiscount());
         jsonGenerator.writeEndObject();
     }
