@@ -6,4 +6,8 @@ public interface IMerchandiseService {
     Merchandise updateMerchandise(Long id, Merchandise updatedMerchandise);
 
     Merchandise getMerchandiseById(Long id);
+
+    Merchandise deactivateMerchandise(Long merchandiseId);
+
+    Merchandise reactivateMerchandise(Long merchandiseId);
 }

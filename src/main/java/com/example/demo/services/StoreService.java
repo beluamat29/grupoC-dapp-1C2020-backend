@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class StoreService implements IStoreService {
@@ -38,7 +39,7 @@ public class StoreService implements IStoreService {
         if(storeRepository.findById(storeId).get().listOfAvailableMerchandise().isEmpty()){
             return new ArrayList<>();
         }
-        return merchandiseRepository.getMerchandiseFromStore(storeId).get();
+        return merchandiseRepository.getMerchandiseFromStore(storeId).get().stream().filter(Merchandise::isActive).collect(Collectors.toList());
 
     }
 

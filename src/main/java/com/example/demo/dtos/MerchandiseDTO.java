@@ -21,10 +21,12 @@ public class MerchandiseDTO {
     private MerchandiseCategory category;
     @JsonProperty
     private String imageURL;
+    @JsonProperty
+    private Boolean isActiveMerchandise;
 
     @JsonCreator
     public MerchandiseDTO(@JsonProperty("storeId") Long storeId, @JsonProperty("name")String name, @JsonProperty("brand")String brand,
-                          @JsonProperty("price") Double price, @JsonProperty("stock") Integer stock,
+                          @JsonProperty("price") Double price, @JsonProperty("stock") Integer stock, @JsonProperty("isActiveMerchandise")Boolean isActiveMerchandise,
                           @JsonProperty("category") MerchandiseCategory category, @JsonProperty("productImageURL") String imageURL){
         this.storeId = storeId;
         this.merchandiseName = name;
@@ -33,6 +35,7 @@ public class MerchandiseDTO {
         this.merchandiseStock = stock;
         this.category = category;
         this.imageURL = imageURL;
+        this.isActiveMerchandise = isActiveMerchandise;
     }
 
     public MerchandiseDTO(){};
@@ -44,6 +47,7 @@ public class MerchandiseDTO {
     public Integer getMerchandiseStock(){ return this.merchandiseStock;}
     public MerchandiseCategory getCategory(){ return this.category;}
     public String getImageURL(){ return this.imageURL;}
+    public Boolean getIsActiveMerchandise() {return this.isActiveMerchandise;}
 
     public void setStoreId(Long id){ this.storeId = id; }
     public void setMerchandiseName(String name){ this.merchandiseName = name; }
@@ -52,6 +56,9 @@ public class MerchandiseDTO {
     public void setMerchandiseStock(Integer stock){ this.merchandiseStock = stock; }
     public void setCategory(MerchandiseCategory aCategory){ this.category = aCategory;}
     public void setImageURL(String url){ this.imageURL = url;}
+    public void setActiveMerchandise(Boolean activeMerchandise) {
+        isActiveMerchandise = activeMerchandise;
+    }
 
     public Merchandise buildMerchandise() {
         Merchandise merchandise = new Merchandise(this.merchandiseName, this.merchandiseBrand, this.merchandisePrice, this.merchandiseStock, this.category, this.imageURL);
