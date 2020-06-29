@@ -90,4 +90,25 @@ public class MerchandiseTest {
         assertThrows(InvalidStockTypeException.class,
                 () -> merchandise.addStock(-2));
     }
+
+    @Test
+    public void aNewMerchandiseIsActive() {
+        Merchandise merchandise = MerchandiseBuilder.aMerchandise().build();
+        assertTrue(merchandise.isActive());
+    }
+
+    @Test
+    public void aMerchandiseCanBeDeactivated() {
+        Merchandise merchandise = MerchandiseBuilder.aMerchandise().build();
+        merchandise.deactivate();
+        assertFalse(merchandise.isActive());
+    }
+
+    @Test
+    public void aDeactivatedMerchandiseCanBeActivatedAgain() {
+        Merchandise merchandise = MerchandiseBuilder.aMerchandise().build();
+        merchandise.deactivate();
+        merchandise.activate();
+        assertTrue(merchandise.isActive());
+    }
 }
