@@ -62,14 +62,19 @@ public class StoreServiceTest {
     }
 
     @Test
-    public void gettingStoreProductsList() {
+    public void gettingStoreProductsListOnlyReturnsActiveMerchandiseFromStore() {
         Store store = StoreBuilder.aStore().buildWithId();
-        store.addMerchandise("Nesquick", "Nestle", 20.4, 30, MerchandiseCategory.GROCERY, "foto nesquik");
+        Merchandise nesquick = new Merchandise("Nesquick", "Nestle", 20.4, 30, MerchandiseCategory.GROCERY, "foto nesquick");
+        Merchandise fideos = new Merchandise("Fideos", "Marolio", 26.4, 23, MerchandiseCategory.GROCERY, "foto fideos");
+        store.addMerchandise(nesquick);
+        store.addMerchandise(fideos);
+        store.deactivateProduct("Fideos", "Marolio");
         List<Merchandise> merchandiseList = store.listOfAvailableMerchandise();
         when(storeRepositoryMock.findById(any())).thenReturn(java.util.Optional.of(store));
         when(merchandiseRepository.getMerchandiseFromStore(any())).thenReturn(java.util.Optional.ofNullable(merchandiseList));
 
-        assertEquals(merchandiseList, storeService.getProductsFromStore(store.id()));
+        assertEquals(1, storeService.getProductsFromStore(store.id()).size());
+        assertTrue(storeService.getProductsFromStore(store.id()).contains(nesquick));
     }
     @Test
     public void addingAStoreReturnsTheStore() {
