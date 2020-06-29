@@ -125,5 +125,4 @@ public class StoreServiceTest {
 
         assertThrows(NotFoundStoreException.class , ()-> storeService.addMerchandiseToStore((long) 0, merchandise));
     }
-
 }
