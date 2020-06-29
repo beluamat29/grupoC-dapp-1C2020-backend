@@ -25,6 +25,7 @@ public class Merchandise {
     private Integer merchandiseStock;
     private String imageURL;
     private MerchandiseCategory category;
+    private Boolean isActiveProduct;
     @Transient
     private Discount discountToApply = new NoDiscount();
 
@@ -37,13 +38,11 @@ public class Merchandise {
         merchandiseStock = aStock;
         category = aCategory;
         imageURL = url;
+        isActiveProduct = true;
     }
 
     public Merchandise(){};
 
-    /*public void setStore(Store store) {
-        this.store = store;
-    }*/
     public String name() {
         return this.merchandiseName;
     }
@@ -114,5 +113,17 @@ public class Merchandise {
 
     public void setImageURL(String newImageURL) {
         this.imageURL = newImageURL;
+    }
+
+    public Boolean isActive() {
+        return this.isActiveProduct;
+    }
+
+    public void deactivate() {
+        this.isActiveProduct = false;
+    }
+
+    public void activate() {
+        this.isActiveProduct = true;
     }
 }

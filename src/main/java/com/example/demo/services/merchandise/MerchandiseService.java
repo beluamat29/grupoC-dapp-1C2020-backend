@@ -29,4 +29,18 @@ public class MerchandiseService implements IMerchandiseService {
     public Merchandise getMerchandiseById(Long id) {
         return merchandiseRepository.findById(id).orElseThrow(NotFoundMerchandiseException::new);
     }
+
+    @Override
+    public Merchandise deactivateMerchandise(Long merchandiseId) {
+        Merchandise retrievedMerchandise = this.getMerchandiseById(merchandiseId);
+        retrievedMerchandise.deactivate();
+        return merchandiseRepository.save(retrievedMerchandise);
+    }
+
+    @Override
+    public Merchandise reactivateMerchandise(Long merchandiseId) {
+        Merchandise retrievedMerchandise = this.getMerchandiseById(merchandiseId);
+        retrievedMerchandise.activate();
+        return merchandiseRepository.save(retrievedMerchandise);
+    }
 }

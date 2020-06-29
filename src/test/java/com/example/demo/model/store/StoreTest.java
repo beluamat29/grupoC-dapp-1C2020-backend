@@ -5,6 +5,7 @@ import com.example.demo.model.AcquiredProduct;
 import com.example.demo.model.StoreSchedule;
 import com.example.demo.model.exceptions.InsufficientMerchandiseStockException;
 import com.example.demo.model.exceptions.NotFoundProductInStore;
+import com.example.demo.model.merchandise.Merchandise;
 import com.example.demo.model.merchandise.MerchandiseCategory;
 import org.junit.Test;
 
@@ -96,5 +97,22 @@ public class StoreTest {
         Store store = StoreBuilder.aStore().build();
         store.addMerchandise("Mayonesa", "Hellmans", 15.4, 200, MerchandiseCategory.GROCERY, "foto mayonesa");
         assertThrows(NotFoundProductInStore.class, () -> store.getProduct("A fake", "Product", 1));
+    }
+
+    @Test
+    public void aStoreCanDeactivateAMerchandise() {
+        Store store = StoreBuilder.aStore().build();
+        store.addMerchandise("Mayonesa", "Hellmans", 15.4, 200, MerchandiseCategory.GROCERY, "foto mayonesa");
+        store.deactivateProduct("Mayonesa", "Hellmans");
+        assertFalse(store.isActiveMerchandise("Mayonesa", "Hellmans"));
+    }
+
+    @Test
+    public void aStoreCanActivateAMerchandise() {
+        Store store = StoreBuilder.aStore().build();
+        store.addMerchandise("Mayonesa", "Hellmans", 15.4, 200, MerchandiseCategory.GROCERY, "foto mayonesa");
+        store.deactivateProduct("Mayonesa", "Hellmans");
+        store.activateProduct("Mayonesa", "Hellmans");
+        assertTrue(store.isActiveMerchandise("Mayonesa", "Hellmans"));
     }
 }

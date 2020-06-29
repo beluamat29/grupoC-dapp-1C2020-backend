@@ -278,5 +278,17 @@ public class Store {
     public void setPaymentMethods(List<String> availablePaymentMethods) {
         this.availablePaymentMethods = availablePaymentMethods;
     }
+
+    public void deactivateProduct(String name, String brand) {
+        this.findMerchandise(name, brand).deactivate();
+    }
+
+    public Boolean isActiveMerchandise(String name, String brand) {
+        return this.findMerchandise(name, brand).isActive();
+    }
+
+    public void activateProduct(String name, String brand) {
+        this.findMerchandise(name, brand).activate();
+    }
 }
 
