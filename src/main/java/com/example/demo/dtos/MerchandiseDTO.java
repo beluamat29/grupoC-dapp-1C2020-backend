@@ -65,8 +65,5 @@ public class MerchandiseDTO {
         Merchandise merchandise = new Merchandise(this.merchandiseName, this.merchandiseBrand, this.merchandisePrice, this.merchandiseStock, this.category, this.imageURL);
         return merchandise;
 
-    public void setActiveMerchandise(Boolean activeMerchandise) {
-        isActiveMerchandise = activeMerchandise;
-
     }
 }
