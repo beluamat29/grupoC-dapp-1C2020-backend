@@ -75,7 +75,7 @@ public class Merchandise {
     }
 
     public Integer percentOfDiscount() {
-        return this.discountToApply.percentOfDiscount();
+        return 0;
     }
 
     public MerchandiseCategory getCategory() {
