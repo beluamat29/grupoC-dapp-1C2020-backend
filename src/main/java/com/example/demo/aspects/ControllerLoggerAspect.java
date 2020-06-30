@@ -1,21 +1,31 @@
 package com.example.demo.aspects;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
+import org.aspectj.lang.reflect.MethodSignature;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.web.bind.annotation.RequestMapping;
 
+import javax.servlet.http.HttpServletRequest;
+import java.lang.annotation.Annotation;
+import java.security.Timestamp;
+import java.time.LocalDateTime;
 import java.util.Arrays;
 
 @Aspect
 @Component
 public class ControllerLoggerAspect {
 
-    private Logger log = LogManager.getLogger(ControllerLoggerAspect.class);
+    @Autowired(required = false)
+    private HttpServletRequest request;
 
-    @Pointcut("@annotation(org.springframework.web.bind.annotation.RequestMapping)")
+    private Logger log = LoggerFactory.getLogger(ControllerLoggerAspect.class);
+
+    @Pointcut("@annotation(org.springframework.web.bind.annotation.RequestMapping) || @annotation(org.springframework.web.bind.annotation.PostMapping) || @annotation(org.springframework.web.bind.annotation.PutMapping)")
     public void controller() {
     }
 
@@ -27,7 +37,13 @@ public class ControllerLoggerAspect {
             String methodName = joinPoint.getSignature().getName();
             Object result = joinPoint.proceed();
             long elapsedTime = System.currentTimeMillis() - start;
-            log.info("Soy un aspecto interceptando el metodo de un controller");
+            log.info("--------------------------------------------");
+            log.info(LocalDateTime.now().toString());
+            log.info(request.getMethod() + " " + String.valueOf(request.getRequestURL()));
+            log.info("Controller name: " + className);
+            log.info("Invoked Method: " + methodName);
+            log.info("Elapsed Time: " + elapsedTime + "ms");
+            log.info("--------------------------------------------");
 
             return result;
         } catch (IllegalArgumentException e) {
