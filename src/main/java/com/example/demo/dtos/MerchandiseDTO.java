@@ -1,5 +1,6 @@
 package com.example.demo.dtos;
 
+import com.example.demo.model.merchandise.Merchandise;
 import com.example.demo.model.merchandise.MerchandiseCategory;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -57,5 +58,12 @@ public class MerchandiseDTO {
     public void setImageURL(String url){ this.imageURL = url;}
     public void setActiveMerchandise(Boolean activeMerchandise) {
         isActiveMerchandise = activeMerchandise;
+    }
+
+
+    public Merchandise buildMerchandise() {
+        Merchandise merchandise = new Merchandise(this.merchandiseName, this.merchandiseBrand, this.merchandisePrice, this.merchandiseStock, this.category, this.imageURL);
+        return merchandise;
+
     }
 }
