@@ -5,6 +5,7 @@ import com.example.demo.model.*;
 import com.example.demo.model.Bill;
 import com.example.demo.model.store.Store;
 import com.example.demo.model.merchandise.MerchandiseCategory;
+import com.example.demo.model.ticket.Ticket;
 import com.example.demo.model.user.ClientUser;
 import org.junit.Test;
 
@@ -55,12 +56,12 @@ public class MoneyThresholdTest {
     public void aBillWithAHigherTotalPriceThanAnEnabledMoneyThresholdBreaksTheLimit() {
         MoneyThreshold moneyThreshold = MoneyThresholdBuilder.aMoneyThreshold().withMoneyLimit(30.0).build();
         Store store = StoreBuilder.aStore().withMerchandise("Mayonesa", "Hellmans", 15.0, 300, MerchandiseCategory.GROCERY);
-        PurchaseFromStore purchase = PurchaseFromStoreBuilder.aPurchase().withProductOfStore("Mayonesa", "Hellmans", 4, store);
+        Ticket ticket = TicketBuilder.aTicket().withProductOfStore("Mayonesa", "Hellmans",10, store);
         ClientUser pepe = ClientUserBuilder.user().build();
         String paymentMethod = "Tarjeta de credito";
         DeliveryType deliveryType = new HomeDelivery("Alsina 123", LocalDateTime.now().plusDays(1));
         BillGenerator billGenerator = new BillGenerator();
-        Bill bill = billGenerator.generateBill(Arrays.asList(purchase), pepe, paymentMethod, deliveryType);
+        Bill bill = billGenerator.generateBill(Arrays.asList(ticket), pepe, paymentMethod, deliveryType);
         assertTrue(moneyThreshold.breaksTheLimitWith(bill));
     }
 
@@ -68,12 +69,12 @@ public class MoneyThresholdTest {
     public void aPurchaseWithAHigherTotalPriceThanADisabledMoneyThresholdDoesNotBreakTheLimit() {
         MoneyThreshold moneyThreshold = MoneyThresholdBuilder.aMoneyThreshold().whichIsDisabled();
         Store store = StoreBuilder.aStore().withMerchandise("Mayonesa", "Hellmans", 15.0, 300, MerchandiseCategory.GROCERY);
-        PurchaseFromStore purchase = PurchaseFromStoreBuilder.aPurchase().withProductOfStore("Mayonesa", "Hellmans", 4, store);
+        Ticket ticket = TicketBuilder.aTicket().withProductOfStore("Mayonesa", "Hellmans", 4, store);
         ClientUser pepe = ClientUserBuilder.user().build();
         String paymentMethod = "Tarjeta de credito";
         DeliveryType deliveryType = new HomeDelivery("Alsina 123", LocalDateTime.now().plusDays(1));
         BillGenerator billGenerator = new BillGenerator();
-        Bill bill = billGenerator.generateBill(Arrays.asList(purchase), pepe, paymentMethod, deliveryType);
+        Bill bill = billGenerator.generateBill(Arrays.asList(ticket), pepe, paymentMethod, deliveryType);
         assertFalse(moneyThreshold.breaksTheLimitWith(bill));
     }
 
@@ -81,12 +82,12 @@ public class MoneyThresholdTest {
     public void aPurchaseWithALowerTotalPriceThanAnEnabledMoneyThresholdDoesNotBreakTheLimit() {
         MoneyThreshold moneyThreshold = MoneyThresholdBuilder.aMoneyThreshold().withMoneyLimit(3000.0).build();
         Store store = StoreBuilder.aStore().withMerchandise("Mayonesa", "Hellmans", 15.0, 300, MerchandiseCategory.GROCERY);
-        PurchaseFromStore purchase = PurchaseFromStoreBuilder.aPurchase().withProductOfStore("Mayonesa", "Hellmans", 4, store);
+        Ticket ticket = TicketBuilder.aTicket().withProductOfStore("Mayonesa", "Hellmans", 4, store);
         ClientUser pepe = ClientUserBuilder.user().build();
         String paymentMethod = "Tarjeta de credito";
         DeliveryType deliveryType = new HomeDelivery("Alsina 123", LocalDateTime.now().plusDays(1));
         BillGenerator billGenerator = new BillGenerator();
-        Bill bill = billGenerator.generateBill(Arrays.asList(purchase), pepe, paymentMethod, deliveryType);
+        Bill bill = billGenerator.generateBill(Arrays.asList(ticket), pepe, paymentMethod, deliveryType);
         assertFalse(moneyThreshold.breaksTheLimitWith(bill));
     }
 
@@ -94,12 +95,12 @@ public class MoneyThresholdTest {
     public void aPurchaseWithALowerTotalPriceThanADisabledMoneyThresholdDoesNotBreakTheLimit() {
         MoneyThreshold moneyThreshold = MoneyThresholdBuilder.aMoneyThreshold().withMoneyLimit(3000.0).whichIsDisabled();
         Store store = StoreBuilder.aStore().withMerchandise("Mayonesa", "Hellmans", 15.0, 300, MerchandiseCategory.GROCERY);
-        PurchaseFromStore purchase = PurchaseFromStoreBuilder.aPurchase().withProductOfStore("Mayonesa", "Hellmans", 4, store);
+        Ticket ticket = TicketBuilder.aTicket().withProductOfStore("Mayonesa", "Hellmans", 4, store);
         ClientUser pepe = ClientUserBuilder.user().build();
         String paymentMethod = "Tarjeta de credito";
         DeliveryType deliveryType = new HomeDelivery("Alsina 123", LocalDateTime.now().plusDays(1));
         BillGenerator billGenerator = new BillGenerator();
-        Bill bill = billGenerator.generateBill(Arrays.asList(purchase), pepe, paymentMethod, deliveryType);
+        Bill bill = billGenerator.generateBill(Arrays.asList(ticket), pepe, paymentMethod, deliveryType);
         assertFalse(moneyThreshold.breaksTheLimitWith(bill));
     }
 }

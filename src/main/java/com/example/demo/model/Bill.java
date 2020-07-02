@@ -35,7 +35,7 @@ public class Bill {
         return allTickets.stream().mapToDouble(Ticket::getTotal).sum();
     }
 
-    public Boolean hasTicketOfPurchase(PurchaseFromStore purchase) {
-        return allTickets.stream().anyMatch(ticket -> ticket.purchase().equals(purchase));
+    public Boolean hasTicket(Ticket aTicket) {
+        return allTickets.stream().anyMatch(ticket -> ticket.equals(aTicket));
     }
 }

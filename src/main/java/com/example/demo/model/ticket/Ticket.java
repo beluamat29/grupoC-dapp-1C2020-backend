@@ -1,7 +1,6 @@
 package com.example.demo.model.ticket;
 
 import com.example.demo.model.AcquiredProduct;
-import com.example.demo.model.PurchaseFromStore;
 import com.example.demo.model.purchasePriceCalculator.PurchasePriceCalculator;
 import com.example.demo.model.store.Store;
 
@@ -11,28 +10,36 @@ import java.util.List;
 
 public class Ticket {
 
-    private PurchaseFromStore ticketPurchase;
+
     private String paymentMethod;
     private Double totalPrice;
     private List<AcquiredProduct> productList = new ArrayList<>();
     private Store tickeStore;
 
-    public Ticket(PurchaseFromStore purchase, String aPaymentMethod/*,Store aTickeStore*/) {
-        ticketPurchase = purchase;
+    public Ticket(String aPaymentMethod, Store aTickeStore) {
         paymentMethod = aPaymentMethod;
-        /*tickeStore = aTickeStore;*/
-        totalPrice = new PurchasePriceCalculator().calculatePriceFor(ticketPurchase);
+        tickeStore = aTickeStore;
     }
 
-    public PurchaseFromStore purchase() {
-        return this.ticketPurchase;
-    }
 
     public String paymentMethod() {
         return this.paymentMethod;
     }
 
     public Double getTotal() {
-        return this.totalPrice;
+        totalPrice = new PurchasePriceCalculator().calculatePriceFor(productList);
+        return totalPrice;
+    }
+
+    public Store store() { return this.tickeStore; }
+
+    public Integer productsQuantity() { return this.productList.stream().mapToInt(AcquiredProduct::quantity).sum();  }
+
+    public List<AcquiredProduct> getListOfAdquiredProducts() {
+        return this.productList;
+    }
+
+    public void addProduct(String productName, String productBrand, Integer quantity) {
+        this.productList.add(this.store().getProduct(productName, productBrand, quantity));
     }
 }

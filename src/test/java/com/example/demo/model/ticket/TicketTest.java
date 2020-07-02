@@ -1,9 +1,8 @@
 package com.example.demo.model.ticket;
 
-import com.example.demo.builders.PurchaseFromStoreBuilder;
+
 import com.example.demo.builders.StoreBuilder;
 import com.example.demo.builders.TicketBuilder;
-import com.example.demo.model.PurchaseFromStore;
 import com.example.demo.model.store.Store;
 import org.junit.Test;
 

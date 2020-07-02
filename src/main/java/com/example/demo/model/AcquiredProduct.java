@@ -22,13 +22,11 @@ public class AcquiredProduct {
         this.productQuantity = quantity;
     }
 
-    public Double price() {  return this.merchandise.price();  }
-
     public String name() { return this.merchandise.name();  }
 
     public String brand() { return this.merchandise.brand(); }
 
     public Integer quantity() {  return this.productQuantity;  }
 
-    public Double totalPrice() { return productQuantity * merchandise.price();  }
+    public Double price() { return productQuantity * merchandise.price();  }
 }

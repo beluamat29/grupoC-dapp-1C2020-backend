@@ -1,3 +1,4 @@
+/*
 package com.example.demo.model;
 
 import com.example.demo.model.store.Store;
@@ -30,4 +31,4 @@ public class PurchaseFromStore {
     public void addProduct(String productName, String productBrand, Integer quantity) {
         this.productList.add(this.store().getProduct(productName, productBrand, quantity));
     }
-}
+}*/
