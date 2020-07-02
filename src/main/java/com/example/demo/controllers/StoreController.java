@@ -1,6 +1,7 @@
 package com.example.demo.controllers;
 
 import com.example.demo.dtos.MerchandiseDTO;
+import com.example.demo.dtos.MerchandiseListDTO;
 import com.example.demo.dtos.MerchandiseListResponseDTO;
 import com.example.demo.model.merchandise.Merchandise;
 import com.example.demo.model.store.StoreCategory;
@@ -61,6 +62,12 @@ public class StoreController {
                 merchandiseDTO.getMerchandisePrice(), merchandiseDTO.getMerchandiseStock(), merchandiseDTO.getCategory(),
                 merchandiseDTO.getImageURL());
         return addMerchandiseToStore(merchandiseDTO.getStoreId(), merchandise);
+    }
+
+    @PostMapping(path="/stores/addMerchandiseList", consumes = "application/json", produces = "application/json")
+    public ResponseEntity<MerchandiseListDTO> addMerchandiseList(@RequestBody MerchandiseListDTO merchandiseListDTO){
+        storeService.addMultipleMerchandisesToStore(merchandiseListDTO.getStoreId(), merchandiseListDTO.getMerchandiseList());
+        return new ResponseEntity<>(merchandiseListDTO, HttpStatus.OK);
     }
 
     private ResponseEntity<Merchandise> addMerchandiseToStore(Long storeId, Merchandise merchandise) {

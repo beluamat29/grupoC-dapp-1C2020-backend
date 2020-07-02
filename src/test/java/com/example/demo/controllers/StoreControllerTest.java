@@ -2,6 +2,7 @@ package com.example.demo.controllers;
 
 import com.example.demo.builders.MerchandiseBuilder;
 import com.example.demo.builders.StoreBuilder;
+import com.example.demo.dtos.MerchandiseListDTO;
 import com.example.demo.model.exceptions.InvalidMerchandiseException;
 import com.example.demo.model.exceptions.NotFoundStoreException;
 import com.example.demo.model.exceptions.RepeatedMerchandiseInStore;
@@ -12,6 +13,7 @@ import com.example.demo.services.StoreService;
 import com.example.demo.model.store.Store;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.jayway.jsonpath.JsonPath;
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.junit.Test;
@@ -27,8 +29,10 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
+import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.when;
@@ -172,6 +176,25 @@ public class StoreControllerTest {
                 .andReturn();
     }
 
+ /*   @Test
+    public void addingAListOfMerchandisesToAStoreReturns200AndTheAddedMerchandiseList() throws Exception {
+        Store store = StoreBuilder.aStore().buildWithId();
+        Merchandise merchandise = MerchandiseBuilder.aMerchandise().build();
+        Merchandise anotherMerchandise = MerchandiseBuilder.aMerchandise().build();
+        List<Merchandise> merchandiseList = new ArrayList<Merchandise>() {{ add(merchandise); add(anotherMerchandise);}};
+
+        JSONObject body = generateMerchandisesList(Arrays.asList(merchandise, anotherMerchandise), store.id());
+        when(storeServiceMock.addMultipleMerchandisesToStore(any(), any())).thenReturn(merchandiseList);
+
+        MvcResult mvcResult = mockMvc.perform(post("/stores/addMerchandiseList")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(String.valueOf(body)))
+                .andExpect(status().isOk())
+                .andReturn();
+
+        String response = mvcResult.getResponse().getContentAsString();
+    }*/
+
     @Test
     public void gettingMerchandiseFromASpecificStoreReturnsTheMerchandiseListAnd200Status() throws Exception{
         Store store = StoreBuilder.aStore().buildWithId();
@@ -215,8 +238,7 @@ public class StoreControllerTest {
                 .andExpect(jsonPath("store.id", is(store.id())));
     }
 
-    private JSONObject generateMerchandiseToAddBody(Merchandise merchandise) throws JSONException {
-        merchandise.setId(new Random().nextLong());
+    private JSONObject generateMerchandiseToAddBody(Merchandise merchandise) throws RuntimeException, JSONException {
         JSONObject merchandiseJson = new JSONObject();
 
         merchandiseJson.put("id", merchandise.id());
@@ -229,8 +251,24 @@ public class StoreControllerTest {
         return merchandiseJson;
     }
 
+    public JSONObject generateMerchandisesList(List<Merchandise> merchandises, Long storeId) throws JSONException {
+        JSONObject merchandiseListJson = new JSONObject();
+        List<JSONObject> merchandisesJsons = merchandises.stream().map(merchandise -> {
+            try {
+                return generateMerchandiseToAddBody(merchandise);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            return null;
+        }).collect(Collectors.toList());
+        merchandiseListJson.put("storeId", storeId);
+        merchandiseListJson.put("merchandiseList", merchandisesJsons);
+        return merchandiseListJson;
+    }
+    
     public List<Store> addIdToStores(List<Store> stores){
         stores.stream().forEach(store -> store.setId(new Random().nextLong()));
         return stores;
     }
-}
+};
+
