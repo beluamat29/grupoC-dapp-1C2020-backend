@@ -2,6 +2,7 @@ package com.example.demo.controllers;
 
 import com.example.demo.builders.MerchandiseBuilder;
 import com.example.demo.builders.StoreBuilder;
+import com.example.demo.dtos.MerchandiseListDTO;
 import com.example.demo.model.exceptions.InvalidMerchandiseException;
 import com.example.demo.model.exceptions.NotFoundStoreException;
 import com.example.demo.model.exceptions.RepeatedMerchandiseInStore;
@@ -12,6 +13,7 @@ import com.example.demo.services.StoreService;
 import com.example.demo.model.store.Store;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.jayway.jsonpath.JsonPath;
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.junit.Test;
@@ -27,8 +29,10 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
+import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.when;
@@ -226,7 +230,23 @@ public class StoreControllerTest {
         merchandiseJson.put("stock", merchandise.stock());
         merchandiseJson.put("category", merchandise.getCategory().toString());
         merchandiseJson.put("productImageURL", merchandise.imageURL());
+        merchandiseJson.put("isActiveMerchandise", merchandise.isActive());
         return merchandiseJson;
+    }
+
+    public JSONObject generateMerchandisesList(List<Merchandise> merchandises, Long storeId) throws JSONException {
+        JSONObject merchandiseListJson = new JSONObject();
+        List<JSONObject> merchandisesJsons = merchandises.stream().map(merchandise -> {
+            try {
+                return generateMerchandiseToAddBody(merchandise, storeId);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            return null;
+        }).collect(Collectors.toList());
+        merchandiseListJson.put("storeId", storeId);
+        merchandiseListJson.put("merchandiseList", merchandisesJsons);
+        return merchandiseListJson;
     }
 
     public List<Store> addIdToStores(List<Store> stores){

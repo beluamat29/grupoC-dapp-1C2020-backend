@@ -23,4 +23,6 @@ public interface IStoreService {
     StoreAdminUser addAdmin();
 
     Merchandise addMerchandiseToStore(Long storeId, Merchandise merchandise);
+
+    List<Merchandise> addMultipleMerchandisesToStore(Long storeId, List<Merchandise> merchandiseList);
 }

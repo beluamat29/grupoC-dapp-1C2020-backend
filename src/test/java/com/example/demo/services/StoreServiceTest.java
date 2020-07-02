@@ -125,4 +125,20 @@ public class StoreServiceTest {
 
         assertThrows(NotFoundStoreException.class , ()-> storeService.addMerchandiseToStore((long) 0, merchandise));
     }
+
+    @Test
+    public void addingMultipleMerchandisesToAStore() {
+        Merchandise merchandise1 = MerchandiseBuilder.aMerchandise().build();
+        Merchandise merchandise2 = MerchandiseBuilder.aMerchandise().withName("Pure").build();
+        List<Merchandise> merchandiseList = new ArrayList<Merchandise>() {{ add(merchandise1); add(merchandise2);}};
+        Store store = StoreBuilder.aStore().buildWithId();
+        when(storeRepositoryMock.save(any())).thenReturn(store);
+        when(storeRepositoryMock.findById(any())).thenReturn(java.util.Optional.ofNullable(store));
+        when(merchandiseRepository.getMerchandiseFromStore(any())).thenReturn(java.util.Optional.of(merchandiseList));
+
+        storeService.addMultipleMerchandisesToStore(store.id(), merchandiseList);
+        List <Merchandise> productsFromStore = storeService.getProductsFromStore(store.id());
+        assertEquals(productsFromStore.size(), 2);
+    }
+
 }

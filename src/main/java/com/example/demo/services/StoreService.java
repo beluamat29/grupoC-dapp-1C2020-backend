@@ -75,4 +75,15 @@ public class StoreService implements IStoreService {
         storeRepository.save(store);
         return merchandise;
     }
+
+    @Override
+    public List<Merchandise> addMultipleMerchandisesToStore(Long storeId, List<Merchandise> merchandiseList) {
+        Store store = this.getStore(storeId);
+        merchandiseList.stream().forEach(merchandise -> {
+            store.addMerchandise(merchandise);
+            merchandiseRepository.save(merchandise);
+        });
+        storeRepository.save(store);
+        return merchandiseList;
+    }
 }
