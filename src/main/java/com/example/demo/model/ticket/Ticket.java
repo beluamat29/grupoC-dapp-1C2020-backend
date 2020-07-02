@@ -10,7 +10,6 @@ import java.util.List;
 
 public class Ticket {
 
-
     private String paymentMethod;
     private Double totalPrice;
     private List<AcquiredProduct> productList = new ArrayList<>();
