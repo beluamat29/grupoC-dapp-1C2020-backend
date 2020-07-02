@@ -120,7 +120,7 @@ public class StoreControllerTest {
         Merchandise merchandise = MerchandiseBuilder.aMerchandise().build();
         when(storeServiceMock.addMerchandiseToStore(any(), any())).thenReturn(merchandise);
 
-        JSONObject body = generateMerchandiseToAddBody(merchandise);
+        JSONObject body = generateMerchandiseToAddBody(merchandise, store.id());
         MvcResult mvcResult = mockMvc.perform(post("/stores/addMerchandise")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(String.valueOf(body)))
@@ -142,7 +142,7 @@ public class StoreControllerTest {
         Merchandise merchandise = MerchandiseBuilder.aMerchandise().build();
         when(storeServiceMock.addMerchandiseToStore(any(), any())).thenThrow(new NotFoundStoreException());
 
-        JSONObject body = generateMerchandiseToAddBody(merchandise);
+        JSONObject body = generateMerchandiseToAddBody(merchandise, new Random().nextLong());
         MvcResult mvcResult = mockMvc.perform(post("/stores/addMerchandise")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(String.valueOf(body)))
@@ -155,7 +155,7 @@ public class StoreControllerTest {
         Merchandise merchandise = MerchandiseBuilder.aMerchandise().build();
         when(storeServiceMock.addMerchandiseToStore(any(), any())).thenThrow(new RepeatedMerchandiseInStore());
 
-        JSONObject body = generateMerchandiseToAddBody(merchandise);
+        JSONObject body = generateMerchandiseToAddBody(merchandise, new Random().nextLong());
         MvcResult mvcResult = mockMvc.perform(post("/stores/addMerchandise")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(String.valueOf(body)))
@@ -168,7 +168,7 @@ public class StoreControllerTest {
         Merchandise merchandise = MerchandiseBuilder.aMerchandise().withName("").build();
         when(storeServiceMock.addMerchandiseToStore(any(), any())).thenThrow(new InvalidMerchandiseException());
 
-        JSONObject body = generateMerchandiseToAddBody(merchandise);
+        JSONObject body = generateMerchandiseToAddBody(merchandise, new Random().nextLong());
         MvcResult mvcResult = mockMvc.perform(post("/stores/addMerchandise")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(String.valueOf(body)))
@@ -238,14 +238,15 @@ public class StoreControllerTest {
                 .andExpect(jsonPath("store.id", is(store.id())));
     }
 
-    private JSONObject generateMerchandiseToAddBody(Merchandise merchandise) throws RuntimeException, JSONException {
+    private JSONObject generateMerchandiseToAddBody(Merchandise merchandise, Long storeId) throws JSONException {
+        merchandise.setId(new Random().nextLong());
         JSONObject merchandiseJson = new JSONObject();
 
-        merchandiseJson.put("id", merchandise.id());
-        merchandiseJson.put("merchandiseName", merchandise.name());
-        merchandiseJson.put("merchandiseBrand", merchandise.brand());
-        merchandiseJson.put("merchandisePrice", merchandise.price());
-        merchandiseJson.put("merchandiseStock", merchandise.stock());
+        merchandiseJson.put("storeId", storeId);
+        merchandiseJson.put("name", merchandise.name());
+        merchandiseJson.put("brand", merchandise.brand());
+        merchandiseJson.put("price", merchandise.price());
+        merchandiseJson.put("stock", merchandise.stock());
         merchandiseJson.put("category", merchandise.getCategory().toString());
         merchandiseJson.put("productImageURL", merchandise.imageURL());
         return merchandiseJson;
@@ -265,10 +266,9 @@ public class StoreControllerTest {
         merchandiseListJson.put("merchandiseList", merchandisesJsons);
         return merchandiseListJson;
     }
-    
+
     public List<Store> addIdToStores(List<Store> stores){
         stores.stream().forEach(store -> store.setId(new Random().nextLong()));
         return stores;
     }
-};
-
+}
