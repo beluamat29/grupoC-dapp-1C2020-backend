@@ -1,9 +1,8 @@
 package com.example.demo.model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import com.example.demo.model.merchandise.Merchandise;
+
+import javax.persistence.*;
 
 @Entity
 public class AcquiredProduct {
@@ -12,27 +11,24 @@ public class AcquiredProduct {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String productName;
-    private String productBrand;
-    private Double productPrice;
+    @Transient
+    private Merchandise merchandise;
     private Integer productQuantity;
 
     public AcquiredProduct(){};
 
-    public AcquiredProduct(String name, String brand, Double price, Integer quantity){
-        this.productName = name;
-        this.productBrand = brand;
-        this.productPrice = price;
+    public AcquiredProduct(Merchandise aMerchandise, Integer quantity){
+        this.merchandise = aMerchandise;
         this.productQuantity = quantity;
     }
 
-    public Double price() {  return this.productPrice;  }
+    public Double price() {  return this.merchandise.price();  }
 
-    public String name() { return this.productName;  }
+    public String name() { return this.merchandise.name();  }
 
-    public String brand() { return this.productBrand; }
+    public String brand() { return this.merchandise.brand(); }
 
     public Integer quantity() {  return this.productQuantity;  }
 
-    public Double totalPrice() { return productQuantity * productPrice;  }
+    public Double totalPrice() { return productQuantity * merchandise.price();  }
 }

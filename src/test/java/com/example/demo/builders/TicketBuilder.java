@@ -1,6 +1,7 @@
 package com.example.demo.builders;
 
 import com.example.demo.model.PurchaseFromStore;
+import com.example.demo.model.store.Store;
 import com.example.demo.model.ticket.Ticket;
 
 public class TicketBuilder {
@@ -25,4 +26,5 @@ public class TicketBuilder {
         ticketPurchase = purchase;
         return this;
     }
+
 }

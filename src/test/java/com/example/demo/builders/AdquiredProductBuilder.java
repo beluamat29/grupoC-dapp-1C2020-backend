@@ -1,33 +1,22 @@
 package com.example.demo.builders;
 
 import com.example.demo.model.AcquiredProduct;
+import com.example.demo.model.merchandise.Merchandise;
 
 public class AdquiredProductBuilder {
 
-    private String productName;
-    private String productBrand;
-    private Double productPrice;
+    private Merchandise merchandise;
     private Integer productQuantity;
 
     public static AdquiredProductBuilder aProduct(){ return new AdquiredProductBuilder(); }
 
     public AcquiredProduct build() {
-        return new AcquiredProduct(productName, productBrand, productPrice, productQuantity);
+        return new AcquiredProduct(merchandise, productQuantity);
     }
 
 
-    public AdquiredProductBuilder withName(String name) {
-        productName =name;
-        return this;
-    }
-
-    public AdquiredProductBuilder withBrand(String brand) {
-        productBrand = brand;
-        return this;
-    }
-
-    public AdquiredProductBuilder withPrice(Double price) {
-        productPrice = price;
+    public AdquiredProductBuilder withMerchandise(Merchandise aMerchandise) {
+        merchandise = aMerchandise;
         return this;
     }
 

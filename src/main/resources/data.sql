@@ -1,1 +1,0 @@
-insert into acquired_product values(1, 'Fideos', 'Marolio', 25.0, 45)

@@ -179,7 +179,7 @@ public class Store {
             throw new InsufficientMerchandiseStockException();
         }
         this.decreaseStock(productName, productBrand, quantity);
-        return new AcquiredProduct(merchandise.name(), merchandise.brand(), merchandise.price(), quantity);
+        return new AcquiredProduct(merchandise, quantity);
     }
 
 
