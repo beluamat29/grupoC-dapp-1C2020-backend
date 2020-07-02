@@ -1,7 +1,9 @@
 package com.example.demo.model.purchase;
 
 import com.example.demo.builders.AdquiredProductBuilder;
+import com.example.demo.builders.MerchandiseBuilder;
 import com.example.demo.model.AcquiredProduct;
+import com.example.demo.model.merchandise.Merchandise;
 import org.junit.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -10,20 +12,23 @@ public class AcquiredProductTest {
 
     @Test
     public void anAdquiredProductHasAName(){
-        AcquiredProduct product = AdquiredProductBuilder.aProduct().withName("Fideos").build();
+        Merchandise merchandise = MerchandiseBuilder.aMerchandise().build();
+        AcquiredProduct product = AdquiredProductBuilder.aProduct().withMerchandise(merchandise).build();
         assertEquals("Fideos", product.name());
     }
 
     @Test
     public void anAdquiredProductHasABrand(){
-        AcquiredProduct product = AdquiredProductBuilder.aProduct().withBrand("Knorr").build();
-        assertEquals("Knorr", product.brand());
+        Merchandise merchandise = MerchandiseBuilder.aMerchandise().build();
+        AcquiredProduct product = AdquiredProductBuilder.aProduct().withMerchandise(merchandise).build();
+        assertEquals("Matarazzo", product.brand());
     }
 
     @Test
     public void anAdquiredProductHasAPrice(){
-        AcquiredProduct product = AdquiredProductBuilder.aProduct().withPrice(40.2).build();
-        assertEquals(40.2, product.price());
+        Merchandise merchandise = MerchandiseBuilder.aMerchandise().build();
+        AcquiredProduct product = AdquiredProductBuilder.aProduct().withMerchandise(merchandise).build();
+        assertEquals(65.0, product.price());
     }
 
     @Test
