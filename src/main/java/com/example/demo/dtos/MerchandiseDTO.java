@@ -50,13 +50,13 @@ public class MerchandiseDTO {
     public Boolean getIsActiveMerchandise() {return this.isActiveMerchandise;}
 
     public void setStoreId(Long id){ this.storeId = id; }
-    public void setMerchandiseName(String name){ this.merchandiseName = name; }
-    public void setMerchandiseBrand(String brand){ this.merchandiseBrand = brand; }
-    public void setMerchandisePrice(Double price){ this.merchandisePrice = price; }
-    public void setMerchandiseStock(Integer stock){ this.merchandiseStock = stock; }
+    public void setName(String name){ this.merchandiseName = name; }
+    public void setBrand(String brand){ this.merchandiseBrand = brand; }
+    public void setPrice(Double price){ this.merchandisePrice = price; }
+    public void setStock(Integer stock){ this.merchandiseStock = stock; }
     public void setCategory(MerchandiseCategory aCategory){ this.category = aCategory;}
     public void setImageURL(String url){ this.imageURL = url;}
-    public void setActiveMerchandise(Boolean activeMerchandise) {
+    public void setIsActiveMerchandise(Boolean activeMerchandise) {
         isActiveMerchandise = activeMerchandise;
     }
 

@@ -12,8 +12,10 @@ import com.example.demo.model.store.Store;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -65,9 +67,9 @@ public class StoreController {
     }
 
     @PostMapping(path="/stores/addMerchandiseList", consumes = "application/json", produces = "application/json")
-    public ResponseEntity<MerchandiseListDTO> addMerchandiseList(@RequestBody MerchandiseListDTO merchandiseListDTO){
-        storeService.addMultipleMerchandisesToStore(merchandiseListDTO.getStoreId(), merchandiseListDTO.getMerchandiseList());
-        return new ResponseEntity<>(merchandiseListDTO, HttpStatus.OK);
+    public ResponseEntity<List<Merchandise>> addMerchandiseList(@RequestBody MerchandiseListDTO merchandiseListDTO){
+        List<Merchandise> addedMerchandises = storeService.addMultipleMerchandisesToStore(merchandiseListDTO.getStoreId(), merchandiseListDTO.getMerchandisesAsEntities());
+        return new ResponseEntity<>(addedMerchandises, HttpStatus.OK);
     }
 
     private ResponseEntity<Merchandise> addMerchandiseToStore(Long storeId, Merchandise merchandise) {

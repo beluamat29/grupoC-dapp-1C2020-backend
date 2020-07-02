@@ -11,10 +11,10 @@ public class MerchandiseListDTO {
     @JsonProperty
     private Long storeId;
     @JsonProperty
-    private List<Merchandise> merchandiseList;
+    private List<MerchandiseDTO> merchandiseList;
 
     @JsonCreator
-    public MerchandiseListDTO(@JsonProperty("storeId") Long storeId, @JsonProperty("merchandiseList") List<Merchandise> merchandiseList){
+    public MerchandiseListDTO(@JsonProperty("storeId") Long storeId, @JsonProperty("merchandiseList") List<MerchandiseDTO> merchandiseList){
         this.merchandiseList = merchandiseList;
         this.storeId = storeId;
     }
@@ -29,12 +29,16 @@ public class MerchandiseListDTO {
         this.storeId = storeId;
     }
 
-    public List<Merchandise> getMerchandiseList() {
+    public List<MerchandiseDTO> getMerchandiseList() {
         return merchandiseList;
     }
 
-    public void setMerchandiseList(List<Merchandise> merchandiseList) {
+    public void setMerchandiseList(List<MerchandiseDTO> merchandiseList) {
         this.merchandiseList = merchandiseList;
     }
 
+    public List<Merchandise> getMerchandisesAsEntities() {
+        List<Merchandise> merchandisesEntities = this.merchandiseList.stream().map(MerchandiseDTO::buildMerchandise).collect(Collectors.toList());
+        return merchandisesEntities;
+    }
 }

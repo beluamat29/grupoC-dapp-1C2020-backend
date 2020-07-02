@@ -176,25 +176,6 @@ public class StoreControllerTest {
                 .andReturn();
     }
 
- /*   @Test
-    public void addingAListOfMerchandisesToAStoreReturns200AndTheAddedMerchandiseList() throws Exception {
-        Store store = StoreBuilder.aStore().buildWithId();
-        Merchandise merchandise = MerchandiseBuilder.aMerchandise().build();
-        Merchandise anotherMerchandise = MerchandiseBuilder.aMerchandise().build();
-        List<Merchandise> merchandiseList = new ArrayList<Merchandise>() {{ add(merchandise); add(anotherMerchandise);}};
-
-        JSONObject body = generateMerchandisesList(Arrays.asList(merchandise, anotherMerchandise), store.id());
-        when(storeServiceMock.addMultipleMerchandisesToStore(any(), any())).thenReturn(merchandiseList);
-
-        MvcResult mvcResult = mockMvc.perform(post("/stores/addMerchandiseList")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(String.valueOf(body)))
-                .andExpect(status().isOk())
-                .andReturn();
-
-        String response = mvcResult.getResponse().getContentAsString();
-    }*/
-
     @Test
     public void gettingMerchandiseFromASpecificStoreReturnsTheMerchandiseListAnd200Status() throws Exception{
         Store store = StoreBuilder.aStore().buildWithId();
@@ -249,6 +230,7 @@ public class StoreControllerTest {
         merchandiseJson.put("stock", merchandise.stock());
         merchandiseJson.put("category", merchandise.getCategory().toString());
         merchandiseJson.put("productImageURL", merchandise.imageURL());
+        merchandiseJson.put("isActiveMerchandise", merchandise.isActive());
         return merchandiseJson;
     }
 
@@ -256,7 +238,7 @@ public class StoreControllerTest {
         JSONObject merchandiseListJson = new JSONObject();
         List<JSONObject> merchandisesJsons = merchandises.stream().map(merchandise -> {
             try {
-                return generateMerchandiseToAddBody(merchandise);
+                return generateMerchandiseToAddBody(merchandise, storeId);
             } catch (JSONException e) {
                 e.printStackTrace();
             }
