@@ -34,13 +34,16 @@ public class StoreService implements IStoreService {
         return storeRepository.getStoresWithACategory(category);
     }
 
-    public List<Merchandise> getProductsFromStore(Long storeId) {
+    public List<Merchandise> getProductsFromStore(Long storeId, Boolean activeProducts) {
         storeRepository.findById(storeId).orElseThrow(NotFoundStoreException::new);
         if(storeRepository.findById(storeId).get().listOfAvailableMerchandise().isEmpty()){
             return new ArrayList<>();
         }
-        return merchandiseRepository.getMerchandiseFromStore(storeId).get().stream().filter(Merchandise::isActive).collect(Collectors.toList());
-
+        if(activeProducts) {
+            return merchandiseRepository.getMerchandiseFromStore(storeId).get().stream().filter(Merchandise::isActive).collect(Collectors.toList());
+        } else {
+            return merchandiseRepository.getMerchandiseFromStore(storeId).get();
+        }
     }
 
    @Override

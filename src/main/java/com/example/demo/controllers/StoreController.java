@@ -43,9 +43,9 @@ public class StoreController {
     }
 
     @RequestMapping(path="/stores/{id}/products")
-    public ResponseEntity<Object> getProducts(@PathVariable("id") Long storeId) {
+    public ResponseEntity<Object> getProducts(@PathVariable("id") Long storeId, @RequestParam() Boolean activeProducts) {
         Store store = storeService.getStore(storeId);
-        List<Merchandise> merchandises = storeService.getProductsFromStore(storeId);
+        List<Merchandise> merchandises = storeService.getProductsFromStore(storeId, activeProducts);
         return generateProductsResponse(merchandises, store);
     }
 

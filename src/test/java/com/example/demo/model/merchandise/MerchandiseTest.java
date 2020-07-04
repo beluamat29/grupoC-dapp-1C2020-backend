@@ -105,6 +105,13 @@ public class MerchandiseTest {
     }
 
     @Test
+    public void aMerchandiseConditionCanBeSet() {
+        Merchandise merchandise = MerchandiseBuilder.aMerchandise().build();
+        merchandise.setActiveCondition(false);
+        assertFalse(merchandise.isActive());
+    }
+
+    @Test
     public void aDeactivatedMerchandiseCanBeActivatedAgain() {
         Merchandise merchandise = MerchandiseBuilder.aMerchandise().build();
         merchandise.deactivate();

@@ -63,7 +63,7 @@ public class MerchandiseDTO {
 
     public Merchandise buildMerchandise() {
         Merchandise merchandise = new Merchandise(this.merchandiseName, this.merchandiseBrand, this.merchandisePrice, this.merchandiseStock, this.category, this.imageURL);
+        merchandise.setActiveCondition(this.isActiveMerchandise);
         return merchandise;
-
     }
 }

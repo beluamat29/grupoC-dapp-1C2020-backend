@@ -73,8 +73,8 @@ public class StoreServiceTest {
         when(storeRepositoryMock.findById(any())).thenReturn(java.util.Optional.of(store));
         when(merchandiseRepository.getMerchandiseFromStore(any())).thenReturn(java.util.Optional.ofNullable(merchandiseList));
 
-        assertEquals(1, storeService.getProductsFromStore(store.id()).size());
-        assertTrue(storeService.getProductsFromStore(store.id()).contains(nesquick));
+        assertEquals(1, storeService.getProductsFromStore(store.id(), true).size());
+        assertTrue(storeService.getProductsFromStore(store.id(), true).contains(nesquick));
     }
     @Test
     public void addingAStoreReturnsTheStore() {
@@ -137,7 +137,7 @@ public class StoreServiceTest {
         when(merchandiseRepository.getMerchandiseFromStore(any())).thenReturn(java.util.Optional.of(merchandiseList));
 
         storeService.addMultipleMerchandisesToStore(store.id(), merchandiseList);
-        List <Merchandise> productsFromStore = storeService.getProductsFromStore(store.id());
+        List <Merchandise> productsFromStore = storeService.getProductsFromStore(store.id(), true);
         assertEquals(productsFromStore.size(), 2);
     }
 
