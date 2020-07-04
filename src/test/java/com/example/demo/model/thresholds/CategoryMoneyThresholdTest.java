@@ -36,10 +36,9 @@ public class CategoryMoneyThresholdTest {
         Store anotherStore = StoreBuilder.aStore().withMerchandise("Fideos", "Marolio", 20.0, 300, MerchandiseCategory.GROCERY);
         Ticket anotherTicket = TicketBuilder.aTicket().withProductOfStore("Fideos", "Marolio",5,anotherStore);
         ClientUser pepe = ClientUserBuilder.user().build();
-        String paymentMethod = "Tarjeta de credito";
         DeliveryType deliveryType = new HomeDelivery("Alsina 123", LocalDateTime.now().plusDays(1));
         BillGenerator billGenerator = new BillGenerator();
-        Bill bill = billGenerator.generateBill(Arrays.asList(ticket,anotherTicket), pepe, paymentMethod, deliveryType);
+        Bill bill = billGenerator.generateBill(Arrays.asList(ticket,anotherTicket), pepe, deliveryType);
         assertTrue(categoryMoneyThreshold.breaksTheLimitWith(bill));
     }
 
@@ -49,10 +48,9 @@ public class CategoryMoneyThresholdTest {
         Store store = StoreBuilder.aStore().withMerchandise("Mayonesa", "Hellmans", 15.0, 300, MerchandiseCategory.GROCERY);
         Ticket purchase = TicketBuilder.aTicket().withStore(store).build();
         ClientUser pepe = ClientUserBuilder.user().build();
-        String paymentMethod = "Tarjeta de credito";
         DeliveryType deliveryType = new HomeDelivery("Alsina 123", LocalDateTime.now().plusDays(1));
         BillGenerator billGenerator = new BillGenerator();
-        Bill bill = billGenerator.generateBill(Arrays.asList(purchase), pepe, paymentMethod, deliveryType);
+        Bill bill = billGenerator.generateBill(Arrays.asList(purchase), pepe, deliveryType);
         assertFalse(categoryMoneyThreshold.breaksTheLimitWith(bill));
     }
 
@@ -64,10 +62,9 @@ public class CategoryMoneyThresholdTest {
         Store anotherStore = StoreBuilder.aStore().withMerchandise("Fernet", "Branca", 400.0, 300, MerchandiseCategory.ALCOHOLIC_DRIKS);
         Ticket anotherTicket = TicketBuilder.aTicket().withStore(anotherStore).build();
         ClientUser pepe = ClientUserBuilder.user().build();
-        String paymentMethod = "Tarjeta de credito";
         DeliveryType deliveryType = new HomeDelivery("Alsina 123", LocalDateTime.now().plusDays(1));
         BillGenerator billGenerator = new BillGenerator();
-        Bill bill = billGenerator.generateBill(Arrays.asList(ticket, anotherTicket), pepe, paymentMethod, deliveryType);
+        Bill bill = billGenerator.generateBill(Arrays.asList(ticket, anotherTicket), pepe, deliveryType);
         assertFalse(categoryMoneyThreshold.breaksTheLimitWith(bill));
     }
 
@@ -77,10 +74,9 @@ public class CategoryMoneyThresholdTest {
         Store store = StoreBuilder.aStore().withMerchandise("Mayonesa", "Hellmans", 15.0, 300, MerchandiseCategory.GROCERY);
         Ticket ticket = TicketBuilder.aTicket().withStore(store).build();
         ClientUser pepe = ClientUserBuilder.user().build();
-        String paymentMethod = "Tarjeta de credito";
         DeliveryType deliveryType = new HomeDelivery("Alsina 123", LocalDateTime.now().plusDays(1));
         BillGenerator billGenerator = new BillGenerator();
-        Bill bill = billGenerator.generateBill(Arrays.asList(ticket), pepe, paymentMethod, deliveryType);
+        Bill bill = billGenerator.generateBill(Arrays.asList(ticket), pepe, deliveryType);
         assertFalse(categoryMoneyThreshold.breaksTheLimitWith(bill));
     }
 

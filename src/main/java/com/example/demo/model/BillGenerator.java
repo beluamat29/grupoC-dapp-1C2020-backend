@@ -8,13 +8,10 @@ import java.util.stream.Collectors;
 
 public class BillGenerator {
 
-    public Bill generateBill(List<Ticket> listOfTickets, ClientUser aClientUser, String paymentMethod, DeliveryType delivery) {
+    public Bill generateBill(List<Ticket> listOfTickets, ClientUser aClientUser, DeliveryType delivery) {
         Bill bill = new Bill(listOfTickets, delivery);
         aClientUser.addBillOfPurchase(bill);
         return bill;
     }
 
-    /*private Ticket generateTicket(PurchaseFromStore purchase, String paymentMethod) {
-        return new Ticket(purchase, paymentMethod);
-    }*/
 }

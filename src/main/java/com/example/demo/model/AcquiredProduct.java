@@ -11,7 +11,7 @@ public class AcquiredProduct {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Transient
+    @OneToOne
     private Merchandise merchandise;
     private Integer productQuantity;
 

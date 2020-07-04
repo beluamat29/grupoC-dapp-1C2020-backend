@@ -17,10 +17,9 @@ public class BillGeneratorTest {
     public void whenAUserMakesAPurchaseInOneStoreOnlyOneTicketIsSavedInTeBill(){
         ClientUser pepe = ClientUserBuilder.user().build();
         Ticket ticket = TicketBuilder.aTicket().build();
-        String paymentMethod = "Tarjeta de credito";
         DeliveryType deliveryType = new HomeDelivery("Alsina 123", LocalDateTime.now().plusDays(1));
         BillGenerator billGenerator = new BillGenerator();
-        Bill bill = billGenerator.generateBill(Arrays.asList(ticket), pepe, paymentMethod, deliveryType);
+        Bill bill = billGenerator.generateBill(Arrays.asList(ticket), pepe, deliveryType);
         assertTrue(pepe.hasBill(bill));
         assertEquals(1, pepe.quantityOfBills());
         assertEquals(1, bill.quantityTickets());
@@ -32,10 +31,9 @@ public class BillGeneratorTest {
         ClientUser pepe = ClientUserBuilder.user().build();
         Ticket ticket = TicketBuilder.aTicket().build();
         Ticket anotherTicket = TicketBuilder.aTicket().build();
-        String paymentMethod = "Tarjeta de credito";
         DeliveryType deliveryType = new HomeDelivery("Alsina 123", LocalDateTime.now().plusDays(1));
         BillGenerator billGenerator = new BillGenerator();
-        Bill bill = billGenerator.generateBill(Arrays.asList(ticket, anotherTicket), pepe, paymentMethod, deliveryType);
+        Bill bill = billGenerator.generateBill(Arrays.asList(ticket, anotherTicket), pepe, deliveryType);
         assertEquals(2, bill.quantityTickets());
         assertTrue(bill.hasTicket(ticket));
         assertTrue(bill.hasTicket(anotherTicket));
