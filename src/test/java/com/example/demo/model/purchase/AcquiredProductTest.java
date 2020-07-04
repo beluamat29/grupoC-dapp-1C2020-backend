@@ -27,7 +27,7 @@ public class AcquiredProductTest {
     @Test
     public void anAdquiredProductHasAPrice(){
         Merchandise merchandise = MerchandiseBuilder.aMerchandise().build();
-        AcquiredProduct product = AdquiredProductBuilder.aProduct().withMerchandise(merchandise).build();
+        AcquiredProduct product = AdquiredProductBuilder.aProduct().withMerchandise(merchandise).withQuantity(1).build();
         assertEquals(65.0, product.price());
     }
 

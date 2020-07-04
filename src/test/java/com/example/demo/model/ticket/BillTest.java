@@ -21,6 +21,7 @@ public class BillTest {
         Ticket ticket1 = TicketBuilder.aTicket().build();
         Ticket ticket2 = TicketBuilder.aTicket().build();
         Bill bill = BillBuilder.aBill().withTickets(Arrays.asList(ticket1, ticket2)).build();
+
         assertEquals(2, bill.quantityTickets());
     }
 
@@ -28,6 +29,7 @@ public class BillTest {
     public void aBillHasAHomeDelivery(){
         DeliveryType delivery = new HomeDelivery("Alsina 123", LocalDateTime.of(2020, 05, 20, 18, 00));
         Bill bill = BillBuilder.aBill().withDeliveyType(delivery).build();
+
         assertEquals("Alsina 123", bill.addressOfDelivery());
         assertEquals(LocalDateTime.of(2020, 05, 20, 18, 00), bill.deliveryTime());
     }
@@ -40,34 +42,35 @@ public class BillTest {
         Integer anotherQuantity = 2;
         Store storeWithProducts = StoreBuilder.withMerchandise("Mayonesa", "Hellmans", aPrice, aQuantity + 1, MerchandiseCategory.GROCERY);
         Store anotherStoreWithProducts = StoreBuilder.withMerchandise("Fideos", "Marolio", anotherPrice, anotherQuantity + 1, MerchandiseCategory.GROCERY);
-        PurchaseFromStore purchase1 = PurchaseFromStoreBuilder.aPurchase().withProductOfStore("Mayonesa", "Hellmans", aQuantity, storeWithProducts);
-        PurchaseFromStore purchase2 = PurchaseFromStoreBuilder.aPurchase().withProductOfStore("Fideos", "Marolio", anotherQuantity, anotherStoreWithProducts);
-        Ticket ticket1 = TicketBuilder.aTicket().withPurchase(purchase1).build();
-        Ticket ticket2 = TicketBuilder.aTicket().withPurchase(purchase2).build();
+        Ticket ticket1 = TicketBuilder.aTicket().withProductOfStore("Mayonesa", "Hellmans", aQuantity, storeWithProducts);
+        Ticket ticket2 = TicketBuilder.aTicket().withProductOfStore("Fideos", "Marolio", anotherQuantity, anotherStoreWithProducts);
         Bill bill = BillBuilder.aBill().withTickets(Arrays.asList(ticket1, ticket2)).build();
         Double total = (aPrice * aQuantity) + (anotherPrice * anotherQuantity);
+
         assertEquals(total, bill.totalPrice());
     }
 
     @Test
     public void aUserThatChoosesHomeDeliveryBillHasAndAddressAndDeliveryDate() {
         ClientUser clientUser = ClientUserBuilder.user().build();
-        PurchaseFromStore purchase = PurchaseFromStoreBuilder.aPurchase().withUser(clientUser).build();
-        String paymentMethod = "Credit Card";
-        DeliveryType deliveryType = new HomeDelivery("Alsina 123", LocalDateTime.now().plusDays(1));
+        Ticket ticket = TicketBuilder.aTicket().build();
+        DeliveryType deliveryType = new HomeDelivery(clientUser.address(), LocalDateTime.now().plusDays(1));
         BillGenerator billGenerator = new BillGenerator();
-        Bill bill = billGenerator.generateBill(Arrays.asList(purchase), clientUser, paymentMethod, deliveryType);
-        assertEquals(bill.addressOfDelivery(), "Alsina 123");
+        Bill bill = billGenerator.generateBill(Arrays.asList(ticket), clientUser, deliveryType);
+
+        assertEquals(clientUser.address(), bill.addressOfDelivery());
+        assertTrue(clientUser.hasBill(bill));
     }
 
     @Test
     public void aUserThatChoosesStorePickUpDeliveryTicketDoesNotHaveADeliveryAddress() {
         ClientUser clientUser = ClientUserBuilder.user().build();
-        PurchaseFromStore purchase = PurchaseFromStoreBuilder.aPurchase().withUser(clientUser).build();
-        String paymentMethod = "Credit Card";
+        Ticket ticket = TicketBuilder.aTicket().build();
         DeliveryType deliveryType = new StorePickUp(LocalDateTime.now().plusDays(1));
         BillGenerator billGenerator = new BillGenerator();
-        Bill bill = billGenerator.generateBill(Arrays.asList(purchase), clientUser, paymentMethod, deliveryType);
+        Bill bill = billGenerator.generateBill(Arrays.asList(ticket), clientUser, deliveryType);
+
+        assertTrue(clientUser.hasBill(bill));
         assertThrows(OptionNotAvailableForThisDeliveryType.class, bill::addressOfDelivery);
     }
 

@@ -19,6 +19,6 @@ public class CategoryMoneyThreshold extends MoneyThreshold {
     @Override
     public Boolean breaksTheLimitWith(Bill bill) {
         return this.isActive()
-                && bill.getTickets().stream().mapToDouble(ticket -> this.purchasePriceCalculator().calculatePriceForCategory(ticket.purchase(), this.category())).sum()> this.moneyLimit();
+                && bill.getTickets().stream().mapToDouble(ticket -> this.purchasePriceCalculator().calculatePriceForCategory(ticket, this.category())).sum()> this.moneyLimit();
     }
 }

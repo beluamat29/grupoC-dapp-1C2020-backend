@@ -80,7 +80,7 @@ public class StoreTest {
         AcquiredProduct product = store.getProduct("Mayonesa", "Hellmans", 2);
         assertEquals(store.stockOf("Mayonesa", "Hellmans"), 198);
         assertEquals(product.quantity(), 2);
-        assertEquals(product.price(), 15.4);
+        assertEquals(product.price(), 30.8);
         assertEquals(product.brand(), "Hellmans");
         assertEquals(product.name(), "Mayonesa");
     }

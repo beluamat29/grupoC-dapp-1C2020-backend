@@ -1,20 +1,19 @@
 package com.example.demo.builders;
 
-import com.example.demo.model.PurchaseFromStore;
 import com.example.demo.model.store.Store;
 import com.example.demo.model.ticket.Ticket;
 
 public class TicketBuilder {
 
     private String paymentMethod = "Credit Card";
-    private PurchaseFromStore ticketPurchase = PurchaseFromStoreBuilder.aPurchase().build();
+    private Store ticketStore = StoreBuilder.aStore().build();
 
     public static TicketBuilder aTicket() {
         return new TicketBuilder();
     }
 
     public Ticket build(){
-        return new Ticket(ticketPurchase, paymentMethod);
+        return new Ticket(paymentMethod, ticketStore);
     }
 
     public TicketBuilder withPaymentMethod(String aPaymentMethod) {
@@ -22,9 +21,15 @@ public class TicketBuilder {
         return this;
     }
 
-    public TicketBuilder withPurchase(PurchaseFromStore purchase) {
-        ticketPurchase = purchase;
+    public TicketBuilder withStore(Store store) {
+        ticketStore = store;
         return this;
     }
 
+    public Ticket withProductOfStore(String productName, String productBrand, Integer quantity, Store store) {
+        ticketStore = store;
+        Ticket ticket = build();
+        ticket.addProduct(productName, productBrand, quantity);
+        return ticket;
+    }
 }

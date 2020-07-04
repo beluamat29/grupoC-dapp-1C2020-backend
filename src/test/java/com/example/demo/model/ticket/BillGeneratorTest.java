@@ -1,7 +1,7 @@
 package com.example.demo.model.ticket;
 
-import com.example.demo.builders.PurchaseFromStoreBuilder;
 import com.example.demo.builders.ClientUserBuilder;
+import com.example.demo.builders.TicketBuilder;
 import com.example.demo.model.*;
 import com.example.demo.model.Bill;
 import com.example.demo.model.user.ClientUser;
@@ -16,28 +16,26 @@ public class BillGeneratorTest {
     @Test
     public void whenAUserMakesAPurchaseInOneStoreOnlyOneTicketIsSavedInTeBill(){
         ClientUser pepe = ClientUserBuilder.user().build();
-        PurchaseFromStore purchase = PurchaseFromStoreBuilder.aPurchase().build();
-        String paymentMethod = "Tarjeta de credito";
+        Ticket ticket = TicketBuilder.aTicket().build();
         DeliveryType deliveryType = new HomeDelivery("Alsina 123", LocalDateTime.now().plusDays(1));
         BillGenerator billGenerator = new BillGenerator();
-        Bill bill = billGenerator.generateBill(Arrays.asList(purchase), pepe, paymentMethod, deliveryType);
+        Bill bill = billGenerator.generateBill(Arrays.asList(ticket), pepe, deliveryType);
         assertTrue(pepe.hasBill(bill));
         assertEquals(1, pepe.quantityOfBills());
         assertEquals(1, bill.quantityTickets());
-        assertTrue(bill.hasTicketOfPurchase(purchase));
+        assertTrue(bill.hasTicket(ticket));
     }
 
     @Test
     public void aUserMakesAPurchaseAndTheBillIsGeneratedWithAllTheCorrespondentTickets(){
         ClientUser pepe = ClientUserBuilder.user().build();
-        PurchaseFromStore aPurchase = PurchaseFromStoreBuilder.aPurchase().build();
-        PurchaseFromStore anotherPurchase = PurchaseFromStoreBuilder.aPurchase().build();
-        String paymentMethod = "Tarjeta de credito";
+        Ticket ticket = TicketBuilder.aTicket().build();
+        Ticket anotherTicket = TicketBuilder.aTicket().build();
         DeliveryType deliveryType = new HomeDelivery("Alsina 123", LocalDateTime.now().plusDays(1));
         BillGenerator billGenerator = new BillGenerator();
-        Bill bill = billGenerator.generateBill(Arrays.asList(aPurchase, anotherPurchase), pepe, paymentMethod, deliveryType);
+        Bill bill = billGenerator.generateBill(Arrays.asList(ticket, anotherTicket), pepe, deliveryType);
         assertEquals(2, bill.quantityTickets());
-        assertTrue(bill.hasTicketOfPurchase(aPurchase));
-        assertTrue(bill.hasTicketOfPurchase(anotherPurchase));
+        assertTrue(bill.hasTicket(ticket));
+        assertTrue(bill.hasTicket(anotherTicket));
     }
 }
