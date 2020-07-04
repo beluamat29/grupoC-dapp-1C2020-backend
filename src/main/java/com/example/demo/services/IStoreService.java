@@ -12,7 +12,7 @@ public interface IStoreService {
 
     List<Store> getStoresWithACategory(String category);
 
-    List<Merchandise> getProductsFromStore(Long storeId);
+    List<Merchandise> getProductsFromStore(Long storeId, Boolean activeProducts);
 
     Store getStore(Long storeId);
 

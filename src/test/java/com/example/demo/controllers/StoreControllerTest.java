@@ -182,10 +182,10 @@ public class StoreControllerTest {
         Merchandise bread = MerchandiseBuilder.aMerchandise().buildWithId();
         store.addMerchandise(bread);
         List<Merchandise> merchandiseList = store.listOfAvailableMerchandise();
-        when(storeServiceMock.getProductsFromStore(any())).thenReturn(merchandiseList);
+        when(storeServiceMock.getProductsFromStore(any(), any())).thenReturn(merchandiseList);
         when(storeServiceMock.getStore(any())).thenReturn(store);
 
-        mockMvc.perform(get("/stores/" + (store.id()).toString() + "/products"))
+        mockMvc.perform(get("/stores/" + (store.id()).toString() + "/products?activeProducts=true"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("merchandises", hasSize(1)))
                 .andExpect(jsonPath("store.id", is(store.id())))
@@ -200,20 +200,20 @@ public class StoreControllerTest {
 
     @Test
     public void gettingStoreProductsListFromNonExistingStoreReturns404() throws Exception{
-        when(storeServiceMock.getProductsFromStore(any())).thenThrow((new NotFoundStoreException()));
+        when(storeServiceMock.getProductsFromStore(any(), any())).thenThrow((new NotFoundStoreException()));
         Long nonExistingId = (new Random().nextLong());
 
-        mockMvc.perform(get("/stores/"+ nonExistingId.toString() +"/products"))
+        mockMvc.perform(get("/stores/"+ nonExistingId.toString() +"/products?activeProducts=true"))
                 .andExpect(status().isNotFound());
     }
 
     @Test
     public void gettingStoreProductsListFromStoreWithoutMerchandiseReturnsAnEmptyList() throws Exception {
         Store store = StoreBuilder.aStore().buildWithId();
-        when(storeServiceMock.getProductsFromStore(any())).thenReturn(new ArrayList<>());
+        when(storeServiceMock.getProductsFromStore(any(), any())).thenReturn(new ArrayList<>());
         when(storeServiceMock.getStore(any())).thenReturn(store);
 
-        mockMvc.perform(get("/stores/"+ store.id().toString() +"/products"))
+        mockMvc.perform(get("/stores/"+ store.id().toString() +"/products?activeProducts=true"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("merchandises", hasSize(0)))
                 .andExpect(jsonPath("store.id", is(store.id())));

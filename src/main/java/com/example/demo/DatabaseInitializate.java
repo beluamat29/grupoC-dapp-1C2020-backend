@@ -182,6 +182,7 @@ public class DatabaseInitializate implements CommandLineRunner {
         StoreAdminUser monstromercadoadmin = new StoreAdminUser("monstromercado@gmail.com", "monstromercado123", monstruomercado);
         userService.addStoreAdmin(monstromercadoadmin);
 
+        milaSoja.setActiveCondition(false);
         tryNSave.addMerchandise(milaSoja);
         tryNSave.addMerchandise(coca);
         tryNSave.addMerchandise(cocaDosLts);

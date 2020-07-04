@@ -14,15 +14,16 @@ public class MerchandiseService implements IMerchandiseService {
 
     @Override
     public Merchandise updateMerchandise(Long id, Merchandise merchandise) {
-        Merchandise retrivedMerchandise = this.getMerchandiseById(id);
-        retrivedMerchandise.setName(merchandise.name());
-        retrivedMerchandise.setBrand(merchandise.brand());
-        retrivedMerchandise.updatePrice(merchandise.price());
-        retrivedMerchandise.setStock(merchandise.stock());
-        retrivedMerchandise.setCategory(merchandise.getCategory());
-        retrivedMerchandise.setImageURL(merchandise.imageURL());
+        Merchandise retrievedMerchandise = this.getMerchandiseById(id);
+        retrievedMerchandise.setName(merchandise.name());
+        retrievedMerchandise.setBrand(merchandise.brand());
+        retrievedMerchandise.updatePrice(merchandise.price());
+        retrievedMerchandise.setStock(merchandise.stock());
+        retrievedMerchandise.setCategory(merchandise.getCategory());
+        retrievedMerchandise.setImageURL(merchandise.imageURL());
+        retrievedMerchandise.setActiveCondition(merchandise.isActive());
 
-        return merchandiseRepository.save(retrivedMerchandise);
+        return merchandiseRepository.save(retrievedMerchandise);
     }
 
     @Override

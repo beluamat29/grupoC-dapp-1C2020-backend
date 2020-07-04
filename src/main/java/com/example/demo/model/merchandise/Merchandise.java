@@ -126,4 +126,8 @@ public class Merchandise {
     public void activate() {
         this.isActiveProduct = true;
     }
+
+    public void setActiveCondition(Boolean isActiveProduct) {
+        this.isActiveProduct = isActiveProduct;
+    }
 }
