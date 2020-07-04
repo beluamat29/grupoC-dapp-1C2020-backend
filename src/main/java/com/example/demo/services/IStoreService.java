@@ -1,5 +1,6 @@
 package com.example.demo.services;
 
+import com.example.demo.model.AcquiredProduct;
 import com.example.demo.model.store.Store;
 import com.example.demo.model.merchandise.Merchandise;
 import com.example.demo.model.store.StoreCategory;
@@ -25,4 +26,6 @@ public interface IStoreService {
     Merchandise addMerchandiseToStore(Long storeId, Merchandise merchandise);
 
     List<Merchandise> addMultipleMerchandisesToStore(Long storeId, List<Merchandise> merchandiseList);
+
+    List<AcquiredProduct> getAcquiredProductsFromStore(Long storeId, List<AcquiredProduct> prodcutsToBuy);
 }

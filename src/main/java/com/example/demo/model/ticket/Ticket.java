@@ -20,6 +20,12 @@ public class Ticket {
         tickeStore = aTickeStore;
     }
 
+    public Ticket(String aPaymentMethod, Store aTickeStore, List<AcquiredProduct> aProductList) {
+        paymentMethod = aPaymentMethod;
+        tickeStore = aTickeStore;
+        productList = aProductList;
+    }
+
 
     public String paymentMethod() {
         return this.paymentMethod;
