@@ -1,11 +1,9 @@
 package com.example.demo.model.store;
 
 import com.example.demo.builders.StoreBuilder;
-import com.example.demo.model.AcquiredProduct;
-import com.example.demo.model.StoreSchedule;
+import com.example.demo.model.acquiredProduct.AcquiredProduct;
 import com.example.demo.model.exceptions.InsufficientMerchandiseStockException;
 import com.example.demo.model.exceptions.NotFoundProductInStore;
-import com.example.demo.model.merchandise.Merchandise;
 import com.example.demo.model.merchandise.MerchandiseCategory;
 import org.junit.Test;
 

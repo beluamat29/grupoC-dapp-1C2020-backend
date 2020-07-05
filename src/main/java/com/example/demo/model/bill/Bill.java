@@ -1,5 +1,6 @@
-package com.example.demo.model;
+package com.example.demo.model.bill;
 
+import com.example.demo.model.delivery.DeliveryType;
 import com.example.demo.model.ticket.Ticket;
 
 import java.time.LocalDateTime;

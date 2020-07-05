@@ -1,6 +1,4 @@
-package com.example.demo.model;
-
-import com.example.demo.model.exceptions.OptionNotAvailableForThisDeliveryType;
+package com.example.demo.model.delivery;
 
 import java.time.LocalDateTime;
 

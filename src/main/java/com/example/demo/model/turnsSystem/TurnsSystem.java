@@ -1,6 +1,6 @@
 package com.example.demo.model.turnsSystem;
 
-import com.example.demo.model.StoreSchedule;
+import com.example.demo.model.store.StoreSchedule;
 
 import java.time.DayOfWeek;
 import java.time.LocalDate;
