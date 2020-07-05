@@ -2,6 +2,7 @@ package com.example.demo.model;
 
 import com.example.demo.model.merchandise.Merchandise;
 
+import javax.naming.ldap.LdapName;
 import javax.persistence.*;
 
 @Entity
@@ -11,7 +12,7 @@ public class AcquiredProduct {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @OneToOne
+    @ManyToOne
     private Merchandise merchandise;
     private Integer productQuantity;
 
