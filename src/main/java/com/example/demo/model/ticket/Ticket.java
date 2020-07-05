@@ -4,25 +4,32 @@ import com.example.demo.model.AcquiredProduct;
 import com.example.demo.model.purchasePriceCalculator.PurchasePriceCalculator;
 import com.example.demo.model.store.Store;
 
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
-
+@Entity
 public class Ticket {
 
-    private String paymentMethod;
-    private Double totalPrice;
-    private List<AcquiredProduct> productList = new ArrayList<>();
-    private Store tickeStore;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-    public Ticket(String aPaymentMethod, Store aTickeStore) {
+    private String paymentMethod;
+    @OneToMany(cascade = CascadeType.ALL)
+    private List<AcquiredProduct> productList = new ArrayList<>();
+    private Double totalPrice = new PurchasePriceCalculator().calculatePriceFor(productList);
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private Store ticketStore;
+
+    public Ticket(String aPaymentMethod, Store aTicketStore) {
         paymentMethod = aPaymentMethod;
-        tickeStore = aTickeStore;
+        ticketStore = aTicketStore;
     }
 
-    public Ticket(String aPaymentMethod, Store aTickeStore, List<AcquiredProduct> aProductList) {
+    public Ticket(String aPaymentMethod, Store aTicketStore, List<AcquiredProduct> aProductList) {
         paymentMethod = aPaymentMethod;
-        tickeStore = aTickeStore;
+        ticketStore = aTicketStore;
         productList = aProductList;
     }
 
@@ -32,11 +39,10 @@ public class Ticket {
     }
 
     public Double getTotal() {
-        totalPrice = new PurchasePriceCalculator().calculatePriceFor(productList);
-        return totalPrice;
+        return this.totalPrice;
     }
 
-    public Store store() { return this.tickeStore; }
+    public Store store() { return this.ticketStore; }
 
     public Integer productsQuantity() { return this.productList.stream().mapToInt(AcquiredProduct::quantity).sum();  }
 
@@ -46,5 +52,9 @@ public class Ticket {
 
     public void addProduct(String productName, String productBrand, Integer quantity) {
         this.productList.add(this.store().getProduct(productName, productBrand, quantity));
+    }
+
+    public void setId(long id) {
+        this.id = id;
     }
 }
