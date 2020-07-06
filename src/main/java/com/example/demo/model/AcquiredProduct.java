@@ -1,6 +1,7 @@
 package com.example.demo.model;
 
 import com.example.demo.model.merchandise.Merchandise;
+import com.example.demo.model.merchandise.MerchandiseCategory;
 
 import javax.naming.ldap.LdapName;
 import javax.persistence.*;
@@ -30,4 +31,20 @@ public class AcquiredProduct {
     public Integer quantity() {  return this.productQuantity;  }
 
     public Double price() { return productQuantity * merchandise.price();  }
+
+    public Integer stock() {
+        return this.merchandise.stock();
+    }
+
+    public MerchandiseCategory category() {
+        return this.category();
+    }
+
+    public Boolean isActiveProduct() {
+        return this.merchandise.isActive();
+    }
+
+    public String imageURL() {
+        return this.merchandise.imageURL();
+    }
 }

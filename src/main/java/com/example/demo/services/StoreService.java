@@ -1,5 +1,6 @@
 package com.example.demo.services;
 
+import com.example.demo.dtos.MerchandiseDTO;
 import com.example.demo.model.AcquiredProduct;
 import com.example.demo.model.exceptions.NotFoundStoreException;
 import com.example.demo.model.merchandise.Merchandise;
@@ -91,11 +92,11 @@ public class StoreService implements IStoreService {
     }
 
     @Override
-    public List<AcquiredProduct> getAcquiredProductsFromStore(Long storeId, List<AcquiredProduct> productsToBuy) {
+    public List<AcquiredProduct> getAcquiredProductsFromStore(Long storeId, List<MerchandiseDTO> productsToBuy) {
         List<AcquiredProduct> products = new ArrayList<>();
         Store store = getStore(storeId);
         productsToBuy.stream().forEach(product -> {
-            products.add(store.getProduct(product.name(), product.brand(), product.quantity()));
+            products.add(store.getProduct(product.getMerchandiseName(), product.getMerchandiseBrand(), product.getQuantity()));
         });
         return products;
     }

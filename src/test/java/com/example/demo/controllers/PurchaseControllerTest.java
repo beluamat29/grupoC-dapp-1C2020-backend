@@ -3,6 +3,7 @@ package com.example.demo.controllers;
 import com.example.demo.builders.ClientUserBuilder;
 import com.example.demo.builders.MerchandiseBuilder;
 import com.example.demo.builders.StoreBuilder;
+import com.example.demo.dtos.MerchandiseDTO;
 import com.example.demo.model.*;
 import com.example.demo.model.merchandise.Merchandise;
 import com.example.demo.model.store.Store;
@@ -59,12 +60,14 @@ public class PurchaseControllerTest {
         Store store = StoreBuilder.aStore().buildWithId();
         Merchandise merchandise = MerchandiseBuilder.aMerchandise().build();
         AcquiredProduct acquiredProduct = new AcquiredProduct(merchandise, 2);
+        MerchandiseDTO productToBuyDTO = new MerchandiseDTO(merchandise, store.id(), 2);
         DeliveryType delivery = new HomeDelivery(clientUser.address(), LocalDateTime.of(2020, 07, 25, 14,00));
         String paymentMethod = "Efectivo";
         String deliveryType = "Home Delivery";
         LocalDateTime deliveryTime = LocalDateTime.of(2020, 07, 25, 14,00);
-        List<AcquiredProduct> products = Arrays.asList(acquiredProduct);
-        Ticket ticket = new Ticket(paymentMethod, store, products);
+        List<AcquiredProduct> acquiredProducts = Arrays.asList(acquiredProduct);
+        List<MerchandiseDTO> products = Arrays.asList(productToBuyDTO);
+        Ticket ticket = new Ticket(paymentMethod, store, acquiredProducts);
         addIdToTicket(ticket);
         List<Ticket> ticketList = Arrays.asList(ticket);
         Bill bill = new BillGenerator().generateBill(ticketList, clientWithId, delivery);
@@ -88,7 +91,7 @@ public class PurchaseControllerTest {
         return bill;
     }
 
-    private JSONObject generateBillToAddBody(ClientUser clientUser, Bill bill, String paymentMethod, List<AcquiredProduct> products, String deliveryType, LocalDateTime deliveryTime ) throws JSONException {
+    private JSONObject generateBillToAddBody(ClientUser clientUser, Bill bill, String paymentMethod, List<MerchandiseDTO> products, String deliveryType, LocalDateTime deliveryTime ) throws JSONException {
         bill.setId(new Random().nextLong());
         JSONObject purchaseDTOJson = new JSONObject();
 
@@ -100,29 +103,30 @@ public class PurchaseControllerTest {
         return purchaseDTOJson;
     }
 
-    private JSONObject generateProductsList(List<AcquiredProduct> products) throws JSONException {
-        JSONObject productsJson = new JSONObject();
-
-        List<JSONObject> acquiredProductJson = products.stream().map(product -> {
+    private JSONArray generateProductsList(List<MerchandiseDTO> products) throws JSONException {
+        JSONArray productsArray = new JSONArray();
+        products.stream().forEach(product -> {
             try {
-                return generateJsonProduct(product);
+                productsArray.put(generateJsonProduct(product));
             } catch (JSONException e) {
                 e.printStackTrace();
             }
-            return null;
-        }).collect(Collectors.toList());
-        productsJson.put("productsList", acquiredProductJson);
-        return productsJson;
-
+        });
+        return productsArray;
     }
 
-    private JSONObject generateJsonProduct(AcquiredProduct product) throws JSONException {
+    private JSONObject generateJsonProduct(MerchandiseDTO product) throws JSONException {
         JSONObject productJson = new JSONObject();
 
-        productJson.put("name", product.name());
-        productJson.put("brand", product.brand());
-        productJson.put("price", product.price());
-        productJson.put("quantity", product.quantity());
+        productJson.put("storeId", product.getStoreId());
+        productJson.put("name", product.getMerchandiseName());
+        productJson.put("brand", product.getMerchandiseBrand());
+        productJson.put("price", product.getMerchandisePrice());
+        productJson.put("quantity", product.getQuantity());
+        productJson.put("category", product.getCategory());
+        productJson.put("isActiveMerchandise", product.getIsActiveMerchandise());
+        productJson.put("productImageURL", product.getImageURL());
+        productJson.put("stock", product.getMerchandiseStock());
         return productJson;
 
     }

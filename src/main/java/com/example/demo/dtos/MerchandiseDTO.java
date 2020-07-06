@@ -1,6 +1,5 @@
 package com.example.demo.dtos;
 
-import com.example.demo.model.AcquiredProduct;
 import com.example.demo.model.merchandise.Merchandise;
 import com.example.demo.model.merchandise.MerchandiseCategory;
 import com.fasterxml.jackson.annotation.JsonCreator;
@@ -44,6 +43,18 @@ public class MerchandiseDTO {
 
     public MerchandiseDTO(){};
 
+    public MerchandiseDTO(Merchandise merchandise, Long storeId, Integer quantity) {
+        this.storeId = storeId;
+        this.merchandiseName = merchandise.name();
+        this.merchandiseBrand = merchandise.brand();
+        this.merchandisePrice = merchandise.price();
+        this.merchandiseStock = merchandise.stock();
+        this.category = merchandise.getCategory();
+        this.imageURL = merchandise.imageURL();
+        this.isActiveMerchandise = merchandise.isActive();
+        this.quantity = quantity;
+    }
+
     public Long getStoreId(){ return this.storeId;}
     public String getMerchandiseName(){ return this.merchandiseName;}
     public String getMerchandiseBrand(){ return this.merchandiseBrand;}
@@ -71,11 +82,5 @@ public class MerchandiseDTO {
         Merchandise merchandise = new Merchandise(this.merchandiseName, this.merchandiseBrand, this.merchandisePrice, this.merchandiseStock, this.category, this.imageURL);
         return merchandise;
 
-    }
-
-    public ProductToBuy buildProductToBuy() {
-        AcquiredProduct acquiredProduct = new AcquiredProduct(buildMerchandise(), this.quantity);
-        ProductToBuy product = new ProductToBuy(storeId, acquiredProduct);
-        return product;
     }
 }

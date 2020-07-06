@@ -1,7 +1,7 @@
 package com.example.demo.services.purchase;
 
 
-import com.example.demo.dtos.ProductToBuy;
+import com.example.demo.dtos.MerchandiseDTO;
 import com.example.demo.model.*;
 import com.example.demo.model.store.Store;
 import com.example.demo.model.ticket.Ticket;
@@ -37,22 +37,21 @@ public class PurchaseService implements IPurchaseService{
     BillRepository billRepository;
 
     @Override
-    public Ticket processTicket(Long storeId, List<ProductToBuy> productsToBuy, String paymentMethod) {
-        List<AcquiredProduct> products = productsToBuy.stream().map(productToBuy -> productToBuy.getProductToBuy()).collect(Collectors.toList());
-        List<AcquiredProduct> productsList = storeService.getAcquiredProductsFromStore(storeId, products);
+    public Ticket processTicket(Long storeId, List<MerchandiseDTO> productsToBuy, String paymentMethod) {
+        List<AcquiredProduct> productsList = storeService.getAcquiredProductsFromStore(storeId, productsToBuy);
         Store store = storeService.getStore(storeId);
         Ticket ticket = generateTicketWithId(paymentMethod, store, productsList);
         return ticketRepository.save(ticket);
     }
 
     @Override
-    public Bill processBill(List<ProductToBuy> productsToBuy, String aDeliveryTipe, LocalDateTime deliveryTime, String paymentMethod, ClientUser user) {
-        Map<Long, List<ProductToBuy>> productsGroupByStore = productsToBuy.stream().collect(Collectors.groupingBy(ProductToBuy::getStoreId));
+    public Bill processBill(List<MerchandiseDTO> productsToBuy, String aDeliveryType, LocalDateTime deliveryTime, String paymentMethod, ClientUser user) {
+        Map<Long, List<MerchandiseDTO>> productsGroupByStore = productsToBuy.stream().collect(Collectors.groupingBy(MerchandiseDTO::getStoreId));
         List<Ticket> ticketList = new ArrayList<>();
         productsGroupByStore.forEach((storeId, products) -> ticketList.add(processTicket(storeId, products, paymentMethod)));
         BillGenerator billGenerator = new BillGenerator();
         User clientUser = userService.getUserById(user.id());
-        DeliveryType deliveryType = generateDelivery(aDeliveryTipe, clientUser, deliveryTime);
+        DeliveryType deliveryType = generateDelivery(aDeliveryType, clientUser, deliveryTime);
         Bill bill = billGenerator.generateBill(ticketList,(ClientUser) clientUser, deliveryType);
         return billRepository.save(bill);
     }

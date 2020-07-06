@@ -1,22 +1,10 @@
 package com.example.demo.services;
 
 
-import com.example.demo.builders.ClientUserBuilder;
-import com.example.demo.builders.MerchandiseBuilder;
-import com.example.demo.builders.StoreBuilder;
-import com.example.demo.dtos.ProductToBuy;
-import com.example.demo.model.*;
-import com.example.demo.model.exceptions.NotFoundStoreException;
-import com.example.demo.model.merchandise.Merchandise;
-import com.example.demo.model.store.Store;
-import com.example.demo.model.ticket.Ticket;
-import com.example.demo.model.user.ClientUser;
 import com.example.demo.repositories.BillRepository;
 import com.example.demo.repositories.TicketRepository;
 import com.example.demo.services.purchase.PurchaseService;
 import com.example.demo.services.users.UserService;
-import org.apache.tomcat.jni.Local;
-import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
@@ -24,15 +12,7 @@ import org.mockito.junit.MockitoJUnitRunner;
 import org.springframework.boot.test.context.SpringBootTest;
 
 
-import java.time.LocalDateTime;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Random;
-
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.when;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 @RunWith(MockitoJUnitRunner.class)
