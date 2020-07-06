@@ -22,7 +22,7 @@ import java.util.Random;
 import java.util.stream.Collectors;
 
 @Service
-public class PurchaseService implements IPurchaseService{
+public class PurchaseService implements IPurchaseService {
 
     @Autowired
     StoreService storeService;
@@ -48,16 +48,23 @@ public class PurchaseService implements IPurchaseService{
     public Bill processBill(List<MerchandiseDTO> productsToBuy, String aDeliveryType, LocalDateTime deliveryTime, String paymentMethod, ClientUser user) {
         Map<Long, List<MerchandiseDTO>> productsGroupByStore = productsToBuy.stream().collect(Collectors.groupingBy(MerchandiseDTO::getStoreId));
         List<Ticket> ticketList = new ArrayList<>();
-        productsGroupByStore.forEach((storeId, products) -> ticketList.add(processTicket(storeId, products, paymentMethod)));
+        productsGroupByStore.forEach((storeId, products) -> {
+            Store store = storeService.getStore(storeId);
+            ticketList.add(new Ticket(paymentMethod, store, generateAcquiredProducts(products, store)));
+        });
         BillGenerator billGenerator = new BillGenerator();
         User clientUser = userService.getUserById(user.id());
         DeliveryType deliveryType = generateDelivery(aDeliveryType, clientUser, deliveryTime);
-        Bill bill = billGenerator.generateBill(ticketList,(ClientUser) clientUser, deliveryType);
+        Bill bill = billGenerator.generateBill(ticketList, (ClientUser) clientUser, deliveryType);
         return billRepository.save(bill);
     }
 
+    private List<AcquiredProduct> generateAcquiredProducts(List<MerchandiseDTO> productsToBuy, Store store) {
+        return productsToBuy.stream().map(product -> store.getProduct(product.getMerchandiseName(), product.getMerchandiseBrand(), product.getQuantity())).collect(Collectors.toList());
+    }
+
     public DeliveryType generateDelivery(String deliveryType, User user, LocalDateTime deliveryTime) {
-        if(deliveryType.equals("Home Delivery")){
+        if (deliveryType.equals("Home Delivery")) {
             return new HomeDelivery(user.address(), deliveryTime);
         }
         return new StorePickUp(deliveryTime);

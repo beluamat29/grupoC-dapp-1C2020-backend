@@ -71,6 +71,7 @@ public class PurchaseControllerTest {
         addIdToTicket(ticket);
         List<Ticket> ticketList = Arrays.asList(ticket);
         Bill bill = new BillGenerator().generateBill(ticketList, clientWithId, delivery);
+        addIdToBill(bill);
         when(purchaseServiceMock.processBill(any(), any(), any(), any(), any())).thenReturn(addIdToBill(bill));
 
         JSONObject body = generateBillToAddBody(clientWithId, bill, paymentMethod, products, deliveryType, deliveryTime);
@@ -79,6 +80,8 @@ public class PurchaseControllerTest {
                 .content(String.valueOf(body)))
                 .andExpect(status().isOk())
                 .andReturn();
+
+        //testear contenido
     }
 
     private Ticket addIdToTicket(Ticket ticket) {

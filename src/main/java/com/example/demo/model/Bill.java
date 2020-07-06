@@ -1,6 +1,8 @@
 package com.example.demo.model;
 
 import com.example.demo.model.ticket.Ticket;
+import com.example.demo.serializers.BillJsonSerializer;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import org.hibernate.annotations.Cascade;
 
 import javax.persistence.*;
@@ -8,12 +10,13 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
+@JsonSerialize(using = BillJsonSerializer.class)
 public class Bill {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<Ticket> allTickets;
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private DeliveryType deliveryType;
@@ -22,6 +25,8 @@ public class Bill {
         this.allTickets = tickets;
         this.deliveryType = delivery;
     }
+
+    public Bill(){};
 
     public Integer quantityTickets() {
         return this.allTickets.size();

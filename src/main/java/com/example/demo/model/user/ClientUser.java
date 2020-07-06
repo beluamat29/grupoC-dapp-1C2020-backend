@@ -20,8 +20,8 @@ import java.util.List;
 @JsonSerialize(using = UserJsonSerializer.class)
     public class ClientUser extends User {
 
-    @Transient
-    private List<Bill> billOfPurchase;
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private List<Bill> billOfPurchase ;
 
     @OneToOne
     private MoneyThreshold moneyThresold = new MoneyThreshold(0.0);

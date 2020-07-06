@@ -3,12 +3,15 @@ package com.example.demo.model.ticket;
 import com.example.demo.model.AcquiredProduct;
 import com.example.demo.model.purchasePriceCalculator.PurchasePriceCalculator;
 import com.example.demo.model.store.Store;
+import com.example.demo.serializers.TicketJsonSerializer;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
+@JsonSerialize(using = TicketJsonSerializer.class)
 public class Ticket {
 
     @Id
@@ -16,22 +19,26 @@ public class Ticket {
     private Long id;
 
     private String paymentMethod;
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<AcquiredProduct> productList = new ArrayList<>();
-    private Double totalPrice = new PurchasePriceCalculator().calculatePriceFor(productList);
+    private Double totalPrice;
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Store ticketStore;
 
     public Ticket(String aPaymentMethod, Store aTicketStore) {
         paymentMethod = aPaymentMethod;
         ticketStore = aTicketStore;
+        totalPrice =  new PurchasePriceCalculator().calculatePriceFor(productList);
     }
 
     public Ticket(String aPaymentMethod, Store aTicketStore, List<AcquiredProduct> aProductList) {
         paymentMethod = aPaymentMethod;
         ticketStore = aTicketStore;
         productList = aProductList;
+        totalPrice =  new PurchasePriceCalculator().calculatePriceFor(productList);
     }
+
+    public Ticket(){};
 
 
     public String paymentMethod() {
@@ -53,6 +60,8 @@ public class Ticket {
     public void addProduct(String productName, String productBrand, Integer quantity) {
         this.productList.add(this.store().getProduct(productName, productBrand, quantity));
     }
+
+    public Long id(){ return this.id;}
 
     public void setId(long id) {
         this.id = id;
