@@ -64,7 +64,7 @@ public class PurchaseService implements IPurchaseService {
     }
 
     public DeliveryType generateDelivery(String deliveryType, User user, LocalDateTime deliveryTime) {
-        if (deliveryType.equals("Home Delivery")) {
+        if (deliveryType.equals("HOME_DELIVERY")) {
             return new HomeDelivery(user.address(), deliveryTime);
         }
         return new StorePickUp(deliveryTime);

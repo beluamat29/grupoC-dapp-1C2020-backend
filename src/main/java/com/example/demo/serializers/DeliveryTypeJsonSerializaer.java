@@ -1,7 +1,6 @@
 package com.example.demo.serializers;
 
 import com.example.demo.model.DeliveryType;
-import com.example.demo.model.HomeDelivery;
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.JsonSerializer;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -18,7 +17,7 @@ public class DeliveryTypeJsonSerializaer extends JsonSerializer<DeliveryType> {
 
         jgen.writeStartObject();
         jgen.writeStringField("deliveryAddress", deliveryType.deliveryAddress());
-        jgen.writeObjectField("pickUpDate", deliveryType.pickUpDate());
+        jgen.writeObjectField("pickUpDate", deliveryType.pickUpDate().toString());
         jgen.writeEndObject();
 
 

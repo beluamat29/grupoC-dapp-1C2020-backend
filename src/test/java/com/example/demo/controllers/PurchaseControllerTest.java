@@ -9,8 +9,11 @@ import com.example.demo.model.merchandise.Merchandise;
 import com.example.demo.model.store.Store;
 import com.example.demo.model.ticket.Ticket;
 import com.example.demo.model.user.ClientUser;
+import com.example.demo.services.StoreService;
 import com.example.demo.services.purchase.PurchaseService;
+import com.example.demo.services.users.UserService;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.jayway.jsonpath.JsonPath;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -25,6 +28,7 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
+import org.springframework.test.web.servlet.ResultMatcher;
 
 import java.time.LocalDateTime;
 import java.util.Arrays;
@@ -33,9 +37,13 @@ import java.util.Random;
 import java.util.stream.Collectors;
 
 
+import static org.hamcrest.Matchers.hasSize;
+import static org.hamcrest.Matchers.is;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringBootTest
@@ -46,6 +54,12 @@ public class PurchaseControllerTest {
 
     @MockBean
     PurchaseService purchaseServiceMock;
+
+    @MockBean
+    UserService userServiceMock;
+
+    @MockBean
+    StoreService storeServiceMock;
 
     @Autowired
     ObjectMapper objectMapper;
@@ -73,15 +87,25 @@ public class PurchaseControllerTest {
         Bill bill = new BillGenerator().generateBill(ticketList, clientWithId, delivery);
         addIdToBill(bill);
         when(purchaseServiceMock.processBill(any(), any(), any(), any(), any())).thenReturn(addIdToBill(bill));
+        when(userServiceMock.getUserById(any())).thenReturn(clientWithId);
+        when(storeServiceMock.getStore(any())).thenReturn(store);
 
         JSONObject body = generateBillToAddBody(clientWithId, bill, paymentMethod, products, deliveryType, deliveryTime);
         MvcResult mvcResult = mockMvc.perform(post("/purchase")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(String.valueOf(body)))
                 .andExpect(status().isOk())
+                .andExpect((jsonPath("id", is(bill.id()))))
+                .andExpect((jsonPath("allTickets", hasSize(1))))
+                .andExpect((jsonPath("allTickets[0].id", is(ticket.id()))))
+                .andExpect((jsonPath("allTickets[0].paymentMethod", is(ticket.paymentMethod()))))
+                .andExpect((jsonPath("allTickets[0].productList", hasSize(1))))
+                .andExpect((jsonPath("allTickets[0].totalPrice",is(ticket.getTotal()))))
+                .andExpect((jsonPath("allTickets[0].ticketStore.id", is(ticket.store().id()))))
+                .andExpect((jsonPath("deliveryType.deliveryAddress", is(bill.addressOfDelivery()))))
+                .andExpect((jsonPath("deliveryType.pickUpDate", is(bill.deliveryTime().toString()))))
                 .andReturn();
 
-        //testear contenido
     }
 
     private Ticket addIdToTicket(Ticket ticket) {
