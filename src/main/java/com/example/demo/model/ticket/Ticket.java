@@ -28,14 +28,12 @@ public class Ticket {
     public Ticket(String aPaymentMethod, Store aTicketStore) {
         paymentMethod = aPaymentMethod;
         ticketStore = aTicketStore;
-        totalPrice =  new PurchasePriceCalculator().calculatePriceFor(productList);
     }
 
     public Ticket(String aPaymentMethod, Store aTicketStore, List<AcquiredProduct> aProductList) {
         paymentMethod = aPaymentMethod;
         ticketStore = aTicketStore;
         productList = aProductList;
-        totalPrice =  new PurchasePriceCalculator().calculatePriceFor(productList);
     }
 
     public Ticket(){};
@@ -46,7 +44,7 @@ public class Ticket {
     }
 
     public Double getTotal() {
-        return this.totalPrice;
+        return totalPrice = new PurchasePriceCalculator().calculatePriceFor(this.getListOfAdquiredProducts());
     }
 
     public Store store() { return this.ticketStore; }
