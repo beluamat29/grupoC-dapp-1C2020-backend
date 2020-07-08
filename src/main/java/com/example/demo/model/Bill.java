@@ -1,19 +1,32 @@
 package com.example.demo.model;
 
 import com.example.demo.model.ticket.Ticket;
+import com.example.demo.serializers.BillJsonSerializer;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import org.hibernate.annotations.Cascade;
 
+import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.List;
 
+@Entity
+@JsonSerialize(using = BillJsonSerializer.class)
 public class Bill {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<Ticket> allTickets;
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private DeliveryType deliveryType;
 
     public Bill(List<Ticket> tickets, DeliveryType delivery){
         this.allTickets = tickets;
         this.deliveryType = delivery;
     }
+
+    public Bill(){};
 
     public Integer quantityTickets() {
         return this.allTickets.size();
@@ -38,4 +51,11 @@ public class Bill {
     public Boolean hasTicket(Ticket aTicket) {
         return allTickets.stream().anyMatch(ticket -> ticket.equals(aTicket));
     }
+
+    public void setId(Long id) { this.id = id;}
+
+    public Long id() { return this.id;}
+
+    public DeliveryType getDeliveryType() { return this.deliveryType;}
+
 }

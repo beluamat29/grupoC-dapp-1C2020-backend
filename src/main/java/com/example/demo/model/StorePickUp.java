@@ -1,10 +1,20 @@
 package com.example.demo.model;
 
 import com.example.demo.model.exceptions.OptionNotAvailableForThisDeliveryType;
+import com.example.demo.serializers.DeliveryTypeJsonSerializaer;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
+import javax.persistence.*;
 import java.time.LocalDateTime;
 
-public class StorePickUp implements DeliveryType {
+@Entity
+@DiscriminatorValue("PICK_UP")
+@JsonSerialize(using = DeliveryTypeJsonSerializaer.class)
+public class StorePickUp extends DeliveryType {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
     private LocalDateTime pickUpDate;
 
@@ -18,5 +28,10 @@ public class StorePickUp implements DeliveryType {
     @Override
     public LocalDateTime pickUpDate() {
         return this.pickUpDate;
+    }
+
+    @Override
+    public Long getId() {
+        return this.id;
     }
 }

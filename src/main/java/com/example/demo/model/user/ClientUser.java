@@ -1,6 +1,5 @@
 package com.example.demo.model.user;
 
-import com.example.demo.deserializers.UserJsonDeserializer;
 import com.example.demo.model.Bill;
 import com.example.demo.model.exceptions.ClientUserDoesNotHaveStoresException;
 import com.example.demo.model.exceptions.InvalidAddressException;
@@ -10,7 +9,6 @@ import com.example.demo.model.store.Store;
 import com.example.demo.model.thresholds.CategoryMoneyThreshold;
 import com.example.demo.model.thresholds.MoneyThreshold;
 import com.example.demo.serializers.UserJsonSerializer;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 import javax.persistence.*;
@@ -22,8 +20,8 @@ import java.util.List;
 @JsonSerialize(using = UserJsonSerializer.class)
     public class ClientUser extends User {
 
-    @Transient
-    private List<Bill> billOfPurchase;
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private List<Bill> billOfPurchase ;
 
     @OneToOne
     private MoneyThreshold moneyThresold = new MoneyThreshold(0.0);

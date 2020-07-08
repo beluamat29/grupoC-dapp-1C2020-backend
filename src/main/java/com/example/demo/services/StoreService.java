@@ -1,5 +1,7 @@
 package com.example.demo.services;
 
+import com.example.demo.dtos.MerchandiseDTO;
+import com.example.demo.model.AcquiredProduct;
 import com.example.demo.model.exceptions.NotFoundStoreException;
 import com.example.demo.model.merchandise.Merchandise;
 import com.example.demo.model.user.StoreAdminUser;
@@ -36,7 +38,7 @@ public class StoreService implements IStoreService {
 
     public List<Merchandise> getProductsFromStore(Long storeId, Boolean activeProducts) {
         storeRepository.findById(storeId).orElseThrow(NotFoundStoreException::new);
-        if(storeRepository.findById(storeId).get().listOfAvailableMerchandise().isEmpty()){
+        if (storeRepository.findById(storeId).get().listOfAvailableMerchandise().isEmpty()) {
             return new ArrayList<>();
         }
         if(activeProducts) {
@@ -46,20 +48,22 @@ public class StoreService implements IStoreService {
         }
     }
 
-   @Override
+    @Override
     public Store getStore(Long storeId) {
         return storeRepository.findById(storeId).orElseThrow(NotFoundStoreException::new);
     }
 
     @Override
-    public List<Merchandise> getDiscountFromStores() {  return null; }
+    public List<Merchandise> getDiscountFromStores() {
+        return null;
+    }
 
-   @Override
-   public Store addStore(Store store) {
-       validateStore(store);
-       storeRepository.save(store);
-       return store;
-   }
+    @Override
+    public Store addStore(Store store) {
+        validateStore(store);
+        storeRepository.save(store);
+        return store;
+    }
 
     private void validateStore(Store aStore) {
         entityVAlidator.validateStore(aStore);
@@ -88,5 +92,15 @@ public class StoreService implements IStoreService {
         });
         storeRepository.save(store);
         return merchandiseList;
+    }
+
+    @Override
+    public List<AcquiredProduct> getAcquiredProductsFromStore(Long storeId, List<MerchandiseDTO> productsToBuy) {
+        List<AcquiredProduct> products = new ArrayList<>();
+        Store store = getStore(storeId);
+        productsToBuy.stream().forEach(product -> {
+            products.add(store.getProduct(product.getMerchandiseName(), product.getMerchandiseBrand(), product.getQuantity()));
+        });
+        return products;
     }
 }

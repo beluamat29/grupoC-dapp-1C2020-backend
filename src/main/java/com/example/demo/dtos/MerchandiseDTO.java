@@ -23,11 +23,13 @@ public class MerchandiseDTO {
     private String imageURL;
     @JsonProperty
     private Boolean isActiveMerchandise;
+    @JsonProperty
+    private Integer quantity;
 
     @JsonCreator
     public MerchandiseDTO(@JsonProperty("storeId") Long storeId, @JsonProperty("name")String name, @JsonProperty("brand")String brand,
                           @JsonProperty("price") Double price, @JsonProperty("stock") Integer stock, @JsonProperty("isActiveMerchandise")Boolean isActiveMerchandise,
-                          @JsonProperty("category") MerchandiseCategory category, @JsonProperty("productImageURL") String imageURL){
+                          @JsonProperty("category") MerchandiseCategory category, @JsonProperty("productImageURL") String imageURL, @JsonProperty(value ="quantity", required = false) Integer quantity){
         this.storeId = storeId;
         this.merchandiseName = name;
         this.merchandiseBrand = brand;
@@ -36,9 +38,22 @@ public class MerchandiseDTO {
         this.category = category;
         this.imageURL = imageURL;
         this.isActiveMerchandise = isActiveMerchandise;
+        this.quantity = quantity;
     }
 
     public MerchandiseDTO(){};
+
+    public MerchandiseDTO(Merchandise merchandise, Long storeId, Integer quantity) {
+        this.storeId = storeId;
+        this.merchandiseName = merchandise.name();
+        this.merchandiseBrand = merchandise.brand();
+        this.merchandisePrice = merchandise.price();
+        this.merchandiseStock = merchandise.stock();
+        this.category = merchandise.getCategory();
+        this.imageURL = merchandise.imageURL();
+        this.isActiveMerchandise = merchandise.isActive();
+        this.quantity = quantity;
+    }
 
     public Long getStoreId(){ return this.storeId;}
     public String getMerchandiseName(){ return this.merchandiseName;}
@@ -48,6 +63,7 @@ public class MerchandiseDTO {
     public MerchandiseCategory getCategory(){ return this.category;}
     public String getImageURL(){ return this.imageURL;}
     public Boolean getIsActiveMerchandise() {return this.isActiveMerchandise;}
+    public Integer getQuantity(){ return this.quantity;}
 
     public void setStoreId(Long id){ this.storeId = id; }
     public void setName(String name){ this.merchandiseName = name; }
@@ -59,6 +75,7 @@ public class MerchandiseDTO {
     public void setIsActiveMerchandise(Boolean activeMerchandise) {
         isActiveMerchandise = activeMerchandise;
     }
+    public void setQuantity(Integer quantity){ this.quantity = quantity;}
 
 
     public Merchandise buildMerchandise() {
