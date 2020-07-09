@@ -1,8 +1,7 @@
 package com.example.demo.model.store;
 
 import com.example.demo.deserializers.StoreJsonDeserializer;
-import com.example.demo.model.AcquiredProduct;
-import com.example.demo.model.StoreSchedule;
+import com.example.demo.model.acquiredProduct.AcquiredProduct;
 import com.example.demo.model.discounts.*;
 import com.example.demo.model.exceptions.InsufficientMerchandiseStockException;
 import com.example.demo.model.exceptions.InvalidMerchandiseException;

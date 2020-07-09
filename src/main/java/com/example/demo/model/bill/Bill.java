@@ -1,9 +1,9 @@
-package com.example.demo.model;
+package com.example.demo.model.bill;
 
+import com.example.demo.model.delivery.DeliveryType;
 import com.example.demo.model.ticket.Ticket;
 import com.example.demo.serializers.BillJsonSerializer;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import org.hibernate.annotations.Cascade;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;

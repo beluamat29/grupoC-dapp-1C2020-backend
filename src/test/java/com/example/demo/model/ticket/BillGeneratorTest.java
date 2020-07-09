@@ -2,8 +2,10 @@ package com.example.demo.model.ticket;
 
 import com.example.demo.builders.ClientUserBuilder;
 import com.example.demo.builders.TicketBuilder;
-import com.example.demo.model.*;
-import com.example.demo.model.Bill;
+import com.example.demo.model.bill.Bill;
+import com.example.demo.model.bill.BillGenerator;
+import com.example.demo.model.delivery.DeliveryType;
+import com.example.demo.model.delivery.HomeDelivery;
 import com.example.demo.model.user.ClientUser;
 import org.junit.Test;
 

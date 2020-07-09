@@ -1,7 +1,7 @@
 package com.example.demo.controllers;
 
 import com.example.demo.dtos.PurchaseDTO;
-import com.example.demo.model.Bill;
+import com.example.demo.model.bill.Bill;
 import com.example.demo.model.user.ClientUser;
 import com.example.demo.model.user.User;
 import com.example.demo.services.purchase.IPurchaseService;

@@ -1,7 +1,11 @@
 package com.example.demo.model.ticket;
 
 import com.example.demo.builders.*;
-import com.example.demo.model.*;
+import com.example.demo.model.bill.Bill;
+import com.example.demo.model.bill.BillGenerator;
+import com.example.demo.model.delivery.DeliveryType;
+import com.example.demo.model.delivery.HomeDelivery;
+import com.example.demo.model.delivery.StorePickUp;
 import com.example.demo.model.exceptions.OptionNotAvailableForThisDeliveryType;
 import com.example.demo.model.merchandise.MerchandiseCategory;
 import com.example.demo.model.store.Store;

@@ -1,4 +1,4 @@
-package com.example.demo.model;
+package com.example.demo.model.store;
 
 import com.example.demo.deserializers.StoreScheduleJsonDeserializer;
 import com.example.demo.model.exceptions.WrongScheduleException;

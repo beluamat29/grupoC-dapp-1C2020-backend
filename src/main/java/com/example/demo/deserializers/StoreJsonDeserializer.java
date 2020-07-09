@@ -1,6 +1,6 @@
 package com.example.demo.deserializers;
 
-import com.example.demo.model.StoreSchedule;
+import com.example.demo.model.store.StoreSchedule;
 import com.example.demo.model.store.Store;
 import com.example.demo.model.store.StoreCategory;
 import com.fasterxml.jackson.core.JsonParser;

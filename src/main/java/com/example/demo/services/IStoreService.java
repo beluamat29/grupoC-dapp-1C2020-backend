@@ -1,7 +1,7 @@
 package com.example.demo.services;
 
 import com.example.demo.dtos.MerchandiseDTO;
-import com.example.demo.model.AcquiredProduct;
+import com.example.demo.model.acquiredProduct.AcquiredProduct;
 import com.example.demo.model.store.Store;
 import com.example.demo.model.merchandise.Merchandise;
 import com.example.demo.model.user.StoreAdminUser;

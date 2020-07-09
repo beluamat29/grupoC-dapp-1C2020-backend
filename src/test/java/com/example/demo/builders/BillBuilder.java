@@ -1,8 +1,8 @@
 package com.example.demo.builders;
 
-import com.example.demo.model.DeliveryType;
-import com.example.demo.model.HomeDelivery;
-import com.example.demo.model.Bill;
+import com.example.demo.model.delivery.DeliveryType;
+import com.example.demo.model.delivery.HomeDelivery;
+import com.example.demo.model.bill.Bill;
 import com.example.demo.model.ticket.Ticket;
 
 import java.time.LocalDateTime;

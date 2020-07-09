@@ -1,6 +1,5 @@
 package com.example.demo.model.store;
 
-import com.example.demo.model.StoreSchedule;
 import com.example.demo.model.exceptions.WrongScheduleException;
 import org.junit.Test;
 

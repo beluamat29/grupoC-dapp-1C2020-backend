@@ -1,6 +1,6 @@
 package com.example.demo.serializers;
 
-import com.example.demo.model.StoreSchedule;
+import com.example.demo.model.store.StoreSchedule;
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.JsonSerializer;
 import com.fasterxml.jackson.databind.SerializerProvider;
