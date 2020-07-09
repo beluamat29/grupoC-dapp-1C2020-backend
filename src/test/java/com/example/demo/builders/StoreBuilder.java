@@ -1,7 +1,7 @@
 package com.example.demo.builders;
 
 import com.example.demo.model.store.Store;
-import com.example.demo.model.StoreSchedule;
+import com.example.demo.model.store.StoreSchedule;
 import com.example.demo.model.merchandise.MerchandiseCategory;
 import com.example.demo.model.store.StoreCategory;
 

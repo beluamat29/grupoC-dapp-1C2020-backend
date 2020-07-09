@@ -1,6 +1,6 @@
 package com.example.demo.model.thresholds;
 
-import com.example.demo.model.Bill;
+import com.example.demo.model.bill.Bill;
 import com.example.demo.model.purchasePriceCalculator.PurchasePriceCalculator;
 
 import javax.persistence.*;

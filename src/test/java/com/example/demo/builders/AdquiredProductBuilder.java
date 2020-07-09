@@ -1,6 +1,6 @@
 package com.example.demo.builders;
 
-import com.example.demo.model.AcquiredProduct;
+import com.example.demo.model.acquiredProduct.AcquiredProduct;
 import com.example.demo.model.merchandise.Merchandise;
 
 public class AdquiredProductBuilder {

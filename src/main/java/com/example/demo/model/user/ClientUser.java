@@ -1,6 +1,6 @@
 package com.example.demo.model.user;
 
-import com.example.demo.model.Bill;
+import com.example.demo.model.bill.Bill;
 import com.example.demo.model.exceptions.ClientUserDoesNotHaveStoresException;
 import com.example.demo.model.exceptions.InvalidAddressException;
 import com.example.demo.model.exceptions.NotFoundCategoryMoneyThresholdForThisUser;

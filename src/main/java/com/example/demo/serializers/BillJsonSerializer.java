@@ -1,6 +1,6 @@
 package com.example.demo.serializers;
 
-import com.example.demo.model.Bill;
+import com.example.demo.model.bill.Bill;
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.JsonSerializer;
 import com.fasterxml.jackson.databind.SerializerProvider;

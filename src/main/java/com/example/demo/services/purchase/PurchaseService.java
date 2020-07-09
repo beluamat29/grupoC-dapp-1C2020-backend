@@ -2,7 +2,12 @@ package com.example.demo.services.purchase;
 
 
 import com.example.demo.dtos.MerchandiseDTO;
-import com.example.demo.model.*;
+import com.example.demo.model.acquiredProduct.AcquiredProduct;
+import com.example.demo.model.bill.Bill;
+import com.example.demo.model.bill.BillGenerator;
+import com.example.demo.model.delivery.DeliveryType;
+import com.example.demo.model.delivery.HomeDelivery;
+import com.example.demo.model.delivery.StorePickUp;
 import com.example.demo.model.store.Store;
 import com.example.demo.model.ticket.Ticket;
 import com.example.demo.model.user.ClientUser;

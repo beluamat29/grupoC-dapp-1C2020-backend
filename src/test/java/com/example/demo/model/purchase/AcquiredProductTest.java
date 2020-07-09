@@ -2,7 +2,7 @@ package com.example.demo.model.purchase;
 
 import com.example.demo.builders.AdquiredProductBuilder;
 import com.example.demo.builders.MerchandiseBuilder;
-import com.example.demo.model.AcquiredProduct;
+import com.example.demo.model.acquiredProduct.AcquiredProduct;
 import com.example.demo.model.merchandise.Merchandise;
 import org.junit.Test;
 

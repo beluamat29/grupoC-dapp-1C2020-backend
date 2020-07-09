@@ -1,4 +1,4 @@
-package com.example.demo.model;
+package com.example.demo.model.acquiredProduct;
 
 import com.example.demo.model.merchandise.Merchandise;
 import com.example.demo.model.merchandise.MerchandiseCategory;

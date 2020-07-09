@@ -1,4 +1,4 @@
-package com.example.demo.model;
+package com.example.demo.model.delivery;
 
 import com.example.demo.model.exceptions.OptionNotAvailableForThisDeliveryType;
 import com.example.demo.serializers.DeliveryTypeJsonSerializaer;

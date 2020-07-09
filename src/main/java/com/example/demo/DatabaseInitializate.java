@@ -1,12 +1,11 @@
 package com.example.demo;
 
-import com.example.demo.model.StoreSchedule;
+import com.example.demo.model.store.StoreSchedule;
 import com.example.demo.model.merchandise.Merchandise;
 import com.example.demo.model.merchandise.MerchandiseCategory;
 import com.example.demo.model.store.Store;
 import com.example.demo.model.store.StoreCategory;
 import com.example.demo.model.user.StoreAdminUser;
-import com.example.demo.repositories.merchandise.MerchandiseRepository;
 import com.example.demo.services.StoreService;
 import com.example.demo.services.users.UserService;
 import org.springframework.beans.factory.annotation.Autowired;

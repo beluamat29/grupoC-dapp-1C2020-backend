@@ -1,6 +1,6 @@
 package com.example.demo.model.ticket;
 
-import com.example.demo.model.AcquiredProduct;
+import com.example.demo.model.acquiredProduct.AcquiredProduct;
 import com.example.demo.model.purchasePriceCalculator.PurchasePriceCalculator;
 import com.example.demo.model.store.Store;
 import com.example.demo.serializers.TicketJsonSerializer;

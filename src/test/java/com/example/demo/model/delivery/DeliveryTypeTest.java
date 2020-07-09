@@ -1,6 +1,4 @@
 package com.example.demo.model.delivery;
-import com.example.demo.model.HomeDelivery;
-import com.example.demo.model.StorePickUp;
 import com.example.demo.model.exceptions.OptionNotAvailableForThisDeliveryType;
 import org.junit.Test;
 import static org.junit.jupiter.api.Assertions.*;

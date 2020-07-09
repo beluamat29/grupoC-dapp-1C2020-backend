@@ -1,7 +1,6 @@
 package com.example.demo.model.store;
 
 import com.example.demo.builders.StoreBuilder;
-import com.example.demo.model.StoreSchedule;
 import org.junit.Test;
 
 import java.time.DayOfWeek;

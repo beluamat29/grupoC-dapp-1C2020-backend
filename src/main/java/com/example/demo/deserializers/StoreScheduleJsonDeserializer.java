@@ -1,6 +1,6 @@
 package com.example.demo.deserializers;
 
-import com.example.demo.model.StoreSchedule;
+import com.example.demo.model.store.StoreSchedule;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;

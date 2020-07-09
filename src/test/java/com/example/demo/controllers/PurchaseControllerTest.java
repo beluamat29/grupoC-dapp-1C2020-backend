@@ -4,7 +4,11 @@ import com.example.demo.builders.ClientUserBuilder;
 import com.example.demo.builders.MerchandiseBuilder;
 import com.example.demo.builders.StoreBuilder;
 import com.example.demo.dtos.MerchandiseDTO;
-import com.example.demo.model.*;
+import com.example.demo.model.acquiredProduct.AcquiredProduct;
+import com.example.demo.model.bill.Bill;
+import com.example.demo.model.bill.BillGenerator;
+import com.example.demo.model.delivery.DeliveryType;
+import com.example.demo.model.delivery.HomeDelivery;
 import com.example.demo.model.merchandise.Merchandise;
 import com.example.demo.model.store.Store;
 import com.example.demo.model.ticket.Ticket;
@@ -13,7 +17,6 @@ import com.example.demo.services.StoreService;
 import com.example.demo.services.purchase.PurchaseService;
 import com.example.demo.services.users.UserService;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.jayway.jsonpath.JsonPath;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -28,13 +31,11 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
-import org.springframework.test.web.servlet.ResultMatcher;
 
 import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
-import java.util.stream.Collectors;
 
 
 import static org.hamcrest.Matchers.hasSize;
