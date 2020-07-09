@@ -193,6 +193,6 @@ public class PurchaseServiceTest {
     }
 
     private Boolean sameStore(Store store, Store anotherStore) {
-        return store.name().equals(anotherStore.name()) && store.address().equals(anotherStore);
+        return store.name().equals(anotherStore.name()) && store.address().equals(anotherStore.address());
     }
 }
