@@ -111,5 +111,9 @@ import java.util.List;
         return this.billOfPurchase.contains(aBill);
     }
 
+    public List<Bill> getBills() {
+        return billOfPurchase;
+    }
+
     public void setAddress(String anAddress){  this.address = anAddress; }
 }

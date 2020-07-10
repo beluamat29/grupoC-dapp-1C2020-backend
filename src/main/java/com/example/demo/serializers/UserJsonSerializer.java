@@ -24,6 +24,20 @@ public class UserJsonSerializer extends JsonSerializer<ClientUser> {
         jgen.writeStringField("password", clientUser.password());
         jgen.writeStringField("address", clientUser.address());
         jgen.writeObjectField("isStoreAdmin", clientUser.isAdminOfStore());
+        serializeBills(jgen, clientUser);
         jgen.writeEndObject();
+    }
+
+    private void serializeBills(JsonGenerator jgen, ClientUser clientUser) throws IOException {
+        jgen.writeFieldName("userBills");
+        jgen.writeStartArray();
+        clientUser.getBills().stream().forEach(bill -> {
+            try {
+                jgen.writeObject(bill);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
+        jgen.writeEndArray();
     }
 }

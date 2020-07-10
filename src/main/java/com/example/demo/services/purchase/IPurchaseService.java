@@ -12,4 +12,6 @@ public interface IPurchaseService {
     Ticket processTicket(Long id, List<MerchandiseDTO> productsToBuy, String paymentMethod);
 
     Bill processBill(List<MerchandiseDTO> productsToBuy, String deliveryType, LocalDateTime deliveryTime, String paymentMethod, ClientUser user);
+
+    List<Bill> getUsersBills(Long userId);
 }

@@ -20,10 +20,12 @@ public class Bill {
     private List<Ticket> allTickets;
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private DeliveryType deliveryType;
+    private LocalDateTime dateTime;
 
     public Bill(List<Ticket> tickets, DeliveryType delivery){
         this.allTickets = tickets;
         this.deliveryType = delivery;
+        this.dateTime = LocalDateTime.now();
     }
 
     public Bill(){};
@@ -58,4 +60,7 @@ public class Bill {
 
     public DeliveryType getDeliveryType() { return this.deliveryType;}
 
+    public LocalDateTime getDateTime() {
+        return this.dateTime;
+    }
 }

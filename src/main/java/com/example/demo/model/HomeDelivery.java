@@ -23,6 +23,9 @@ public class HomeDelivery extends DeliveryType {
         deliveryAddress = address;
         deliveryDate = aDeliveryDate;
     }
+
+    public HomeDelivery(){};
+
     @Override
     public String deliveryAddress() {
         return this.deliveryAddress;
