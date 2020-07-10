@@ -17,6 +17,8 @@ public abstract class DeliveryType {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
 
+    public DeliveryType(){};
+
     public abstract String deliveryAddress();
     public abstract LocalDateTime pickUpDate();
     public abstract Long getId();

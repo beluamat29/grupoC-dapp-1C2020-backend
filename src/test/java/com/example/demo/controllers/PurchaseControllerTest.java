@@ -13,7 +13,6 @@ import com.example.demo.services.StoreService;
 import com.example.demo.services.purchase.PurchaseService;
 import com.example.demo.services.users.UserService;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.jayway.jsonpath.JsonPath;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -28,20 +27,18 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
-import org.springframework.test.web.servlet.ResultMatcher;
 
 import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
-import java.util.stream.Collectors;
 
 
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -104,6 +101,42 @@ public class PurchaseControllerTest {
                 .andExpect((jsonPath("allTickets[0].ticketStore.id", is(ticket.store().id()))))
                 .andExpect((jsonPath("deliveryType.deliveryAddress", is(bill.addressOfDelivery()))))
                 .andExpect((jsonPath("deliveryType.pickUpDate", is(bill.deliveryTime().toString()))))
+                .andReturn();
+
+    }
+
+    @Test
+    public void askingForAUsersBillsReturnsAllBillsAnd200Status() throws Exception {
+        ClientUser clientUser = ClientUserBuilder.user().build();
+        ClientUser clientWithId = addIdToClientUser(clientUser);
+        Store store = StoreBuilder.aStore().buildWithId();
+        Merchandise merchandise = MerchandiseBuilder.aMerchandise().build();
+        AcquiredProduct acquiredProduct = new AcquiredProduct(merchandise, 2);
+        MerchandiseDTO productToBuyDTO = new MerchandiseDTO(merchandise, store.id(), 2);
+        DeliveryType delivery = new HomeDelivery(clientUser.address(), LocalDateTime.of(2020, 07, 25, 14,00));
+        String paymentMethod = "Efectivo";
+        String deliveryType = "Home Delivery";
+        LocalDateTime deliveryTime = LocalDateTime.of(2020, 07, 25, 14,00);
+        List<AcquiredProduct> acquiredProducts = Arrays.asList(acquiredProduct);
+        List<MerchandiseDTO> products = Arrays.asList(productToBuyDTO);
+        Ticket ticket = new Ticket(paymentMethod, store, acquiredProducts);
+        addIdToTicket(ticket);
+        List<Ticket> ticketList = Arrays.asList(ticket);
+        Bill bill = new BillGenerator().generateBill(ticketList, clientWithId, delivery);
+        addIdToBill(bill);
+        when(purchaseServiceMock.processBill(any(), any(), any(), any(), any())).thenReturn(addIdToBill(bill));
+        when(userServiceMock.getUserById(any())).thenReturn(clientWithId);
+        when(storeServiceMock.getStore(any())).thenReturn(store);
+        when(purchaseServiceMock.getUsersBills(any())).thenReturn(clientUser.getBills());
+
+
+        mockMvc.perform(get("/purchase/" + clientUser.id()))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("user.id", is(clientUser.id())))
+                .andExpect(jsonPath("userBills", hasSize(1)))
+                .andExpect(jsonPath("userBills.[0].allTickets", hasSize(1)))
+                .andExpect(jsonPath("userBills.[0].deliveryType.deliveryAddress", is(bill.addressOfDelivery())))
+                .andExpect(jsonPath("userBills.[0].deliveryType.pickUpDate", is(bill.deliveryTime().toString())))
                 .andReturn();
 
     }

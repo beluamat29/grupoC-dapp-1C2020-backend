@@ -3,12 +3,14 @@ package com.example.demo.services.purchase;
 
 import com.example.demo.dtos.MerchandiseDTO;
 import com.example.demo.model.*;
+import com.example.demo.model.exceptions.NotFoundUserException;
 import com.example.demo.model.store.Store;
 import com.example.demo.model.ticket.Ticket;
 import com.example.demo.model.user.ClientUser;
 import com.example.demo.model.user.User;
 import com.example.demo.repositories.BillRepository;
 import com.example.demo.repositories.TicketRepository;
+import com.example.demo.repositories.users.UserRepository;
 import com.example.demo.services.StoreService;
 import com.example.demo.services.users.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +31,9 @@ public class PurchaseService implements IPurchaseService {
 
     @Autowired
     UserService userService;
+
+    @Autowired
+    UserRepository userRepository;
 
     @Autowired
     TicketRepository ticketRepository;
@@ -57,6 +62,13 @@ public class PurchaseService implements IPurchaseService {
         DeliveryType deliveryType = generateDelivery(aDeliveryType, clientUser, deliveryTime);
         Bill bill = billGenerator.generateBill(ticketList, (ClientUser) clientUser, deliveryType);
         return billRepository.save(bill);
+    }
+
+    @Override
+    public List<Bill> getUsersBills(Long userId) {
+        ClientUser user = (ClientUser) userRepository.findById(userId).orElseThrow(NotFoundUserException::new);
+        return user.getBills();
+
     }
 
     private List<AcquiredProduct> generateAcquiredProducts(List<MerchandiseDTO> productsToBuy, Store store) {

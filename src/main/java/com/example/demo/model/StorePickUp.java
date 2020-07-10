@@ -22,6 +22,8 @@ public class StorePickUp extends DeliveryType {
         this.pickUpDate = hour;
     }
 
+    public StorePickUp(){};
+
     @Override
     public String deliveryAddress() { throw new OptionNotAvailableForThisDeliveryType(); }
 
