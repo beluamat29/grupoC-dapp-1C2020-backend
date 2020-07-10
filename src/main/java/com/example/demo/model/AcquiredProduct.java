@@ -2,11 +2,14 @@ package com.example.demo.model;
 
 import com.example.demo.model.merchandise.Merchandise;
 import com.example.demo.model.merchandise.MerchandiseCategory;
+import com.example.demo.serializers.AcquiredProductJsonSerializer;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 import javax.naming.ldap.LdapName;
 import javax.persistence.*;
 
 @Entity
+@JsonSerialize(using = AcquiredProductJsonSerializer.class)
 public class AcquiredProduct {
 
     @Id
@@ -47,4 +50,6 @@ public class AcquiredProduct {
     public String imageURL() {
         return this.merchandise.imageURL();
     }
+
+    public Merchandise getMerchandise(){ return this.merchandise; }
 }
