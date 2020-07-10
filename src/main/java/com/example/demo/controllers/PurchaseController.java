@@ -35,14 +35,14 @@ public class PurchaseController {
     }
 
     @RequestMapping(path="/purchase/{id}")
-    public ResponseEntity<Object> getBillsFromUser(@PathVariable("id") String id){
+    public ResponseEntity<BillsListResponseDTO> getBillsFromUser(@PathVariable("id") String id){
         Long userId = Long.parseLong(id);
         User user = userService.getUserById(userId);
         List<Bill> usersBills = purchaseService.getUsersBills(userId);
         return generateBillsResponse(usersBills, user);
     }
 
-    private ResponseEntity<Object> generateBillsResponse(List<Bill> bills, User user) {
+    private ResponseEntity<BillsListResponseDTO> generateBillsResponse(List<Bill> bills, User user) {
         return new ResponseEntity<>(new BillsListResponseDTO(bills, user), HttpStatus.OK);
     }
 }
