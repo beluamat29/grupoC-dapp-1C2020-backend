@@ -11,11 +11,11 @@ public class BillsListResponseDTO {
     @JsonProperty
     private List<Bill> userBills;
     @JsonProperty
-    private Long userId;
+    private User user;
 
 
-    public BillsListResponseDTO(@JsonProperty("userBills") List<Bill> userBills, @JsonProperty("userId") Long userId) {
-        this.userId = userId;
+    public BillsListResponseDTO(@JsonProperty("userBills") List<Bill> userBills, @JsonProperty("user") User user) {
+        this.user = user;
         this.userBills = userBills;
     }
 
@@ -25,7 +25,7 @@ public class BillsListResponseDTO {
 
     public void setUserBills(List<Bill> userBills) { this.userBills = userBills; }
 
-    public Long getUser() { return this.userId; }
+    public User getUser() { return user; }
 
-    public void setUserId(Long userId) { this.userId = userId; }
+    public void setUser(User user) { this.user = user; }
 }

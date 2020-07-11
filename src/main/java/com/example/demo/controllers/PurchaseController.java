@@ -43,6 +43,6 @@ public class PurchaseController {
     }
 
     private ResponseEntity<BillsListResponseDTO> generateBillsResponse(List<Bill> bills, User user) {
-        return new ResponseEntity<>(new BillsListResponseDTO(bills, user.id()), HttpStatus.OK);
+        return new ResponseEntity<>(new BillsListResponseDTO(bills, user), HttpStatus.OK);
     }
 }
