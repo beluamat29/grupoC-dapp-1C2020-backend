@@ -13,7 +13,7 @@ public class FacebookUserJsonSerializer extends JsonSerializer<FacebookUser> {
 
         jgen.writeStartObject();
         jgen.writeNumberField("id", facebookUser.id());
-        jgen.writeStringField("mail", facebookUser.getMail());
+        jgen.writeStringField("mail", facebookUser.getUsername());
         jgen.writeEndObject();
     }
 }

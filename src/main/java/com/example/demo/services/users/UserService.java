@@ -66,13 +66,18 @@ public class UserService implements IUserService {
     }
 
     @Override
-    public FacebookUser addFacebookUser(String mail) {
-        if(canAddUser(mail)){
-            FacebookUser newFacebookUser = new FacebookUser(mail);
+    public FacebookUser addFacebookUser(String username) {
+        if(canAddUser(username)){
+            FacebookUser newFacebookUser = new FacebookUser(username);
             FacebookUser savedFacebookUser = facebookUserRepository.save(newFacebookUser);
             return savedFacebookUser;
         }
         throw new NotFoundUserException();
+    }
+
+    @Override
+    public FacebookUser getFacebookUserByUsername(String username) {
+        return facebookUserRepository.findByUsernameEquals(username);
     }
 
     @Override

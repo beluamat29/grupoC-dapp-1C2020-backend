@@ -15,17 +15,17 @@ public class FacebookUser {
     private Long id;
 
     @Column(unique = true)
-    private String mail;
+    private String username;
 
     public FacebookUser(String email){
-        this.mail = email;
+        this.username = email;
     }
 
     public FacebookUser(){};
 
-    public String getMail() {  return mail; }
+    public String getUsername() {  return username; }
 
-    public void setMail(String mail) { this.mail = mail; }
+    public void setUsername(String mail) { this.username = mail; }
 
     public Long id() { return this.id; }
 

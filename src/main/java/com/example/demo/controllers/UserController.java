@@ -65,7 +65,11 @@ public class UserController {
 
     @PostMapping(path="/facebookUser",  consumes = "application/json", produces = "application/json")
     public ResponseEntity<FacebookUser> createFacebookUser(@RequestBody FacebookUser facebookUser){
-        FacebookUser savedUser = userService.addFacebookUser(facebookUser.getMail());
-        return new ResponseEntity< >(savedUser, HttpStatus.OK);
+        FacebookUser user = userService.getFacebookUserByUsername(facebookUser.getUsername());
+        if(user != null ){
+            return new ResponseEntity<>(user, HttpStatus.OK);
+        }
+        FacebookUser savedUser = userService.addFacebookUser(facebookUser.getUsername());
+        return new ResponseEntity<>(savedUser, HttpStatus.OK);
     }
 }

@@ -219,8 +219,8 @@ public class UsersControllerTest {
 
     @Test
     public void addingAFacebookUserReturnsTheFacebookUserAnd200Status() throws Exception {
-        String mail = "pepe@gmail.com";
-        FacebookUser facebookUser= new FacebookUser(mail);
+        String username = "pepe@gmail.com";
+        FacebookUser facebookUser= new FacebookUser(username);
         when(userServiceMock.addFacebookUser(any())).thenReturn(addIdToFacebookUser(facebookUser));
 
         JSONObject body = generateFacebookUserBody(facebookUser);
@@ -229,7 +229,23 @@ public class UsersControllerTest {
                 .content(String.valueOf(body)))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("id", is(facebookUser.id())))
-                .andExpect(jsonPath("mail", is(facebookUser.getMail())))
+                .andExpect(jsonPath("mail", is(facebookUser.getUsername())))
+                .andReturn();
+    }
+
+    @Test
+    public void addingAnExistinFacebookUserReturnsTheFacebookUserAnd200Status() throws Exception {
+        String username = "carlos@gmail.com";
+        FacebookUser facebookUser = new FacebookUser(username);
+        when(userServiceMock.getFacebookUserByUsername(any())).thenReturn(addIdToFacebookUser(facebookUser));
+
+        JSONObject body = generateFacebookUserBody(facebookUser);
+        MvcResult mvcResult = mockMvc.perform(post("/facebookUser")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(String.valueOf(body)))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("id", is(facebookUser.id())))
+                .andExpect(jsonPath("mail", is(facebookUser.getUsername())))
                 .andReturn();
     }
 
@@ -350,7 +366,7 @@ public class UsersControllerTest {
 
     private JSONObject generateFacebookUserBody(FacebookUser facebookUser) throws JSONException {
         JSONObject jsonObject = new JSONObject();
-        jsonObject.put("mail", facebookUser.getMail());
+        jsonObject.put("mail", facebookUser.getUsername());
         return jsonObject;
     }
 

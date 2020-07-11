@@ -26,4 +26,6 @@ public interface IUserService {
     User updateUser(Long id, User user);
 
     FacebookUser addFacebookUser(String mail);
+
+    FacebookUser getFacebookUserByUsername(String mail);
 }

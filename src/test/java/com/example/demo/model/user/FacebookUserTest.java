@@ -11,6 +11,6 @@ public class FacebookUserTest {
         String mail = "pepe@gmail.com";
         FacebookUser facebookUser = new FacebookUser(mail);
 
-        assertEquals(mail, facebookUser.getMail());
+        assertEquals(mail, facebookUser.getUsername());
     }
 }

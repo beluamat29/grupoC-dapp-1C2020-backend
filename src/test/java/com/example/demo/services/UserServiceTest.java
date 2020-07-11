@@ -1,6 +1,5 @@
 package com.example.demo.services;
 
-import ch.qos.logback.core.net.server.Client;
 import com.example.demo.builders.ClientUserBuilder;
 import com.example.demo.builders.StoreAdminBuilder;
 import com.example.demo.builders.StoreBuilder;
@@ -109,8 +108,8 @@ public class UserServiceTest {
         FacebookUser facebookUser = new FacebookUser(mail);
         when(facebookUserRepositoryMock.save(any())).thenReturn(facebookUser);
 
-        FacebookUser createdFacebookUser = userService.addFacebookUser(facebookUser.getMail());
-        assertEquals(createdFacebookUser.getMail(), facebookUser.getMail());
+        FacebookUser createdFacebookUser = userService.addFacebookUser(facebookUser.getUsername());
+        assertEquals(createdFacebookUser.getUsername(), facebookUser.getUsername());
 
     }
     //UPDATE

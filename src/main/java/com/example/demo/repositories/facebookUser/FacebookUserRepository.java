@@ -6,4 +6,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface FacebookUserRepository extends JpaRepository<FacebookUser, Long> {
+
+    FacebookUser findByUsernameEquals(String username);
 }
