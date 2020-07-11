@@ -1,21 +1,22 @@
 package com.example.demo.controllers;
-import com.example.demo.dtos.ClientUserDTO;
+
 import com.example.demo.dtos.ValidationUserDTO;
+import com.example.demo.model.user.ClientUser;
 import com.example.demo.model.user.StoreAdminUser;
 import com.example.demo.model.user.User;
 import com.example.demo.services.IStoreService;
 import com.example.demo.services.users.IUserService;
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.example.demo.model.user.ClientUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
+@Transactional
 public class UserController {
 
     @Autowired
