@@ -6,7 +6,6 @@ import com.example.demo.model.merchandise.MerchandiseCategory;
 import com.example.demo.model.store.Store;
 import com.example.demo.model.store.StoreCategory;
 import com.example.demo.model.user.StoreAdminUser;
-import com.example.demo.repositories.merchandise.MerchandiseRepository;
 import com.example.demo.services.StoreService;
 import com.example.demo.services.users.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -217,7 +216,7 @@ public class DatabaseInitializate implements CommandLineRunner {
     }
 
     private Store generateStore(String name, String address, Integer distanceInKm, List<StoreCategory> categories, String imageUrl) {
-        List<String> paymentMethods = Arrays.asList("Efectivo", "Tarjeta de Credito");
+        List<String> paymentMethods = Arrays.asList("CASH", "CREDIT_CARD");
         List<DayOfWeek> days = Arrays.asList(DayOfWeek.MONDAY, DayOfWeek.THURSDAY);
         StoreSchedule schedule = new StoreSchedule(days, LocalTime.of(9,0), LocalTime.of(17, 0));
         return new Store(name, categories, address, distanceInKm, paymentMethods,schedule, LocalDate.now(), imageUrl);
