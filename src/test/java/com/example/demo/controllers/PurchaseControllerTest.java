@@ -1,5 +1,6 @@
 package com.example.demo.controllers;
 
+import com.example.demo.builders.AdquiredProductBuilder;
 import com.example.demo.builders.ClientUserBuilder;
 import com.example.demo.builders.MerchandiseBuilder;
 import com.example.demo.builders.StoreBuilder;
@@ -69,8 +70,8 @@ public class PurchaseControllerTest {
         ClientUser clientUser = ClientUserBuilder.user().build();
         ClientUser clientWithId = addIdToClientUser(clientUser);
         Store store = StoreBuilder.aStore().buildWithId();
-        Merchandise merchandise = MerchandiseBuilder.aMerchandise().build();
-        AcquiredProduct acquiredProduct = new AcquiredProduct(merchandise, 2);
+        Merchandise merchandise = MerchandiseBuilder.aMerchandise().buildWithId();
+        AcquiredProduct acquiredProduct = AdquiredProductBuilder.acquiredProduct(merchandise, 2);
         MerchandiseDTO productToBuyDTO = new MerchandiseDTO(merchandise, store.id(), 2);
         DeliveryType delivery = new HomeDelivery(clientUser.address(), LocalDateTime.of(2020, 07, 25, 14,00));
         String paymentMethod = "Efectivo";
@@ -110,8 +111,8 @@ public class PurchaseControllerTest {
         ClientUser clientUser = ClientUserBuilder.user().build();
         ClientUser clientWithId = addIdToClientUser(clientUser);
         Store store = StoreBuilder.aStore().buildWithId();
-        Merchandise merchandise = MerchandiseBuilder.aMerchandise().build();
-        AcquiredProduct acquiredProduct = new AcquiredProduct(merchandise, 2);
+        Merchandise merchandise = MerchandiseBuilder.aMerchandise().buildWithId();
+        AcquiredProduct acquiredProduct = AdquiredProductBuilder.acquiredProduct(merchandise, 2);
         MerchandiseDTO productToBuyDTO = new MerchandiseDTO(merchandise, store.id(), 2);
         DeliveryType delivery = new HomeDelivery(clientUser.address(), LocalDateTime.of(2020, 07, 25, 14,00));
         String paymentMethod = "Efectivo";
@@ -132,7 +133,7 @@ public class PurchaseControllerTest {
 
         mockMvc.perform(get("/purchase/" + clientUser.id()))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("user.id", is(clientUser.id())))
+                .andExpect(jsonPath("userId", is(clientUser.id())))
                 .andExpect(jsonPath("userBills", hasSize(1)))
                 .andExpect(jsonPath("userBills.[0].allTickets", hasSize(1)))
                 .andExpect(jsonPath("userBills.[0].deliveryType.deliveryAddress", is(bill.addressOfDelivery())))
