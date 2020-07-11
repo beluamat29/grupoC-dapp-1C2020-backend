@@ -17,7 +17,7 @@ public class BillGenerator {
     public Bill generateBill(List<Ticket> listOfTickets, ClientUser aClientUser, DeliveryType delivery) {
         Bill bill = new Bill(listOfTickets, delivery);
         aClientUser.addBillOfPurchase(bill);
-        mailSender.sendPurchaseConfirmationMail(bill, aClientUser.username(), delivery);
+        mailSender.sendPurchaseConfirmationMail(bill, aClientUser, delivery);
         return bill;
     }
 

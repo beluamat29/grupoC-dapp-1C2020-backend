@@ -3,6 +3,7 @@ package com.example.demo.sendMail;
 import com.example.demo.model.Bill;
 import com.example.demo.model.DeliveryType;
 import com.example.demo.model.ticket.Ticket;
+import com.example.demo.model.user.ClientUser;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 
@@ -36,15 +37,27 @@ public class QuarantineMailSender {
         this.mailSender.send(message);
     }
 
-    public void sendPurchaseConfirmationMail(Bill bill, String username, DeliveryType delivery) {
+    public void sendPurchaseConfirmationMail(Bill bill, ClientUser user, DeliveryType delivery) {
         String purchaseDateTime = this.parseBillDateTime(bill.getDateTime());
         String storesNames = this.parseStoresNames(bill.getTickets());
+        String deliveryText = this.parseDelivery(delivery, user);
         SimpleMailMessage message = new SimpleMailMessage();
         message.setFrom("noreply@baeldung.com");
         message.setTo("belen.amat29@gmail.com");
         message.setSubject("Confirmación de pedido" + " " + purchaseDateTime);
-        message.setText("Tu pedido para los comercios " + storesNames + " fue confirmado");
+        message.setText("Tu pedido para los comercios " + storesNames + " fue confirmado." + deliveryText + ". ¡Muchas gracias por tu compra!");
         this.mailSender.send(message);
+    }
+
+    private String parseDelivery(DeliveryType delivery, ClientUser user) {
+        if(delivery.isStorePickUp()) {
+            return " Cada comercio se va a estar comunicando con vos para coordinar un turno";
+        } else {
+            String date = this.parseBillDateTime(delivery.pickUpDate());
+            String hour = String.valueOf(delivery.pickUpDate().getHour());
+            String minute = String.valueOf(delivery.pickUpDate().getMinute());
+            return "Tu pedido va a estar llegando a " + user.address() + " el " + date + " aproximadamente a las " + hour + ":" + minute;
+        }
     }
 
     private String parseStoresNames(List<Ticket> tickets) {

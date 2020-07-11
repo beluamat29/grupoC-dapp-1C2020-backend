@@ -217,7 +217,7 @@ public class DatabaseInitializate implements CommandLineRunner {
         userService.addUser("bartsimpson@gmail.com", "aycaramba", "Av. Siempreviva 742");
         userService.addUser("lisasimpson@gmail.com", "yolosetodo", "Av. Siempreviva 742");
         userService.addUser("maggiesimpson@gmail.com", "nohabla", "Av. Siempreviva 742");
-        userService.addUser("belen.amat29@gmail.com", "123456", "saionafal");
+        userService.addUser("belen.amat29@gmail.com", "123456", "Alsina 3561");
     }
 
     private Store generateStore(String name, String address, Integer distanceInKm, List<StoreCategory> categories, String imageUrl) {
