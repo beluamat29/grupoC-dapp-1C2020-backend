@@ -16,6 +16,7 @@ import com.example.demo.model.ticket.Ticket;
 import com.example.demo.model.user.ClientUser;
 import com.example.demo.repositories.BillRepository;
 import com.example.demo.repositories.TicketRepository;
+import com.example.demo.sendMail.QuarantineMailSender;
 import com.example.demo.services.purchase.PurchaseService;
 import com.example.demo.services.users.UserService;
 import org.junit.Test;
@@ -25,18 +26,17 @@ import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 import org.springframework.boot.test.context.SpringBootTest;
 
-
 import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.List;
-import java.util.function.BooleanSupplier;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.when;
 
 @SpringBootTest
-@RunWith(MockitoJUnitRunner.class)
+@RunWith(MockitoJUnitRunner.Silent.class)
 public class PurchaseServiceTest {
 
     @Mock
@@ -50,6 +50,9 @@ public class PurchaseServiceTest {
 
     @Mock
     BillRepository billRepositoryMock;
+
+    @Mock
+    QuarantineMailSender mailSender;
 
     @InjectMocks
     PurchaseService purchaseService;
@@ -72,6 +75,7 @@ public class PurchaseServiceTest {
         when(storeServiceMock.getAcquiredProductsFromStore(any(), any())).thenReturn(acquiredProductList);
         when(storeServiceMock.getStore(any())).thenReturn(store);
         when(ticketRepositoryMock.save(any())).thenReturn(ticket);
+        doNothing().when(mailSender).sendPurchaseConfirmationMail(any(), any(), any());
 
         Ticket retrievedTicket = purchaseService.processTicket(store.id(), productsToBuy, paymentMethod);
 
@@ -121,7 +125,6 @@ public class PurchaseServiceTest {
         when(userServiceMock.getUserById(any())).thenReturn(user);
         when(billRepositoryMock.save(any())).thenReturn(aBill);
 
-
         Bill bill = purchaseService.processBill(productsToBuy, deliveryType, deliveryTime, paymentMethod, user);
 
         assertEquals(1, bill.quantityTickets());
@@ -152,7 +155,6 @@ public class PurchaseServiceTest {
         when(storeServiceMock.getStore(store.id())).thenReturn(store);
         when(userServiceMock.getUserById(any())).thenReturn(user);
         when(billRepositoryMock.save(any())).thenReturn(aBill);
-
 
         Bill bill = purchaseService.processBill(productsToBuy, deliveryType, deliveryTime, paymentMethod, user);
 
