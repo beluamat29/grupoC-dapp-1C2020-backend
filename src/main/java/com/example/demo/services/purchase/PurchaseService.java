@@ -41,6 +41,9 @@ public class PurchaseService implements IPurchaseService {
     @Autowired
     BillRepository billRepository;
 
+    @Autowired
+    BillGenerator billGenerator;
+
     @Override
     public Ticket processTicket(Long storeId, List<MerchandiseDTO> productsToBuy, String paymentMethod) {
         List<AcquiredProduct> productsList = storeService.getAcquiredProductsFromStore(storeId, productsToBuy);
@@ -57,7 +60,6 @@ public class PurchaseService implements IPurchaseService {
             Store store = storeService.getStore(storeId);
             ticketList.add(new Ticket(paymentMethod, store, generateAcquiredProducts(products, store)));
         });
-        BillGenerator billGenerator = new BillGenerator();
         User clientUser = userService.getUserById(user.id());
         DeliveryType deliveryType = generateDelivery(aDeliveryType, clientUser, deliveryTime);
         Bill bill = billGenerator.generateBill(ticketList, (ClientUser) clientUser, deliveryType);

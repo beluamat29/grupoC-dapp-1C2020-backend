@@ -12,6 +12,7 @@ import java.time.Month;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 public class QuarantineMailSender {
 
@@ -41,12 +42,18 @@ public class QuarantineMailSender {
         SimpleMailMessage message = new SimpleMailMessage();
         message.setFrom("noreply@baeldung.com");
         message.setTo("belen.amat29@gmail.com");
-        message.setSubject("Confirmación de compra" + purchaseDateTime);
-        message.setText("que se yo");
+        message.setSubject("Confirmación de pedido" + " " + purchaseDateTime);
+        message.setText("Tu pedido para los comercios " + storesNames + " fue confirmado");
+        this.mailSender.send(message);
     }
 
     private String parseStoresNames(List<Ticket> tickets) {
-        return null;
+        String storeNamesText = "";
+        List<String> storeNames = tickets.stream().map(ticket -> ticket.store().name()).collect(Collectors.toList());
+        for (String aStoreName : storeNames) {
+            storeNamesText = storeNamesText.concat(aStoreName).concat(", ");
+        }
+        return storeNamesText;
     }
 
     private String parseBillDateTime(LocalDateTime dateTime) {
