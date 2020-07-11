@@ -79,7 +79,7 @@ public class PurchaseService implements IPurchaseService {
         if (deliveryType.equals("HOME_DELIVERY")) {
             return new HomeDelivery(user.address(), deliveryTime);
         }
-        return new StorePickUp(deliveryTime);
+        return new StorePickUp(LocalDateTime.now().plusDays(2));
     }
 
     private Ticket generateTicketWithId(String paymentMethod, Store store, List<AcquiredProduct> productsList) {

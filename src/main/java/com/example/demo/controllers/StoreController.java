@@ -4,18 +4,15 @@ import com.example.demo.dtos.MerchandiseDTO;
 import com.example.demo.dtos.MerchandiseListDTO;
 import com.example.demo.dtos.MerchandiseListResponseDTO;
 import com.example.demo.model.merchandise.Merchandise;
-import com.example.demo.model.store.StoreCategory;
+import com.example.demo.model.store.Store;
 import com.example.demo.services.IStoreService;
 import com.example.demo.services.users.IUserService;
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.example.demo.model.store.Store;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @RestController
