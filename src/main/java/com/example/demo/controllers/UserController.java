@@ -61,4 +61,5 @@ public class UserController {
         StoreAdminUser savedStoreAdmin = userService.addStoreAdmin(storeAdminUser);
         return new ResponseEntity<>(savedStoreAdmin, HttpStatus.OK);
     }
+
 }
