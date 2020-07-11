@@ -12,6 +12,7 @@ public class FacebookUserJsonSerializer extends JsonSerializer<FacebookUser> {
     public void serialize(FacebookUser facebookUser, JsonGenerator jgen, SerializerProvider serializerProvider) throws IOException {
 
         jgen.writeStartObject();
+        jgen.writeNumberField("id", facebookUser.id());
         jgen.writeStringField("mail", facebookUser.getMail());
         jgen.writeEndObject();
     }

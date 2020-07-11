@@ -7,6 +7,7 @@ import com.example.demo.model.exceptions.ForbiddenAttributeUpdate;
 import com.example.demo.model.exceptions.NotAvailableUserNameException;
 import com.example.demo.model.exceptions.NotFoundUserException;
 import com.example.demo.model.store.Store;
+import com.example.demo.model.user.FacebookUser;
 import com.example.demo.model.user.StoreAdminUser;
 import com.example.demo.services.StoreService;
 import com.example.demo.services.users.UserService;
@@ -217,6 +218,22 @@ public class UsersControllerTest {
     }
 
     @Test
+    public void addingAFacebookUserReturnsTheFacebookUserAnd200Status() throws Exception {
+        String mail = "pepe@gmail.com";
+        FacebookUser facebookUser= new FacebookUser(mail);
+        when(userServiceMock.addFacebookUser(any())).thenReturn(addIdToFacebookUser(facebookUser));
+
+        JSONObject body = generateFacebookUserBody(facebookUser);
+        MvcResult mvcResult = mockMvc.perform(post("/facebookUser")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(String.valueOf(body)))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("id", is(facebookUser.id())))
+                .andExpect(jsonPath("mail", is(facebookUser.getMail())))
+                .andReturn();
+    }
+
+    @Test
     public void askingForAUserByIdReturnsTheUserAnd200Status() throws Exception {
         ClientUser aClientUser = ClientUserBuilder.user().build();
         addIdToClientUser(aClientUser);
@@ -315,6 +332,7 @@ public class UsersControllerTest {
         storeJson.put("storeImageURL", "unaURLdementiritas");
         return storeJson;
     }
+
     private JSONObject generateClientUserBody(ClientUser clientUser) throws JSONException {
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("username", clientUser.username());
@@ -323,11 +341,16 @@ public class UsersControllerTest {
         jsonObject.put("isStoreAdmin", clientUser.isAdminOfStore());
         return jsonObject;
     }
-
     private JSONObject generateClientUserBodyForValidation(ClientUser clientUser) throws JSONException {
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("username", clientUser.username());
         jsonObject.put("password", clientUser.password());
+        return jsonObject;
+    }
+
+    private JSONObject generateFacebookUserBody(FacebookUser facebookUser) throws JSONException {
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("mail", facebookUser.getMail());
         return jsonObject;
     }
 
@@ -339,5 +362,10 @@ public class UsersControllerTest {
     private StoreAdminUser addIdToStoreAdminUser(StoreAdminUser aUser){
         aUser.setId(new Random().nextLong());
         return aUser;
+    }
+
+    private FacebookUser addIdToFacebookUser(FacebookUser facebookUser){
+        facebookUser.setId(new Random().nextLong());
+        return facebookUser;
     }
 }

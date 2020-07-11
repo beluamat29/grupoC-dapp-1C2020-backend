@@ -2,6 +2,7 @@ package com.example.demo.controllers;
 
 import com.example.demo.dtos.ValidationUserDTO;
 import com.example.demo.model.user.ClientUser;
+import com.example.demo.model.user.FacebookUser;
 import com.example.demo.model.user.StoreAdminUser;
 import com.example.demo.model.user.User;
 import com.example.demo.services.IStoreService;
@@ -62,4 +63,9 @@ public class UserController {
         return new ResponseEntity<>(savedStoreAdmin, HttpStatus.OK);
     }
 
+    @PostMapping(path="/facebookUser",  consumes = "application/json", produces = "application/json")
+    public ResponseEntity<FacebookUser> createFacebookUser(@RequestBody FacebookUser facebookUser){
+        FacebookUser savedUser = userService.addFacebookUser(facebookUser.getMail());
+        return new ResponseEntity< >(savedUser, HttpStatus.OK);
+    }
 }
