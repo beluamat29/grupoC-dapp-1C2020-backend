@@ -1,18 +1,15 @@
 package com.example.demo.sendMail;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
-import org.springframework.stereotype.Component;
 
 import java.util.Properties;
 
 @Configuration
-public class MailSender {
+public class MailSenderEncuarentenados {
 
     @Value("${mail.username}")
     private String username;
@@ -35,15 +32,11 @@ public class MailSender {
         props.put("mail.debug", "true");
 
         return mailSender;
-
     }
 
-  /*  private Properties getMailProperties() {
-        Properties properties = new Properties();
-        properties.setProperty("mail.transport.protocol", "smtp");
-        properties.setProperty("mail.smtp.auth", "false");
-        properties.setProperty("mail.smtp.starttls.enable", "false");
-        properties.setProperty("mail.debug", "false");
-        return properties;
-    }*/
+    @Bean
+    public QuarantineMailSender quarantineMailSender(JavaMailSender javaMailSender) {
+        return new QuarantineMailSender(javaMailSender);
+    }
+
 }
