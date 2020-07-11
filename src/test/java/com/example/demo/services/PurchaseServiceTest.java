@@ -18,7 +18,6 @@ import com.example.demo.repositories.BillRepository;
 import com.example.demo.repositories.TicketRepository;
 import com.example.demo.services.purchase.PurchaseService;
 import com.example.demo.services.users.UserService;
-import com.sun.org.apache.xpath.internal.operations.Bool;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;

@@ -52,4 +52,8 @@ public class AcquiredProduct {
     }
 
     public Merchandise getMerchandise(){ return this.merchandise; }
+
+    public void setId(Long anId) {
+        this.id = anId;
+    }
 }
