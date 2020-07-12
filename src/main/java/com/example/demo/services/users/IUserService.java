@@ -1,7 +1,6 @@
 package com.example.demo.services.users;
 
 import com.example.demo.model.user.ClientUser;
-import com.example.demo.model.user.FacebookUser;
 import com.example.demo.model.user.StoreAdminUser;
 import com.example.demo.model.user.User;
 import org.springframework.stereotype.Service;
@@ -25,7 +24,4 @@ public interface IUserService {
 
     User updateUser(Long id, User user);
 
-    FacebookUser addFacebookUser(String mail);
-
-    FacebookUser getFacebookUserByUsername(String mail);
 }

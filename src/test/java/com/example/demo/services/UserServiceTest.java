@@ -6,10 +6,8 @@ import com.example.demo.builders.StoreBuilder;
 import com.example.demo.model.exceptions.NotAvailableUserNameException;
 import com.example.demo.model.exceptions.NotFoundUserException;
 import com.example.demo.model.store.Store;
-import com.example.demo.model.user.FacebookUser;
 import com.example.demo.model.user.StoreAdminUser;
 import com.example.demo.model.user.User;
-import com.example.demo.repositories.facebookUser.FacebookUserRepository;
 import com.example.demo.repositories.users.UserRepository;
 import com.example.demo.services.users.IUserService;
 import com.example.demo.model.user.ClientUser;
@@ -36,8 +34,6 @@ public class UserServiceTest {
     @MockBean
     UserRepository userRepositoryMock; //Si esto esta definido hay que usarlo si o si en cada test
 
-    @MockBean
-    FacebookUserRepository facebookUserRepositoryMock;
 
     @Autowired
     IUserService userService;
@@ -102,16 +98,6 @@ public class UserServiceTest {
         assertThrows(NotAvailableUserNameException.class, () -> userService.addUser("aNewUser", "password", "address"));
     }
 
-    @Test
-    public void aFacebookUserIsRegister(){
-        String mail = "pepe@gmail.com";
-        FacebookUser facebookUser = new FacebookUser(mail);
-        when(facebookUserRepositoryMock.save(any())).thenReturn(facebookUser);
-
-        FacebookUser createdFacebookUser = userService.addFacebookUser(facebookUser.getUsername());
-        assertEquals(createdFacebookUser.getUsername(), facebookUser.getUsername());
-
-    }
     //UPDATE
 
     @Test

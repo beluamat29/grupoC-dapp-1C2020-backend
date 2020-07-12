@@ -3,10 +3,8 @@ package com.example.demo.services.users;
 import com.example.demo.model.exceptions.ForbiddenAttributeUpdate;
 import com.example.demo.model.exceptions.NotAvailableUserNameException;
 import com.example.demo.model.exceptions.NotFoundUserException;
-import com.example.demo.model.user.FacebookUser;
 import com.example.demo.model.user.StoreAdminUser;
 import com.example.demo.model.user.User;
-import com.example.demo.repositories.facebookUser.FacebookUserRepository;
 import com.example.demo.repositories.threshold.MoneyThresholdRepository;
 import com.example.demo.repositories.users.UserRepository;
 import com.example.demo.model.user.ClientUser;
@@ -19,9 +17,6 @@ public class UserService implements IUserService {
 
     @Autowired
     private UserRepository userRepository;
-
-    @Autowired
-    private FacebookUserRepository facebookUserRepository;
 
     @Autowired
     private MoneyThresholdRepository moneyThresholdRepository;
@@ -63,21 +58,6 @@ public class UserService implements IUserService {
             return savedUser;
         }
         throw new NotAvailableUserNameException();
-    }
-
-    @Override
-    public FacebookUser addFacebookUser(String username) {
-        if(canAddUser(username)){
-            FacebookUser newFacebookUser = new FacebookUser(username);
-            FacebookUser savedFacebookUser = facebookUserRepository.save(newFacebookUser);
-            return savedFacebookUser;
-        }
-        throw new NotFoundUserException();
-    }
-
-    @Override
-    public FacebookUser getFacebookUserByUsername(String username) {
-        return facebookUserRepository.findByUsernameEquals(username);
     }
 
     @Override

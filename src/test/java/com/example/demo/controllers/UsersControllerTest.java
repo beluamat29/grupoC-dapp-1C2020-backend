@@ -7,7 +7,6 @@ import com.example.demo.model.exceptions.ForbiddenAttributeUpdate;
 import com.example.demo.model.exceptions.NotAvailableUserNameException;
 import com.example.demo.model.exceptions.NotFoundUserException;
 import com.example.demo.model.store.Store;
-import com.example.demo.model.user.FacebookUser;
 import com.example.demo.model.user.StoreAdminUser;
 import com.example.demo.services.StoreService;
 import com.example.demo.services.users.UserService;
@@ -219,33 +218,37 @@ public class UsersControllerTest {
 
     @Test
     public void addingAFacebookUserReturnsTheFacebookUserAnd200Status() throws Exception {
-        String username = "pepe@gmail.com";
-        FacebookUser facebookUser= new FacebookUser(username);
-        when(userServiceMock.addFacebookUser(any())).thenReturn(addIdToFacebookUser(facebookUser));
+        ClientUser facebookUser = ClientUserBuilder.user().withUsername("pepe@gmail.com").withPassword("pepe gonzalez").build();
+        when(userServiceMock.addUser(any(),any(), any())).thenReturn(addIdToClientUser(facebookUser));
 
-        JSONObject body = generateFacebookUserBody(facebookUser);
+        JSONObject body = generateClientUserBody(facebookUser);
         MvcResult mvcResult = mockMvc.perform(post("/facebookUser")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(String.valueOf(body)))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("id", is(facebookUser.id())))
-                .andExpect(jsonPath("mail", is(facebookUser.getUsername())))
+                .andExpect(jsonPath("username", is(facebookUser.username())))
+                .andExpect(jsonPath("password", is(facebookUser.password())))
+                .andExpect(jsonPath("address", is(facebookUser.address())))
+                .andExpect(jsonPath("isStoreAdmin", is(facebookUser.isAdminOfStore())))
                 .andReturn();
     }
 
     @Test
     public void addingAnExistinFacebookUserReturnsTheFacebookUserAnd200Status() throws Exception {
-        String username = "carlos@gmail.com";
-        FacebookUser facebookUser = new FacebookUser(username);
-        when(userServiceMock.getFacebookUserByUsername(any())).thenReturn(addIdToFacebookUser(facebookUser));
+        ClientUser facebookUser = ClientUserBuilder.user().withUsername("pepe@gmail.com").withPassword("pepe gonzalez").build();
+        when(userServiceMock.getUserById(any())).thenReturn(addIdToClientUser(facebookUser));
 
-        JSONObject body = generateFacebookUserBody(facebookUser);
+        JSONObject body = generateClientUserBody(facebookUser);
         MvcResult mvcResult = mockMvc.perform(post("/facebookUser")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(String.valueOf(body)))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("id", is(facebookUser.id())))
-                .andExpect(jsonPath("mail", is(facebookUser.getUsername())))
+                .andExpect(jsonPath("username", is(facebookUser.username())))
+                .andExpect(jsonPath("password", is(facebookUser.password())))
+                .andExpect(jsonPath("address", is(facebookUser.address())))
+                .andExpect(jsonPath("isStoreAdmin", is(facebookUser.isAdminOfStore())))
                 .andReturn();
     }
 
@@ -364,12 +367,6 @@ public class UsersControllerTest {
         return jsonObject;
     }
 
-    private JSONObject generateFacebookUserBody(FacebookUser facebookUser) throws JSONException {
-        JSONObject jsonObject = new JSONObject();
-        jsonObject.put("mail", facebookUser.getUsername());
-        return jsonObject;
-    }
-
     private ClientUser addIdToClientUser(ClientUser aUser){
         aUser.setId(new Random().nextLong());
         return aUser;
@@ -378,10 +375,5 @@ public class UsersControllerTest {
     private StoreAdminUser addIdToStoreAdminUser(StoreAdminUser aUser){
         aUser.setId(new Random().nextLong());
         return aUser;
-    }
-
-    private FacebookUser addIdToFacebookUser(FacebookUser facebookUser){
-        facebookUser.setId(new Random().nextLong());
-        return facebookUser;
     }
 }
