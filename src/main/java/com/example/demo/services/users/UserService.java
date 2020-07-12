@@ -3,14 +3,15 @@ package com.example.demo.services.users;
 import com.example.demo.model.exceptions.ForbiddenAttributeUpdate;
 import com.example.demo.model.exceptions.NotAvailableUserNameException;
 import com.example.demo.model.exceptions.NotFoundUserException;
+import com.example.demo.model.user.ClientUser;
 import com.example.demo.model.user.StoreAdminUser;
 import com.example.demo.model.user.User;
 import com.example.demo.repositories.threshold.MoneyThresholdRepository;
+import com.example.demo.repositories.users.StoreAdminRepository;
 import com.example.demo.repositories.users.UserRepository;
-import com.example.demo.model.user.ClientUser;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 import java.util.List;
 
 @Service
@@ -18,6 +19,9 @@ public class UserService implements IUserService {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private StoreAdminRepository storeAdminRepository;
 
     @Autowired
     private MoneyThresholdRepository moneyThresholdRepository;
@@ -77,6 +81,11 @@ public class UserService implements IUserService {
         }
         return userRepository.save(retrievedUser);
     }
+
+    @Override
+    public StoreAdminUser findStoreAdmin(Long storeId) {
+       return storeAdminRepository.findByStoreId(storeId);
+    };
 
     private void updateStoreData(User user, User retrievedUser) {
         retrievedUser.store().setName(user.store().name());

@@ -66,6 +66,7 @@ public class PurchaseService implements IPurchaseService {
         DeliveryType deliveryType = generateDelivery(aDeliveryType, clientUser, deliveryTime);
         Bill bill = billGenerator.generateBill(ticketList, (ClientUser) clientUser, deliveryType);
         mailSender.sendPurchaseConfirmationMail(bill, clientUser, deliveryType);
+        mailSender.sendStoresNewPurchaseMail(bill, clientUser, deliveryType);
         return billRepository.save(bill);
     }
 
