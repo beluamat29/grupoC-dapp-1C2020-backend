@@ -28,6 +28,7 @@ import java.util.List;
     @Transient
     private List<CategoryMoneyThreshold> categoryMoneyThresholds = new ArrayList<>();
     private String address;
+    private Boolean isFacebookUser;
 
     public ClientUser(String username, String password, String anAddress){
         super(username, password);
@@ -36,6 +37,17 @@ import java.util.List;
         }
         this.address = anAddress;
         this.billOfPurchase = new ArrayList<>();
+        this.setIsFacebookUser(false);
+    }
+
+    private void setIsFacebookUser(Boolean isFacebookUser) {
+        this.isFacebookUser = isFacebookUser;
+    }
+
+    public static ClientUser createFacebookUser(String username, String password, String anAddress) {
+        ClientUser facebookUser = new ClientUser(username, password, anAddress);
+        facebookUser.setIsFacebookUser(true);
+        return facebookUser;
     }
 
     public ClientUser(){};
@@ -116,4 +128,8 @@ import java.util.List;
     }
 
     public void setAddress(String anAddress){  this.address = anAddress; }
+
+    public Boolean isFacebookUser() {
+        return this.isFacebookUser;
+    }
 }

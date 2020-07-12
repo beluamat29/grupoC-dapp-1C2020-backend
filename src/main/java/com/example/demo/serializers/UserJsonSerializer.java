@@ -1,11 +1,11 @@
 package com.example.demo.serializers;
 
+import com.example.demo.model.user.ClientUser;
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonSerializer;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializerProvider;
-import com.example.demo.model.user.ClientUser;
 
 import java.io.IOException;
 
@@ -23,6 +23,7 @@ public class UserJsonSerializer extends JsonSerializer<ClientUser> {
         jgen.writeStringField("username", clientUser.username());
         jgen.writeStringField("password", clientUser.password());
         jgen.writeStringField("address", clientUser.address());
+        jgen.writeObjectField("isFacebookUser", clientUser.isFacebookUser());
         jgen.writeObjectField("isStoreAdmin", clientUser.isAdminOfStore());
         serializeBills(jgen, clientUser);
         jgen.writeEndObject();

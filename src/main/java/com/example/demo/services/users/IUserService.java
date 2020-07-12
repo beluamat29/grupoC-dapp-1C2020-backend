@@ -24,4 +24,5 @@ public interface IUserService {
 
     User updateUser(Long id, User user);
 
+    ClientUser addFacebookUser(String username, String password, String address);
 }

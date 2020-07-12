@@ -3,13 +3,14 @@ package com.example.demo.services.users;
 import com.example.demo.model.exceptions.ForbiddenAttributeUpdate;
 import com.example.demo.model.exceptions.NotAvailableUserNameException;
 import com.example.demo.model.exceptions.NotFoundUserException;
+import com.example.demo.model.user.ClientUser;
 import com.example.demo.model.user.StoreAdminUser;
 import com.example.demo.model.user.User;
 import com.example.demo.repositories.threshold.MoneyThresholdRepository;
 import com.example.demo.repositories.users.UserRepository;
-import com.example.demo.model.user.ClientUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 import java.util.List;
 
 @Service
@@ -75,6 +76,12 @@ public class UserService implements IUserService {
             updateStoreData(user, retrievedUser);
         }
         return userRepository.save(retrievedUser);
+    }
+
+    @Override
+    public ClientUser addFacebookUser(String username, String password, String address) {
+        ClientUser facebookUser = ClientUser.createFacebookUser(username, password, address);
+        return userRepository.save(facebookUser);
     }
 
     private void updateStoreData(User user, User retrievedUser) {

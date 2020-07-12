@@ -68,7 +68,7 @@ public class UserController {
         if(user != null ){
             return new ResponseEntity<>(user, HttpStatus.OK);
         }
-        ClientUser savedUser = userService.addUser(facebookUser.username(), facebookUser.password(), facebookUser.address());
+        ClientUser savedUser = userService.addFacebookUser(facebookUser.username(), facebookUser.password(), facebookUser.address());
         return new ResponseEntity<>(savedUser, HttpStatus.OK);
     }
 }
