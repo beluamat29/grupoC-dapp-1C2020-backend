@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class UserService implements IUserService {
@@ -82,6 +83,11 @@ public class UserService implements IUserService {
     public ClientUser addFacebookUser(String username, String password, String address) {
         ClientUser facebookUser = ClientUser.createFacebookUser(username, password, address);
         return userRepository.save(facebookUser);
+    }
+
+    @Override
+    public Optional<User> getUserByUsername(String username) {
+        return userRepository.findByUsernameEquals(username);
     }
 
     private void updateStoreData(User user, User retrievedUser) {

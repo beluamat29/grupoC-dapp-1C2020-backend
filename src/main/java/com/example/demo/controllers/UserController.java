@@ -14,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @Transactional
@@ -63,10 +64,10 @@ public class UserController {
     }
 
     @PostMapping(path="/facebookUser",  consumes = "application/json", produces = "application/json")
-    public ResponseEntity<ClientUser> createFacebookUser(@RequestBody ClientUser facebookUser){
-        ClientUser user = (ClientUser) userService.getUserById(facebookUser.id());
-        if(user != null ){
-            return new ResponseEntity<>(user, HttpStatus.OK);
+    public ResponseEntity<User> createFacebookUser(@RequestBody ClientUser facebookUser){
+        Optional<User> user = userService.getUserByUsername(facebookUser.username());
+        if(user.isPresent()){
+            return new ResponseEntity<>(user.get(), HttpStatus.OK);
         }
         ClientUser savedUser = userService.addFacebookUser(facebookUser.username(), facebookUser.password(), facebookUser.address());
         return new ResponseEntity<>(savedUser, HttpStatus.OK);
