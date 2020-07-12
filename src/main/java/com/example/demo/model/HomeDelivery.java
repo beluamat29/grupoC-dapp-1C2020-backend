@@ -38,4 +38,9 @@ public class HomeDelivery extends DeliveryType {
     public Long getId() {
         return this.id;
     }
+
+    @Override
+    public Boolean isStorePickUp() {
+        return false;
+    }
 }

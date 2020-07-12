@@ -28,4 +28,6 @@ public interface IUserService {
     ClientUser addFacebookUser(String username, String password, String address);
 
     Optional<User> getUserByUsername(String username);
+
+    StoreAdminUser findStoreAdmin(Long storeId);
 }

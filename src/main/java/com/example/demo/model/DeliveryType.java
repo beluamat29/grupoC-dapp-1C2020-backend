@@ -23,4 +23,5 @@ public abstract class DeliveryType {
     public abstract LocalDateTime pickUpDate();
     public abstract Long getId();
 
+    public abstract Boolean isStorePickUp();
 }

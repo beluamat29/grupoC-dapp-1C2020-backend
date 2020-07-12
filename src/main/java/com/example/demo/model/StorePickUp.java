@@ -36,4 +36,9 @@ public class StorePickUp extends DeliveryType {
     public Long getId() {
         return this.id;
     }
+
+    @Override
+    public Boolean isStorePickUp() {
+        return true;
+    }
 }

@@ -16,6 +16,7 @@ public class BillJsonSerializer extends JsonSerializer<Bill> {
         serializerTickets(jgen, bill);
         jgen.writeObjectField("deliveryType", bill.getDeliveryType());
         jgen.writeStringField("dateTime", bill.getDateTime().toString());
+        jgen.writeNumberField("totalPrice", bill.totalPrice());
         jgen.writeEndObject();
     }
 

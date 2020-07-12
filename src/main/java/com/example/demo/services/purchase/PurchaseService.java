@@ -11,6 +11,7 @@ import com.example.demo.model.user.User;
 import com.example.demo.repositories.BillRepository;
 import com.example.demo.repositories.TicketRepository;
 import com.example.demo.repositories.users.UserRepository;
+import com.example.demo.sendMail.QuarantineMailSender;
 import com.example.demo.services.StoreService;
 import com.example.demo.services.users.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,6 +42,9 @@ public class PurchaseService implements IPurchaseService {
     @Autowired
     BillRepository billRepository;
 
+    @Autowired
+    QuarantineMailSender mailSender;
+
     @Override
     public Ticket processTicket(Long storeId, List<MerchandiseDTO> productsToBuy, String paymentMethod) {
         List<AcquiredProduct> productsList = storeService.getAcquiredProductsFromStore(storeId, productsToBuy);
@@ -57,10 +61,12 @@ public class PurchaseService implements IPurchaseService {
             Store store = storeService.getStore(storeId);
             ticketList.add(new Ticket(paymentMethod, store, generateAcquiredProducts(products, store)));
         });
-        BillGenerator billGenerator = new BillGenerator();
         User clientUser = userService.getUserById(user.id());
+        BillGenerator billGenerator = new BillGenerator();
         DeliveryType deliveryType = generateDelivery(aDeliveryType, clientUser, deliveryTime);
         Bill bill = billGenerator.generateBill(ticketList, (ClientUser) clientUser, deliveryType);
+        mailSender.sendPurchaseConfirmationMail(bill, clientUser, deliveryType);
+        mailSender.sendStoresNewPurchaseMail(bill, clientUser, deliveryType);
         return billRepository.save(bill);
     }
 

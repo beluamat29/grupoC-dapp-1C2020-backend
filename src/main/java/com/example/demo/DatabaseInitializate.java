@@ -6,7 +6,7 @@ import com.example.demo.model.merchandise.MerchandiseCategory;
 import com.example.demo.model.store.Store;
 import com.example.demo.model.store.StoreCategory;
 import com.example.demo.model.user.StoreAdminUser;
-import com.example.demo.repositories.merchandise.MerchandiseRepository;
+import com.example.demo.sendMail.QuarantineMailSender;
 import com.example.demo.services.StoreService;
 import com.example.demo.services.users.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +27,9 @@ public class DatabaseInitializate implements CommandLineRunner {
 
     @Autowired
     StoreService storeService;
+
+    @Autowired
+    QuarantineMailSender quarantineMailSender;
 
     @Override
     public void run(String... args) throws Exception {
@@ -214,10 +217,11 @@ public class DatabaseInitializate implements CommandLineRunner {
         userService.addUser("bartsimpson@gmail.com", "aycaramba", "Av. Siempreviva 742");
         userService.addUser("lisasimpson@gmail.com", "yolosetodo", "Av. Siempreviva 742");
         userService.addUser("maggiesimpson@gmail.com", "nohabla", "Av. Siempreviva 742");
+        userService.addUser("belen.amat29@gmail.com", "123456", "Alsina 3561");
     }
 
     private Store generateStore(String name, String address, Integer distanceInKm, List<StoreCategory> categories, String imageUrl) {
-        List<String> paymentMethods = Arrays.asList("Efectivo", "Tarjeta de Credito");
+        List<String> paymentMethods = Arrays.asList("CASH", "CREDIT_CARD");
         List<DayOfWeek> days = Arrays.asList(DayOfWeek.MONDAY, DayOfWeek.THURSDAY);
         StoreSchedule schedule = new StoreSchedule(days, LocalTime.of(9,0), LocalTime.of(17, 0));
         return new Store(name, categories, address, distanceInKm, paymentMethods,schedule, LocalDate.now(), imageUrl);
