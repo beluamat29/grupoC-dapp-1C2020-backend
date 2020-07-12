@@ -1,6 +1,5 @@
 package com.example.demo.services;
 
-import ch.qos.logback.core.net.server.Client;
 import com.example.demo.builders.ClientUserBuilder;
 import com.example.demo.builders.StoreAdminBuilder;
 import com.example.demo.builders.StoreBuilder;
@@ -34,6 +33,7 @@ public class UserServiceTest {
 
     @MockBean
     UserRepository userRepositoryMock; //Si esto esta definido hay que usarlo si o si en cada test
+
 
     @Autowired
     IUserService userService;
@@ -99,6 +99,7 @@ public class UserServiceTest {
     }
 
     //UPDATE
+
     @Test
     public void aClientUserCanHaveItsPasswordAndAddressUpdated() {
         ClientUser clientUser = ClientUserBuilder.user().withAddress("Alsina 234").withPassword("1234ABCD").build();

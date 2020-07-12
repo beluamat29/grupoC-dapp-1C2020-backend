@@ -2,7 +2,6 @@ package com.example.demo.model.user;
 
 import com.example.demo.model.Bill;
 import com.example.demo.model.exceptions.ClientUserDoesNotHaveStoresException;
-import com.example.demo.model.exceptions.InvalidAddressException;
 import com.example.demo.model.exceptions.NotFoundCategoryMoneyThresholdForThisUser;
 import com.example.demo.model.merchandise.MerchandiseCategory;
 import com.example.demo.model.store.Store;
@@ -23,19 +22,28 @@ import java.util.List;
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<Bill> billOfPurchase ;
 
-    @OneToOne
+    @Transient
     private MoneyThreshold moneyThresold = new MoneyThreshold(0.0);
     @Transient
     private List<CategoryMoneyThreshold> categoryMoneyThresholds = new ArrayList<>();
     private String address;
+    private Boolean isFacebookUser;
 
     public ClientUser(String username, String password, String anAddress){
         super(username, password);
-        if(anAddress.isEmpty()){
-            throw new InvalidAddressException();
-        }
         this.address = anAddress;
         this.billOfPurchase = new ArrayList<>();
+        this.setIsFacebookUser(false);
+    }
+
+    private void setIsFacebookUser(Boolean isFacebookUser) {
+        this.isFacebookUser = isFacebookUser;
+    }
+
+    public static ClientUser createFacebookUser(String username, String password, String anAddress) {
+        ClientUser facebookUser = new ClientUser(username, password, anAddress);
+        facebookUser.setIsFacebookUser(true);
+        return facebookUser;
     }
 
     public ClientUser(){};
@@ -116,4 +124,8 @@ import java.util.List;
     }
 
     public void setAddress(String anAddress){  this.address = anAddress; }
+
+    public Boolean isFacebookUser() {
+        return this.isFacebookUser;
+    }
 }

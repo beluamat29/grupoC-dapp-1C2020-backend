@@ -6,6 +6,7 @@ import com.example.demo.model.user.User;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public interface IUserService {
@@ -23,6 +24,10 @@ public interface IUserService {
     User getUserById(Long id);
 
     User updateUser(Long id, User user);
+
+    ClientUser addFacebookUser(String username, String password, String address);
+
+    Optional<User> getUserByUsername(String username);
 
     StoreAdminUser findStoreAdmin(Long storeId);
 }
