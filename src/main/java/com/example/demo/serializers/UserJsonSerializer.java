@@ -25,6 +25,7 @@ public class UserJsonSerializer extends JsonSerializer<ClientUser> {
         jgen.writeStringField("address", clientUser.address());
         jgen.writeObjectField("isFacebookUser", clientUser.isFacebookUser());
         jgen.writeObjectField("isStoreAdmin", clientUser.isAdminOfStore());
+        jgen.writeNumberField("moneyLimit", clientUser.getMoneyLimit());
         serializeBills(jgen, clientUser);
         jgen.writeEndObject();
     }

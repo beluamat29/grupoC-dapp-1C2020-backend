@@ -26,7 +26,12 @@ public class UserJsonDeserializer extends JsonDeserializer<User> {
             return new StoreAdminUser(username, password, store);
         } else {
             String address = jsonNode.get("address").textValue();
-            return new ClientUser(username, password, address);
+            if(jsonNode.has("moneyLimit")) {
+                Double moneyLimit = jsonNode.get("moneyLimit").asDouble();
+                return new ClientUser(username, password, address, moneyLimit);
+            } else {
+                return new ClientUser(username, password, address);
+            }
         }
     };
 }
