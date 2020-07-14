@@ -47,4 +47,18 @@ public class ClientUserTest {
         ClientUser pepe = ClientUserBuilder.user().build();
         assertFalse(pepe.isAdminOfStore());
     }
+
+    @Test
+    public void aNewClientUserHasAMoneyLimitOfZero() {
+        ClientUser pepe = ClientUserBuilder.user().build();
+        assertEquals(0.0, pepe.getMoneyLimit());
+    }
+
+    @Test
+    public void aNewClientUserCanHaveAMoneyLimitSet() {
+        ClientUser pepe = ClientUserBuilder.user().build();
+        Double aMoneyLimit = 3000.0;
+        pepe.setMoneyLimit(aMoneyLimit);
+        assertEquals(aMoneyLimit, pepe.getMoneyLimit());
+    }
 }

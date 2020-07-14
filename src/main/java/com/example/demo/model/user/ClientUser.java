@@ -28,12 +28,22 @@ import java.util.List;
     private List<CategoryMoneyThreshold> categoryMoneyThresholds = new ArrayList<>();
     private String address;
     private Boolean isFacebookUser;
+    private Double moneyLimit;
 
     public ClientUser(String username, String password, String anAddress){
         super(username, password);
         this.address = anAddress;
         this.billOfPurchase = new ArrayList<>();
         this.setIsFacebookUser(false);
+        this.moneyLimit = 0.0;
+    }
+
+    public ClientUser(String username, String password, String anAddress, Double moneyLimit){
+        super(username, password);
+        this.address = anAddress;
+        this.billOfPurchase = new ArrayList<>();
+        this.setIsFacebookUser(false);
+        this.moneyLimit = moneyLimit;
     }
 
     private void setIsFacebookUser(Boolean isFacebookUser) {
@@ -127,5 +137,13 @@ import java.util.List;
 
     public Boolean isFacebookUser() {
         return this.isFacebookUser;
+    }
+
+    public Double getMoneyLimit() {
+        return this.moneyLimit;
+    }
+
+    public void setMoneyLimit(Double newMoneyLimit) {
+        this.moneyLimit = newMoneyLimit;
     }
 }

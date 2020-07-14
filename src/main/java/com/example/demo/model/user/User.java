@@ -76,4 +76,8 @@ public abstract class User {
     public abstract Store store();
 
     public abstract void setStore(Store store);
+
+    public abstract Double getMoneyLimit();
+
+    public abstract void setMoneyLimit(Double moneyLimit);
 }

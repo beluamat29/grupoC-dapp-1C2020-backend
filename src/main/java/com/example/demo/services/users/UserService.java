@@ -79,6 +79,8 @@ public class UserService implements IUserService {
         retrievedUser.setPassword(user.password());
         if(user.isAdminOfStore()) {
             updateStoreData(user, retrievedUser);
+        } else {
+            retrievedUser.setMoneyLimit(user.getMoneyLimit());
         }
         return userRepository.save(retrievedUser);
     }
