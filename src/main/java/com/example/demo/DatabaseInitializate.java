@@ -126,7 +126,7 @@ public class DatabaseInitializate implements CommandLineRunner {
         kwickEMart.addMerchandise(oreo);
         kwickEMart.addMerchandise(oregano);
         kwickEMart.addMerchandise(cafe);
-        StoreAdminUser apu = new StoreAdminUser("apu@gmail.com", "apu123", kwickEMart);
+        StoreAdminUser apu = new StoreAdminUser("belen.amat@10pines.com", "apu123", kwickEMart);
         userService.addStoreAdmin(apu);
 
         cents.addMerchandise(manzana);

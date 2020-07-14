@@ -67,7 +67,7 @@ public class QuarantineMailSender {
 
     private void sendMailToTicketStore(Ticket ticket, User clientUser, DeliveryType deliveryType) {
         String clientText = "¡Ey! tenes un nuevo pedido del usuario " + clientUser.username();
-        String deliveryText = deliveryAddressAndDateTimeForStoreMail(clientUser, deliveryType);
+        String deliveryText = deliveryAddressAndDateTimeForStoreMail(clientUser, deliveryType, ticket);
         StoreAdminUser storeAdminUser = userService.findStoreAdmin(ticket.store().id());
         String mailProductList = parseProductList(ticket.getListOfAdquiredProducts());
         SimpleMailMessage message = new SimpleMailMessage();
@@ -119,13 +119,12 @@ public class QuarantineMailSender {
         bill.getTickets().stream().forEach(ticket -> sendMailToTicketStore(ticket, clientUser, deliveryType));
     }
 
-    private String deliveryAddressAndDateTimeForStoreMail(User clientUser, DeliveryType deliveryType) {
+    private String deliveryAddressAndDateTimeForStoreMail(User clientUser, DeliveryType deliveryType, Ticket ticket) {
         String deliveryMessage = "";
-        String deliveryDateTime = this.parseBillDateAndTime(deliveryType.pickUpDate());
         if(deliveryType.isStorePickUp()) {
-            deliveryMessage = "Le cliente pasará a buscar el pedido por el local " + deliveryDateTime;
+            deliveryMessage = "Le cliente pasará a buscar el pedido por el local " + this.parseBillDateAndTime(ticket.store().nextTurn(LocalDateTime.now()));
         } else {
-            deliveryMessage = "Le cliente espera el pedido para " + deliveryDateTime + " en la direccion " + clientUser.address();
+            deliveryMessage = "Le cliente espera el pedido para " + this.parseBillDateAndTime(deliveryType.pickUpDate()) + " en la direccion " + clientUser.address();
         }
         return deliveryMessage;
     }
