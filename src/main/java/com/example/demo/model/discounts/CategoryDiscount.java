@@ -3,7 +3,6 @@ package com.example.demo.model.discounts;
 import com.example.demo.model.merchandise.Merchandise;
 import com.example.demo.model.merchandise.MerchandiseCategory;
 
-import javax.naming.InitialContext;
 import java.time.LocalDate;
 
 public class CategoryDiscount extends StoreDiscount{

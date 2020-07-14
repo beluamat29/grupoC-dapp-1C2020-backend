@@ -4,7 +4,6 @@ package com.example.demo.model.merchandise;
 import com.example.demo.builders.MerchandiseBuilder;
 import com.example.demo.builders.MerchandiseDiscountBuilder;
 import com.example.demo.model.discounts.MerchandiseDiscount;
-import com.example.demo.model.merchandise.Merchandise;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;

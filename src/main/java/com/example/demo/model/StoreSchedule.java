@@ -2,7 +2,6 @@ package com.example.demo.model;
 
 import com.example.demo.deserializers.StoreScheduleJsonDeserializer;
 import com.example.demo.model.exceptions.WrongScheduleException;
-import com.example.demo.model.store.Store;
 import com.example.demo.serializers.StoreScheduleSerializer;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;

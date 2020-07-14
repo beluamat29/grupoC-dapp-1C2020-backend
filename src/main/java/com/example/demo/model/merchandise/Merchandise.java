@@ -6,7 +6,6 @@ import com.example.demo.model.exceptions.InvalidStockTypeException;
 import com.example.demo.model.exceptions.NegativePriceMerchandiseException;
 import com.example.demo.model.exceptions.InsufficientMerchandiseStockException;
 import com.example.demo.model.exceptions.NegativeStockMerchandiseException;
-import com.example.demo.model.store.Store;
 import com.example.demo.serializers.MerchandiseJsonSerializer;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 

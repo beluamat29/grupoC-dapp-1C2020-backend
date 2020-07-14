@@ -1,7 +1,6 @@
 package com.example.demo.dtos;
 
 import com.example.demo.model.Bill;
-import com.example.demo.model.user.User;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.List;

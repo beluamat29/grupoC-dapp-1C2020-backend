@@ -1,7 +1,6 @@
 package com.example.demo.model.user;
 import com.example.demo.model.store.Store;
 import com.example.demo.serializers.StoreAdminUserJsonSerializer;
-import com.example.demo.serializers.UserJsonSerializer;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 import javax.persistence.*;

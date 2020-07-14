@@ -1,6 +1,5 @@
 package com.example.demo.model.discounts;
 
-import com.example.demo.model.discounts.Discount;
 import com.example.demo.model.merchandise.Merchandise;
 
 import java.time.LocalDate;

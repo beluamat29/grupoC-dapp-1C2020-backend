@@ -5,7 +5,6 @@ import com.example.demo.serializers.DiscountJsonSerializer;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 import java.time.LocalDate;
-import java.util.function.BooleanSupplier;
 
 @JsonSerialize(using = DiscountJsonSerializer.class)
 public class MerchandiseDiscount extends StoreDiscount {
