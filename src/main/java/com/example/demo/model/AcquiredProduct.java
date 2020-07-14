@@ -5,7 +5,6 @@ import com.example.demo.model.merchandise.MerchandiseCategory;
 import com.example.demo.serializers.AcquiredProductJsonSerializer;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
-import javax.naming.ldap.LdapName;
 import javax.persistence.*;
 
 @Entity

@@ -24,14 +24,6 @@ public class TurnsSystem {
         return LocalDateTime.of(closestDayFromNow.getYear(), closestDayFromNow.getMonth(), closestDayFromNow.getDayOfMonth(), storeSchedule.openingTime().getHour(), storeSchedule.openingTime().getMinute());
     }
 
-   /* private static LocalDateTime encontrarHorarioApertura(LocalDate day, StoreSchedule storeSchedule) {
-        StoreSchedule storeTime = storeSchedule;
-        storeTime = storeTime.stream().filter(schedule -> schedule.availableOnDay().equals(day.getDayOfWeek())).collect(Collectors.toList());
-        StoreSchedule horario = storeTime.stream().min(Comparator.comparing(StoreSchedule::openingTime)).get();
-        return LocalDateTime.of(day.getYear(),day.getMonth(), day.getDayOfMonth(), horario.openingTime().getHour(), horario.openingTime().getMinute());
-    }*/
-
-
     private static LocalDate nextDateWithDat(DayOfWeek dayOfWeek, LocalDate fromNowOn) {
         LocalDate now = fromNowOn;
         return now.with(TemporalAdjusters.next(dayOfWeek));
