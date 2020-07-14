@@ -274,6 +274,7 @@ public class UsersControllerTest {
                 .andExpect(jsonPath("id", is(clientUser.id())))
                 .andExpect(jsonPath("username", is(clientUser.username())))
                 .andExpect(jsonPath("address", is(clientUser.address())))
+                .andExpect(jsonPath("moneyLimit", is(clientUser.getMoneyLimit())))
                 .andExpect(jsonPath("isStoreAdmin", is(clientUser.isAdminOfStore())))
                 .andReturn();
     }
