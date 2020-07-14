@@ -1,6 +1,6 @@
 [![Build Status](https://travis-ci.com/beluamat29/grupoC-dapp-1C2020-backend.svg?branch=master)](https://travis-ci.com/beluamat29/grupoC-dapp-1C2020-backend)
 Release Notes (14/7/2020):
-- Features nuevos implementados: 
+- Features e2e nuevos: 
     - Limite de dinero para los usuarios 
     - Loggin con Facebook 
     - Logger implementado con aspectos 
@@ -18,3 +18,24 @@ Release Notes (14/7/2020):
   - La página de un comercio no se recarga automaticamente luego de cargar un producto
   - Página de facebook a veces se abre cuando la sesión se cierra
     
+FRONTEND:
+    - Vista de perfil de usuario
+    - Vista de las compras hechas por un usuario
+    - Vista de los detalles de un comercio
+    - Se agrega el banner de un comercio cuando entras a su lista de productos
+    - Vista para realizar compras
+    - Login con FB 
+    - Busqueda por nombre de comercio
+    
+WEB LAYER:
+    - endpoint para la edicion de usuarios tanto de clientes como de comercios
+    - endpoint para agregar y editar productos (incluido CSV)
+    - endpoint para realizar compras 
+    - endpoint de loggin con Facebook
+    - Logger con aspectos que intersecta los endpoints de los controllers
+   
+BACKEND: 
+    - Refactors en el modelo de compras
+    - Test de arquitectura
+    - Persistencia de las entidades que quedaron pendientes en el sprint anterior
+    - Implementacion del modelo de tickets (compra en varios comercios)
